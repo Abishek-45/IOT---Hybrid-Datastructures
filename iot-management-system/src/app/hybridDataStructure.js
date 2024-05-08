@@ -104,15 +104,13 @@ class networkTree {
     }
   }
 
-  addSwitch(parentRouterName,newSwitch){
-    if (this.nameList.includes(newSwitch.name))
-    {
+  addSwitch(parentRouterName, newSwitch) {
+    if (this.nameList.includes(newSwitch.name)) {
       console.log("ERROR: Name already exists");
       return;
     }
-    let parent = this.searchElement(parentRouterName);
-    if(parent)
-    {
+    let parent = this.searchElement(parentRouterName, newSwitch.name, 1);
+    if (parent) {
       parent.routeTable.set(newSwitch, {
         names: [newSwitch.name],
         networks: [],
@@ -121,15 +119,13 @@ class networkTree {
     }
   }
 
-  addWrRouter(parentRouterName,newWrRouter){
-    if (this.nameList.includes(newWrRouter.name))
-    {
+  addWrRouter(parentRouterName, newWrRouter) {
+    if (this.nameList.includes(newWrRouter.name)) {
       console.log("ERROR: Name already exists");
       return;
     }
-    let parent = this.searchElement(parentRouterName);
-    if(parent)
-    {
+    let parent = this.searchElement(parentRouterName, newWrRouter.name, 1);
+    if (parent) {
       parent.routeTable.set(newWrRouter, {
         names: [newWrRouter.name],
         networks: [],
@@ -138,15 +134,33 @@ class networkTree {
     }
   }
 
-  searchElement(eleName, node = this.root) {
-    if (node.name == eleName) {
+  addPC(parentNodeName, pcNode) {
+    if (this.nameList.includes(pcNode.name)) {
+      console.log("ERROR: Name already exists");
+      return;
+    }
+    let parent = this.searchElement(parentNodeName, pcNode.name, 0);
+    if (typeof parent == typeof SwitchNode) {
+      parent.routeTable.set(newWrRouter, {
+        names: [newWrRouter.name],
+        networks: [],
+      });
+      newWrRouter.parent = parent;
+    }
+  }
+
+  searchElement(parentNodeName, childNodeName, mode, node = this.root) {
+    if (node.name == parentNodeName) {
       return node;
     } else {
       for (let [child, childValue] of node.routeTable.entries()) {
-        if (childValue.names.includes(parentNode)) {
-          if(mode == 1) childValue.names.push(childNodeName)
-            if(mode == 2) childValue.names = childValue.names.filter(item => item!=childNodeName)
-          return this.searchElement(parentNode, childNodeName, mode, child);
+        if (childValue.names.includes(parentNodeName)) {
+          if (mode == 1) childValue.names.push(childNodeName);
+          if (mode == 2)
+            childValue.names = childValue.names.filter(
+              (item) => item != childNodeName
+            );
+          return this.searchElement(parentNodeName, childNodeName, mode, child);
         }
       }
     }
@@ -161,14 +175,14 @@ Router4 = new RouterNode("Router4", 1);
 Router5 = new RouterNode("Router5", 1);
 Router6 = new RouterNode("Router6", 1);
 Router7 = new RouterNode("Router7", 1);
-Switch1 = new SwitchNode("Swtich1",1,"Bedroom1","179.18.1.160");
-Switch2 = new SwitchNode("Swtich2",1,"Bedroom2","179.18.2.158");
+Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
+Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
 network.addRouter(network.root.name, Router2);
 network.addRouter(network.root.name, Router3);
 network.addRouter("Router2", Router4);
 network.addRouter("Router3", Router5);
 network.addRouter("Router2", Router6);
-network.addSwitch("Router4",Switch1);
-network.addSwitch("Router2",Switch2);
+network.addSwitch("Router4", Switch1);
+network.addSwitch("Router2", Switch2);
 console.log(Router1.routeTable);
 network.printElements();
