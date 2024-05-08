@@ -140,13 +140,8 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentNodeName, pcNode.name, 0);
-    if (typeof parent == typeof SwitchNode) {
-      parent.routeTable.set(newWrRouter, {
-        names: [newWrRouter.name],
-        networks: [],
-      });
-      newWrRouter.parent = parent;
-    }
+    parent.children.push(pcNode);
+    pcNode.parent = parent;
   }
 
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
@@ -177,6 +172,7 @@ Router6 = new RouterNode("Router6", 1);
 Router7 = new RouterNode("Router7", 1);
 Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
 Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
+PC1 = new wiredNode("PC1", "1", "Bathroom", "192.168.152.2", "255.255.255.0");
 network.addRouter(network.root.name, Router2);
 network.addRouter(network.root.name, Router3);
 network.addRouter("Router2", Router4);
@@ -184,5 +180,6 @@ network.addRouter("Router3", Router5);
 network.addRouter("Router2", Router6);
 network.addSwitch("Router4", Switch1);
 network.addSwitch("Router2", Switch2);
-console.log(Router1.routeTable);
+network.addPC("Swtich2", PC1);
 network.printElements();
+console.log(Switch2);
