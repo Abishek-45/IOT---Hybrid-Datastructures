@@ -3,29 +3,9 @@ class RouterNode {
     this.name = routerName;
     this.floorNo = floorNo;
     this.children = [];
-    this.routeTable = {
-      // routerObject : { names: [], networks: [] },
-    };
+    this.routeTable = new Map();   // routerObject : { names: [], networks: [] },
     this.subnetMask = "255.255.255.0";
     this.parent = null;
-  }
-  updateRoutingTable() {
-    this.routeTable = {};
-    this.children.forEach((child, index) => {
-      this.routeTable[index] = [];
-    });
-  }
-  searchElement(eleName) {
-    if(this.name == eleName){
-      return this
-    }
-    else{
-      for (let child in this.routeTable) {
-        if (eleName in child.names) {
-          return child.searchElement(eleName)
-        }
-      }
-    }
   }
 }
 
@@ -91,23 +71,48 @@ class networkTree {
       this.nameList.push(root.name);
     }
   }
+  
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
     }
     this.root = router;
   }
+  
   addRouter(parentRouterName, newRouter) {
-    if(newRouter.name in this.nameList){
-      console.log("ERROR: Name already exist")
-      return
+    if (this.nameList.includes(newRouter.name)) {
+      console.log("ERROR: Name already exists");
+      return;
     }
-    parent = this.root.searchElement(parentRouterName)
-    parent.routeTable[newRouter] = {names:[newRouter.name],networks:[]}
+    let parent = this.searchElement(parentRouterName);
+    if (!parent) {
+    } else {
+      parent.routeTable.set(newRouter, { names: [newRouter.name], networks: [] });
+      newRouter.parent = parent;
+    }
+  }
+  
+  searchElement(eleName, node = this.root) {
+    console.log("Table:",node.routeTable);
+    if (node.name == eleName) {
+      console.log("$$$ parent:", node.name);
+      return node;
+    } else {
+      for (let [child, childValue] of node.routeTable.entries()) {
+        console.log("###", childValue, child);
+        if (childValue.names.includes(eleName)) {
+          return this.searchElement(eleName, child);
+        }
+      }
+    }
   }
 }
 
 Router1 = new RouterNode("Router1", 0);
 network = new networkTree(Router1);
-Router2 = new RouterNode("Router1",1);
-networkTree.addRouter(networkTree.root, Router2);
+Router2 = new RouterNode("Router2", 1);
+Router3 = new RouterNode("Router3", 1);
+Router4 = new RouterNode("Router4", 1);
+network.addRouter(network.root.name, Router2);
+network.addRouter(network.root.name, Router3);
+network.addRouter("Router2", Router4);
