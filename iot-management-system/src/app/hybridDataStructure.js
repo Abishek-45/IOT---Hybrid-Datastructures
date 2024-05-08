@@ -130,6 +130,7 @@ class networkTree {
       newWrRouter.parent = parent;
     }
   }
+
   addIotDevice(parentWrRouterName, Device) {
     if (this.nameList.includes(Device.name)) {
       console.log("ERROR: Name already exists");
@@ -190,18 +191,10 @@ Router3 = new RouterNode("Router3", 1);
 Router4 = new RouterNode("Router4", 1);
 Router5 = new RouterNode("Router5", 1);
 Router6 = new RouterNode("Router6", 1);
-
-wr1 = new wrlessRouterNode(
-  "wr1",
-  1,
-  "Bedroom",
-  "179.1.19.50",
-  "BedroomForMe",
-  "iloveyou"
-);
-
-Ac = new wirelessNode("AC", 1, "Bedroom", "BedroomForMe", "iloveyou");
-
+Router7 = new RouterNode("Router7", 1);
+Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
+Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
+PC1 = new wiredNode("PC1", "1", "Bathroom", "192.168.152.2", "255.255.255.0");
 network.addRouter(network.root.name, Router2);
 network.addRouter(network.root.name, Router3);
 network.addRouter("Router2", Router4);
@@ -209,6 +202,6 @@ network.addRouter("Router3", Router5);
 network.addRouter("Router2", Router6);
 network.addSwitch("Router4", Switch1);
 network.addSwitch("Router2", Switch2);
-console.log(Router1.routeTable);
+network.addPC("Swtich2", PC1);
 network.printElements();
 console.log(Switch2);
