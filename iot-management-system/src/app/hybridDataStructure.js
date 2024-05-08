@@ -84,7 +84,7 @@ class networkTree {
       console.log("ERROR: Name already exists");
       return;
     }
-    let parent = this.searchElement(parentRouterName);
+    let parent = this.searchElement(parentRouterName, newRouter.name, 1);
     if (!parent) {
     } else {
       parent.routeTable.set(newRouter, { names: [newRouter.name], networks: [] });
@@ -102,13 +102,15 @@ class networkTree {
     }
   }
   
-  searchElement(eleName, node = this.root) {
-    if (node.name == eleName) {
+  searchElement(parentNode, childNodeName, mode, node = this.root) {
+    if (node.name == parentNode) {
       return node;
     } else {
       for (let [child, childValue] of node.routeTable.entries()) {
-        if (childValue.names.includes(eleName)) {
-          return this.searchElement(eleName, child);
+        if (childValue.names.includes(parentNode)) {
+          if(mode == 1) childValue.names.push(childNodeName)
+            if(mode == 2) childValue.names = childValue.names.filter(item => item!=childNodeName)
+          return this.searchElement(parentNode, childNodeName, mode, child);
         }
       }
     }
