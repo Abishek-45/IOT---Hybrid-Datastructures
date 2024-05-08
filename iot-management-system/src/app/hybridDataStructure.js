@@ -26,7 +26,6 @@ class wrlessRouterNode {
     this.roomName = roomName;
     this.floorNo = floorNo;
     this.children = [];
-    this.routeTable = {};
     this.ip = ip;
     this.SSID = SSID;
     this.passwd = passwd;
@@ -36,25 +35,23 @@ class wrlessRouterNode {
 }
 
 class wiredNode {
-  constructor(PC_Name, floorNo, roomName, ip, subnetMask) {
+  constructor(PC_Name, floorNo, roomName, ip) {
     this.name = PC_Name;
     this.floorNo = floorNo;
     this.roomName = roomName;
     this.ip = ip;
-    this.subnetMask = subnetMask;
     this.state = 1;
     this.parent = null;
   }
 }
 
 class wirelessNode {
-  constructor(Device_Name, floorNo, roomName, subnetMask, SSID, passwd = null) {
+  constructor(Device_Name, floorNo, roomName, SSID, passwd = null) {
     this.name = Device_Name;
     this.floorNo = floorNo;
     this.roomName = roomName;
     this.SSID = SSID;
     this.passwd = passwd;
-    this.subnetMask = subnetMask;
     this.state = 1;
     this.attributes = {};
     this.parent = null;
@@ -93,7 +90,7 @@ class networkTree {
       newRouter.parent = parent;
     }
   }
-  printElements(node = this.root) {
+  printElements(node = this.root) { // modification needed
     if (node.parent) console.log("Parent Node: ", node.parent.name);
     console.log("Current Node: ", node.name);
     console.log("\n");
@@ -133,6 +130,30 @@ class networkTree {
       newWrRouter.parent = parent;
     }
   }
+  addIotDevice(parentWrRouterName, Device) {
+    if (this.nameList.includes(Device.name)) {
+      console.log("ERROR: Name already exists");
+      return;
+    }
+    let parent = this.searchElement(parentWrRouterName, Device.name, 0);
+    if (parent) {
+      if (parent.SSID == Device.SSID) {
+        if (parent.passwd) {
+          if (parent.passwd == Device.passwd) {
+            parent.children.push(Device);
+            Device.parent = parent;
+          } else {
+            console.log("ERROR: The password doesn't match");
+          }
+        } else {
+          parent.children.push(Device);
+          Device.parent = parent;
+        }
+      } else {
+        console.log("ERROR: Incorrect SSID");
+      }
+    }
+  }
 
   addPC(parentNodeName, pcNode) {
     if (this.nameList.includes(pcNode.name)) {
@@ -169,10 +190,18 @@ Router3 = new RouterNode("Router3", 1);
 Router4 = new RouterNode("Router4", 1);
 Router5 = new RouterNode("Router5", 1);
 Router6 = new RouterNode("Router6", 1);
-Router7 = new RouterNode("Router7", 1);
-Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
-Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
-PC1 = new wiredNode("PC1", "1", "Bathroom", "192.168.152.2", "255.255.255.0");
+
+wr1 = new wrlessRouterNode(
+  "wr1",
+  1,
+  "Bedroom",
+  "179.1.19.50",
+  "BedroomForMe",
+  "iloveyou"
+);
+
+Ac = new wirelessNode("AC", 1, "Bedroom", "BedroomForMe", "iloveyou");
+
 network.addRouter(network.root.name, Router2);
 network.addRouter(network.root.name, Router3);
 network.addRouter("Router2", Router4);
@@ -180,6 +209,6 @@ network.addRouter("Router3", Router5);
 network.addRouter("Router2", Router6);
 network.addSwitch("Router4", Switch1);
 network.addSwitch("Router2", Switch2);
-network.addPC("Swtich2", PC1);
+console.log(Router1.routeTable);
 network.printElements();
 console.log(Switch2);
