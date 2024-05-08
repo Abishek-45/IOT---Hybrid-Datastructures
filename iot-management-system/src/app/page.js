@@ -1,3 +1,5 @@
+import "./hybridDataStructure.js";
+
 export default function Home() {
   return (
     <main className="bg-gray-800">
