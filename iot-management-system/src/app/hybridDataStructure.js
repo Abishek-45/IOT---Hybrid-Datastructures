@@ -91,15 +91,22 @@ class networkTree {
       newRouter.parent = parent;
     }
   }
+  printElements(node = this.root) {
+    if(node.parent)  console.log("Parent Node: ", node.parent.name);
+    console.log("Current Node: ", node.name);
+    console.log("\n");
+    if (node.routeTable) {
+      for (let [child,childvalue] of node.routeTable.entries()) {
+        this.printElements(child);
+      }
+    }
+  }
   
   searchElement(eleName, node = this.root) {
-    console.log("Table:",node.routeTable);
     if (node.name == eleName) {
-      console.log("$$$ parent:", node.name);
       return node;
     } else {
       for (let [child, childValue] of node.routeTable.entries()) {
-        console.log("###", childValue, child);
         if (childValue.names.includes(eleName)) {
           return this.searchElement(eleName, child);
         }
@@ -116,3 +123,5 @@ Router4 = new RouterNode("Router4", 1);
 network.addRouter(network.root.name, Router2);
 network.addRouter(network.root.name, Router3);
 network.addRouter("Router2", Router4);
+console.log(Router1.routeTable);
+network.printElements()
