@@ -90,7 +90,8 @@ class networkTree {
       newRouter.parent = parent;
     }
   }
-  printElements(node = this.root) { // modification needed
+  printElements(node = this.root) {
+    // modification needed
     if (node.parent) console.log("Parent Node: ", node.parent.name);
     console.log("Current Node: ", node.name);
     console.log("\n");
@@ -166,6 +167,48 @@ class networkTree {
     pcNode.parent = parent;
   }
 
+  //Logic needs to be changed (here we are not using parent node so the if condition in for loop will not work properly)
+  deleteSearch(nodename, node = this.root) {
+    console.log(node)
+    if (!node instanceof RouterNode) {
+      console.log("###");
+      return node;
+    }
+    if (node.name == nodename) {
+      console.log("$$$");
+
+      return node;
+    }
+    for (let [child, childValue] of node.routeTable.entries()) {
+      if (childValue.names.includes(nodename)) {
+        childValue.names = childValue.names.filter((item) => item !== nodename);
+        return this.deleteSearch(nodename, child);
+      }
+    }
+  }
+
+  deleteDevice(nodename) {
+    let delNode = this.deleteSearch(nodename);
+    delNode.parent.children = delNode.parent.children.filter(
+      (node) => node !== nodename
+    );
+  }
+
+  deleteRoomNetwork(nodename) {
+    let delNode = this.deleteSearch(nodename);
+    console.log(delNode)
+    if (delNode) {
+      delNode.children = null;
+      delNode.parent.routeTable.delete(delNode);
+    }
+  }
+
+  deleteFloorNetwork(nodename) {
+    let delNode = this.deleteSearch(nodename);
+    delNode.routeTable = null;
+    delNode.parent.routeTable.delete(delNode);
+  }
+
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
     if (node.name == parentNodeName) {
       return node;
@@ -173,10 +216,6 @@ class networkTree {
       for (let [child, childValue] of node.routeTable.entries()) {
         if (childValue.names.includes(parentNodeName)) {
           if (mode == 1) childValue.names.push(childNodeName);
-          if (mode == 2)
-            childValue.names = childValue.names.filter(
-              (item) => item != childNodeName
-            );
           return this.searchElement(parentNodeName, childNodeName, mode, child);
         }
       }
@@ -204,4 +243,5 @@ network.addSwitch("Router4", Switch1);
 network.addSwitch("Router2", Switch2);
 network.addPC("Swtich2", PC1);
 network.printElements();
-console.log(Switch2);
+network.deleteRoomNetwork("swtich2");
+network.printElements();
