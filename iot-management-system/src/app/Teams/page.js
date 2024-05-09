@@ -1,15 +1,14 @@
 import Navbar from "../components/Navbar.js";
-import Image from "next/image.js";
 import TeamCard from "../components/teamCard.js";
 
 export default function Members() {
   const teamDetails = [
     { name: "Abishek", links: ["https://github.com/Abishek-45","https://www.linkedin.com/in/abishek-k-387083309/","https://mail.google.com/mail/u/0/#inbox?compose=new"], photo: "/abishek2.jpg" },
-    { name: "Aakash", links: [], photo: "" },
-    { name: "Thanus Kumaar", links: [], photo: "/Thanos.jpg" },
-    { name: "Lalith", links: [], photo: "" },
-    { name: "Kavinilavan", links: [], photo: "" },
-    { name: "Nalesh Kumar", links: [], photo: "" },
+    { name: "Aakash", links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"], photo: "" },
+    { name: "Thanus Kumaar", links: ["https://github.com/Thanus-Kumaar","https://www.linkedin.com/in/thanus-kumaar/","https://mail.google.com/mail/u/0/#inbox?compose=new"], photo: "/Thanos.jpg" },
+    { name: "Lalith", links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"], photo: "" },
+    { name: "Kavinilavan", links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"], photo: "" },
+    { name: "Nalesh Kumar", links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"], photo: "" },
   ];
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] ">
