@@ -10,5 +10,5 @@ export default function Navbar(){
             </div>
             <div><TeamsButton /></div>
         </div>
-    )
+  );
 }
