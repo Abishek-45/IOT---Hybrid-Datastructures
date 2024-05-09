@@ -1,5 +1,5 @@
 import Navbar from './components/Navbar.js';
-
+import "./hybridDataStructure.js";
 
 export default function Home() {
   return (
