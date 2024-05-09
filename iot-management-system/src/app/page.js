@@ -20,8 +20,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <TeamCard name={"Abishek K"} links={["https://github.com/Abishek-45","https://www.linkedin.com/in/abishek-k-387083309/","asdasd"]} photosrc={"/assets/abishek.jpg"}/>
       </div>
-      <TeamCard />
+      
     </main>
   );
 }
