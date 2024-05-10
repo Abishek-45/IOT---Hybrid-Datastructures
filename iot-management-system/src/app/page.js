@@ -6,7 +6,7 @@ import TeamCard from "./components/teamCard.js";
 export default function Home() {
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] ">
-      <div className="flex flex-col gap-[127px]">
+      <div className="flex flex-col gap-[123px]">
         <div className="flex">
           <Navbar />
         </div>
@@ -40,8 +40,8 @@ export default function Home() {
               <Image
                 src={"/Home.png"}
                 width={550}
-                height={500}
-                className="ml-[60px]"
+                height={530}
+                className="ml-[57px]"
               />
             </div>
           </div>
