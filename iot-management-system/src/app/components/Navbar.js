@@ -6,7 +6,7 @@ export default function Navbar() {
       <div className="flex flex-row gap-[80px]">
         <div className="mt-3 text-[25px] pl-5">IoT Automation</div>
       </div>
-      <div className="mt-3 flex flex-row gap-4 mr-3">
+      <div className="mt-4 flex flex-row gap-4 mr-3">
         <NavButtons buttonName={"Home"} url={"/"} />
         <NavButtons buttonName={"Tool"} url={"/tool"} />
         <NavButtons buttonName={"Docs"} url={"/docs"} />
