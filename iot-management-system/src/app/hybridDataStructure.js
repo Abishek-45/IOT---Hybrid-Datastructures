@@ -223,17 +223,17 @@ class networkTree {
   }
 }
 
-Router1 = new RouterNode("Router1", 0);
-network = new networkTree(Router1);
-Router2 = new RouterNode("Router2", 1);
-Router3 = new RouterNode("Router3", 1);
-Router4 = new RouterNode("Router4", 1);
-Router5 = new RouterNode("Router5", 1);
-Router6 = new RouterNode("Router6", 1);
-Router7 = new RouterNode("Router7", 1);
-Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
-Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
-PC1 = new wiredNode("PC1", "1", "Bathroom", "192.168.152.2", "255.255.255.0");
+let Router1 = new RouterNode("Router1", 0);
+let network = new networkTree(Router1);
+let Router2 = new RouterNode("Router2", 1);
+let Router3 = new RouterNode("Router3", 1);
+let Router4 = new RouterNode("Router4", 1);
+let Router5 = new RouterNode("Router5", 1);
+let Router6 = new RouterNode("Router6", 1);
+let Router7 = new RouterNode("Router7", 1);
+let Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
+let Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
+let PC1 = new wiredNode("PC1", "1", "Bathroom", "192.168.152.2", "255.255.255.0");
 network.addRouter(network.root.name, Router2);
 network.addRouter(network.root.name, Router3);
 network.addRouter("Router2", Router4);
