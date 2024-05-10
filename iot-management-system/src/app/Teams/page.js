@@ -28,7 +28,9 @@ export default function Members() {
     },
     {
       name: "Lalith",
-      links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"],
+      links: ["https://github.com/lalith128",
+              "https://www.linkedin.com/in/lalith-v-6643b6261?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+              "https://mail.google.com/mail/u/0/#inbox?compose=new"],
       photo: "",
     },
     {
