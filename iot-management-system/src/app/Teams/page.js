@@ -14,7 +14,10 @@ export default function Members() {
     },
     {
       name: "Aakash",
-      links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"],
+      links: [
+        "https://github.com/Aakash-Balasundaram",
+        "https://www.linkedin.com/in/aakash-b-9a6749256/",
+        "https://mail.google.com/mail/u/0/#inbox?compose=new"],
       photo: "",
     },
     {
@@ -28,26 +31,34 @@ export default function Members() {
     },
     {
       name: "Lalith",
+      
       links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"],
       photo: "",
     },
     {
       name: "Kavinilavan",
-      links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"],
-      photo: "",
+      links: [
+        "https://github.com/kavinvinayagam",
+        "https://mail.google.com/mail/u/0/#inbox?compose=new"
+      ],
+      photo: "/Kavin.jpg",
     },
     {
       name: "Nalesh Kumar",
-      links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"],
-      photo: "",
+      links: [
+        "https://github.com/Nalesh18",
+        "https://www.linkedin.com/in/nalesh-kumar-b-623806268/",
+        "https://mail.google.com/mail/u/0/#inbox?compose=new"
+      ],
+      photo: "/Nalesh.jpg",
     },
   ];
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] ">
-      <div className="flex flex-col realtive gap-5">
+      <div className="flex flex-col relative gap-0.5">
         <Navbar />
         <div className="flex-1 mt-4">
-          <div className="flex flex-row justify-center gap-y-18 gap-20 flex-wrap columns-3 mt-8">
+          <div className="flex flex-row w-[80%] mx-auto justify-center gap-y-2 gap-x-32 flex-wrap columns-3 mt-8">
             {teamDetails.map((member, index)=>(
                  <TeamCard
                 key={index}
