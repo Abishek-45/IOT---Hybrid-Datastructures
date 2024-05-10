@@ -32,7 +32,7 @@ export default function Home() {
                   </button>
                 </div>
                 <div>
-                  <button className="bg-[#9FBEF7] w-[170px] h-[45px] rounded-2xl text-[18px] text-black border-2 border-[#03379e] transition duration-300 hover:scale-105 active:opacity-60"
+                  <button className="bg-[#9FBEF7] w-[170px] h-[45px] rounded-2xl text-[18px] text-[#03379e] border-2 border-[#03379e] transition duration-300 hover:scale-105 active:opacity-60"
                   onClick={()=>window.location.href = "/docs"}>
                     Documentation
                   </button>
