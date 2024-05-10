@@ -45,6 +45,37 @@ export default function Tool() {
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
+  const [switchAdd, setSwitchAdd] = useState(false);
+  const [switchFormData, setSwitchFormData] = useState({
+    routerName: "",
+    floorNo: "",
+    roomName: "",
+    parentName: "",
+  });
+  const handleSwitchOpen = () => {
+    setSwitchAdd(true);
+  };
+
+  const handleSwitchClose = () => {
+    setSwitchAdd(false);
+  };
+
+  const [deviceAdd, setDeviceAdd] = useState(false);
+  const [deviceFormData, setDeviceFormData] = useState({
+    routerName: "",
+    floorNo: "",
+    roomName: "",
+    parentName: "",
+  });
+
+  const handleDeviceOpen = () => {
+    setDeviceAdd(true);
+  };
+
+  const handleDeviceClose = () => {
+    setDeviceAdd(false);
+  };
+
   const addRouterFunction = () => {
     if (mainNetwork.nameList.includes(routerFormData.routerName)) {
       alert("Name already present!");
