@@ -11,6 +11,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { IoMdAddCircle } from "react-icons/io";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import { MdEdit } from "react-icons/md";
 import Navbar from "../components/Navbar";
 import { useEffect, useMemo, useState } from "react";
 import Tree from "react-d3-tree";
@@ -58,6 +60,21 @@ export default function Tool() {
 
   const handleSwitchClose = () => {
     setSwitchAdd(false);
+  };
+
+  const [wrAdd, setWRouterAdd] = useState(false);
+  const [wrouterFormData, setwrouterFormData] = useState({
+    routerName: "",
+    floorNo: "",
+    roomName: "",
+    parentName: "",
+  });
+  const handleWRouterOpen = () => {
+    setWRouterAdd(true);
+  };
+
+  const handleWRouterClose = () => {
+    setWRouterAdd(false);
   };
 
   const [deviceAdd, setDeviceAdd] = useState(false);
@@ -115,7 +132,7 @@ export default function Tool() {
                 id="panel1-header"
                 className="ml-2"
               >
-                Add Components
+                Components
               </AccordionSummary>
               <AccordionDetails>
                 {/* Router device acccordian */}
@@ -132,12 +149,16 @@ export default function Tool() {
                         className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
                         onClick={handleRouterOpen}
                       >
-                        <div>Router</div>
+                        <div> Add Router</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
                       <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
-                        <div>Wireless Router</div>
-                        <IoMdAddCircle className="h-6 w-6" />
+                        <div>Edit Router</div>
+                        <MdEdit className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+                        <div>Remove Router</div>
+                        <RiDeleteBin5Fill className="h-6 w-6" />
                       </div>
                     </div>
                   </AccordionDetails>
@@ -153,8 +174,44 @@ export default function Tool() {
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
                       <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleSwitchOpen}>
-                        <div>Switch</div>
+                        <div> Add Switch</div>
                         <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleSwitchOpen}>
+                        <div> Edit Switch</div>
+                        <MdEdit className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleSwitchOpen}>
+                        <div> Add Switch</div>
+                        <RiDeleteBin5Fill className="h-6 w-6" />
+                      </div>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                {/* Wireless Router acccordian */}
+                <Accordion className=" bg-red-400">
+                  <AccordionSummary
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                  >
+                    Wireless Router
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="flex flex-col gap-2">
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleWRouterOpen}
+                      >
+                        <div> Add Router</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+                        <div>Edit Router</div>
+                        <MdEdit className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+                        <div>Remove Router</div>
+                        <RiDeleteBin5Fill className="h-6 w-6" />
                       </div>
                     </div>
                   </AccordionDetails>
@@ -170,8 +227,16 @@ export default function Tool() {
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
                       <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleDeviceOpen}>
-                        <div>IoT devices</div>
+                        <div> Add Device</div>
                         <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleDeviceOpen}>
+                        <div> Edit Device</div>
+                        <MdEdit className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleDeviceOpen}>
+                        <div> Remove Device</div>
+                        <RiDeleteBin5Fill className="h-6 w-6" />
                       </div>
                     </div>
                   </AccordionDetails>
