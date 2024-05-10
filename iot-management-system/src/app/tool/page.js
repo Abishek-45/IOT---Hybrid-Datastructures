@@ -5,6 +5,7 @@ import AccordionActions from "@mui/material/AccordionActions";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 
+import { IoMdAddCircle } from "react-icons/io";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 export default function Tool() {
@@ -18,18 +19,86 @@ export default function Tool() {
         <div className="flex-1"></div>
         <div className="w-[400px] p-2 bg-slate-500">
           <div>
-            <Accordion>
+            <Accordion className="bg-[#CADCFC]">
               <AccordionSummary
-                
                 aria-controls="panel1-content"
                 id="panel1-header"
+                className="ml-2"
               >
-                Accordion 1
+                Add Components
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                {/* Router device acccordian */}
+                <Accordion className=" bg-emerald-200">
+                  <AccordionSummary
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                  >
+                    Router
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="flex flex-col gap-2">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Router</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Wireless Router</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                {/* Switch device acccordian */}
+                <Accordion className="bg-red-200">
+                  <AccordionSummary
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                  >
+                    Switch
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="flex flex-col gap-2">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Switch</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+                {/* IoT device acccordian */}
+                <Accordion className="bg-sky-300">
+                  <AccordionSummary
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                  >
+                    IoT devices
+                  </AccordionSummary>
+                  <AccordionDetails>
+                  <div className="flex flex-col gap-2">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Television</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Light</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Camera</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Fan</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                        <div>Fire alarm</div>
+                        <IoMdAddCircle className="h-6 w-6" />
+                      </div>
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
               </AccordionDetails>
             </Accordion>
           </div>
