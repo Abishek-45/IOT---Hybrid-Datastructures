@@ -71,8 +71,8 @@ class networkTree {
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
+      this.root = router;
     }
-    this.root = router;
   }
 
   addRouter(parentRouterName, newRouter) {
@@ -80,6 +80,7 @@ class networkTree {
       console.log("ERROR: Name already exists");
       return;
     }
+    this.nameList.push(newRouter.name);
     let parent = this.searchElement(parentRouterName, newRouter.name, 1);
     if (!parent) {
     } else {
@@ -221,6 +222,21 @@ class networkTree {
       }
     }
   }
+  convertToTreeData(node) {
+    const treeData = {
+      name: node.name,
+      children: []
+    };
+  
+    if (node.routeTable) {
+      for (let [childNode, _] of node.routeTable.entries()) {
+        const childTreeData = this.convertToTreeData(childNode);
+        treeData.children.push(childTreeData);
+      }
+    }
+  
+    return treeData;
+  }
 }
 
 let Router1 = new RouterNode("Router1", 0);
@@ -245,6 +261,7 @@ network.addPC("Swtich2", PC1);
 network.printElements();
 network.deleteRoomNetwork("swtich2");
 network.printElements();
+console.log(network.convertToTreeData(Router1))
 
 
 export  {RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree}

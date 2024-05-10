@@ -12,18 +12,28 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { IoMdAddCircle } from "react-icons/io";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Tree from "react-d3-tree";
 
-import { RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree } from  '../hybridDataStructure';
+import {
+  RouterNode,
+  SwitchNode,
+  wrlessRouterNode,
+  wiredNode,
+  wirelessNode,
+  networkTree,
+} from "../hybridDataStructure";
 import { Main } from "next/document";
 
 export default function Tool() {
   const [mainNetwork] = useState(new networkTree());
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
-    routerName: '',
-    floorNo: '',
+    routerName: "",
+    floorNo: "",
+    parentName: "",
   });
+  const [data, setData] = useState({});
   const handleRouterOpen = () => {
     setRouterAdd(true);
   };
@@ -32,58 +42,40 @@ export default function Tool() {
     setRouterAdd(false);
   };
 
-  const [switchAdd, setSwitchAdd] = useState(false);
-  const [switchFormData, setSwitchFormData] = useState({
-    switchName: '',
-    floorNo: '',
-    roomName: '',
-  });
-  const handleSwitchOpen = () => {
-    setSwitchAdd(true);
-  };
-
-  const handleSwitchClose = () => {
-    setSwitchAdd(false);
-  };
-
-  const [deviceAdd, setDeviceAdd] = useState(false);
-  const [deviceormData, setDeviceFormData] = useState({
-    deviceName: '',
-    floorNo: '',
-    roomName: '',
-  });
-  const handleDeviceOpen = () => {
-    setDeviceAdd(true);
-  };
-
-  const handleDeviceClose = () => {
-    setDeviceAdd(false);
-  };
-
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
-  const addRouterFunction = (routerName, floorNo, parentName)=>{
-    if(mainNetwork.nameList.includes(routerName)){
-      alert("Name already present!")
-    }else{
-      let router = new RouterNode(routerName);
-      if(mainNetwork.root == null){
-        mainNetwork.setRoot(router)
+  const addRouterFunction = () => {
+    if (mainNetwork.nameList.includes(routerFormData.routerName)) {
+      alert("Name already present!");
+    } else {
+      let router = new RouterNode(
+        routerFormData.routerName,
+        routerFormData.floorNo
+      );
+      if (mainNetwork.root == null) {
+        mainNetwork.setRoot(router);
+      } else {
+        mainNetwork.addRouter(routerFormData.parentName, router);
       }
-      else{
-        mainNetwork.addRouter(parentName,router);
-      }
-      mainNetwork.printElements()
+      mainNetwork.printElements();
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
-  }
-
+  };
 
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] flex flex-col">
       <Navbar />
       <div className="flex flex-1 flex-row">
-        <div className="flex-1"></div>
+        <div className="flex-1">
+          <Tree
+            className="h-52 w-52"
+            translate={{ x: 550, y: 100 }}
+            orientation="vertical"
+            draggable
+            data={data}
+          />
+        </div>
         <div className="w-[400px] p-2 bg-slate-500">
           <div>
             <Accordion className="bg-[#CADCFC]">
@@ -158,12 +150,7 @@ export default function Tool() {
           </div>
         </div>
         {/* Router dialog box */}
-        <Dialog
-          open={routerAdd}
-          onClose={handleRouterClose}
-          className=""
-        >
-          
+        <Dialog open={routerAdd} onClose={handleRouterClose} className="">
           <div className="bg-[#CADCFC] ">
             <DialogTitle className="p-5  px-14">Add Router</DialogTitle>
             <DialogContent className="my-2">
@@ -176,36 +163,59 @@ export default function Tool() {
                       type="text"
                       id="routerName"
                       name="routerName"
+                      value={routerFormData.routerName}
+                      onChange={(e) =>
+                        setRouterFormData((prevState) => ({
+                          ...prevState,
+                          routerName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
                   <div>
-                    <label for="floorNo" className="">Floor Number</label>
+                    <label for="floorNo" className="">
+                      Floor Number
+                    </label>
                     <br></br>
                     <input
                       type="number"
                       id="floorNo"
                       name="floorNo"
+                      value={routerFormData.floorNo}
+                      onChange={(e) =>
+                        setRouterFormData((prevState) => ({
+                          ...prevState,
+                          floorNo: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
-            
-                <div>
-                  <label for="parentname">Parent Name</label>
-                  <br></br>
-                  <input
-                    type="text"
-                    id="parentname"
-                    name="parentname"
-                    required
-                    className="border-[1px] border-[#08134e] rounded-md my-2"
-                  />
-                </div>
+
+                  <div>
+                    <label for="parentname">Parent Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="parentname"
+                      name="parentname"
+                      value={routerFormData.parentName}
+                      onChange={(e) =>
+                        setRouterFormData((prevState) => ({
+                          ...prevState,
+                          parentName: e.target.value,
+                        }))
+                      }
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button>Submit</button>
+                  <button onClick={addRouterFunction}>Submit</button>
                   <button onClick={handleRouterClose}>Cancel</button>
                 </div>
               </DialogContentText>
