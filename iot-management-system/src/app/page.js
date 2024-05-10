@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar.js";
 import "./hybridDataStructure.js";
 import Image from "next/image.js";
 
-import TeamCard from "./components/teamCard.js";
 export default function Home() {
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] ">
