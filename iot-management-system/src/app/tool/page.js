@@ -13,8 +13,16 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { IoMdAddCircle } from "react-icons/io";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
+
+import { RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree } from  '../hybridDataStructure';
+import { Main } from "next/document";
+
 export default function Tool() {
   const [routerAdd, setRouterAdd] = useState(false);
+  const [routerFormData, setRouterFormData] = useState({
+    routerName: '',
+    floorNo: '',
+  });
   const handleRouterOpen = () => {
     setRouterAdd(true);
   };
@@ -23,8 +31,25 @@ export default function Tool() {
     setRouterAdd(false);
   };
 
+  let mainNetwork = new networkTree();
+
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
+
+  const addRouterFunction = (routerName, floorNo, parentName)=>{
+    if(mainNetwork.nameList.includes(routerName)){
+      alert("Name already present!")
+    }else{
+      let router = new RouterNode(routerName);
+      if(mainNetwork.root == null){
+        mainNetwork.setRoot(router)
+      }
+      else{
+        mainNetwork.addRouter(parentName,router);
+      }
+      mainNetwork.printElements()
+    }
+  }
 
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] flex flex-col">
