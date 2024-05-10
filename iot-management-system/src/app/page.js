@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from "./components/Navbar.js";
 import "./hybridDataStructure.js";
 import Image from "next/image.js";
@@ -25,12 +27,14 @@ export default function Home() {
               </div>
               <div className="flex flex-row gap-9">
                 <div className="ml-[70px] w-min">
-                  <button className="bg-gradient-to-r px-3 from-[#08134e] to-[#03379e] w-[163px] h-[45px] rounded-2xl text-[18px]">
+                  <button className="bg-gradient-to-r px-3 from-[#08134e] to-[#03379e] w-[163px] h-[45px] rounded-2xl text-[18px] transition duration-300 hover:scale-105 active:opacity-60"
+                  onClick={()=>window.location.href = "/tool"}>
                     Get Started!
                   </button>
                 </div>
                 <div>
-                  <button className="bg-[#9FBEF7] w-[170px] h-[45px] rounded-2xl text-[18px] text-black border-2 border-[#03379e]">
+                  <button className="bg-[#9FBEF7] w-[170px] h-[45px] rounded-2xl text-[18px] text-black border-2 border-[#03379e] transition duration-300 hover:scale-105 active:opacity-60"
+                  onClick={()=>window.location.href = "/docs"}>
                     Documentation
                   </button>
                 </div>
