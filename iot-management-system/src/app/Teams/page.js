@@ -18,7 +18,7 @@ export default function Members() {
           TEAM MEMBERS
         </div>
         <div className="flex-1">
-          <div className="flex flex-row mx-36 gap-y-10 gap-20 flex-wrap columns-3 mt-8">
+          <div className="flex flex-row justify-center gap-y-10 gap-20 flex-wrap columns-3 mt-8">
             {teamDetails.map((member, index)=>(
                  <TeamCard
                 key={index}
