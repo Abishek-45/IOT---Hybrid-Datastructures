@@ -4,11 +4,25 @@ import Accordion from "@mui/material/Accordion";
 import AccordionActions from "@mui/material/AccordionActions";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 import { IoMdAddCircle } from "react-icons/io";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 export default function Tool() {
+  const [routerAdd, setRouterAdd] = useState(false);
+  const handleRouterOpen = () => {
+    setRouterAdd(true);
+  };
+
+  const handleRouterClose = () => {
+    setRouterAdd(false);
+  };
+
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
@@ -38,11 +52,14 @@ export default function Tool() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleRouterOpen}
+                      >
                         <div>Router</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                         <div>Wireless Router</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
@@ -59,7 +76,7 @@ export default function Tool() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                         <div>Switch</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
@@ -75,24 +92,24 @@ export default function Tool() {
                     IoT devices
                   </AccordionSummary>
                   <AccordionDetails>
-                  <div className="flex flex-col gap-2">
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                    <div className="flex flex-col gap-2">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                         <div>Television</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                         <div>Light</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                         <div>Camera</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                         <div>Fan</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                         <div>Fire alarm</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
@@ -103,6 +120,33 @@ export default function Tool() {
             </Accordion>
           </div>
         </div>
+        {/* Router dialog box */}
+        <Dialog open={routerAdd} onClose={handleRouterClose}>
+          <DialogTitle>Add Router</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <div className="flex flex-col gap-3">
+                <div>
+                  <label for="routerName">Router Name:</label>
+                  <input
+                    type="text"
+                    id="routerName"
+                    name="routerName"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="floorNo">Floor Number:</label>
+                  <input type="number" id="floorNo" name="floorNo" required />
+                </div>
+                <div className="flex flex-row justify-end gap-4">
+                  <button>Submit</button>
+                  <button onClick={handleRouterClose}>Cancel</button>
+                </div>
+              </div>
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
       </div>
     </main>
   );
