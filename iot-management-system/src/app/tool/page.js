@@ -146,31 +146,59 @@ export default function Tool() {
           </div>
         </div>
         {/* Router dialog box */}
-        <Dialog open={routerAdd} onClose={handleRouterClose}>
-          <DialogTitle>Add Router</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <div className="flex flex-col gap-3">
+        <Dialog
+          open={routerAdd}
+          onClose={handleRouterClose}
+          className=""
+        >
+          
+          <div className="bg-[#CADCFC] ">
+            <DialogTitle className="p-5  px-14">Add Router</DialogTitle>
+            <DialogContent className="my-2">
+              <DialogContentText className="pr-14 pl-8">
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <label for="routerName">Router Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="routerName"
+                      name="routerName"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+                  <div>
+                    <label for="floorNo" className="">Floor Number</label>
+                    <br></br>
+                    <input
+                      type="number"
+                      id="floorNo"
+                      name="floorNo"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+            
                 <div>
-                  <label for="routerName">Router Name:</label>
+                  <label for="parentname">Parent Name</label>
+                  <br></br>
                   <input
                     type="text"
-                    id="routerName"
-                    name="routerName"
+                    id="parentname"
+                    name="parentname"
                     required
+                    className="border-[1px] border-[#08134e] rounded-md my-2"
                   />
                 </div>
-                <div>
-                  <label for="floorNo">Floor Number:</label>
-                  <input type="number" id="floorNo" name="floorNo" required />
                 </div>
-                <div className="flex flex-row justify-end gap-4">
+                <div className="flex flex-row justify-end gap-4 mt-5">
                   <button>Submit</button>
                   <button onClick={handleRouterClose}>Cancel</button>
                 </div>
-              </div>
-            </DialogContentText>
-          </DialogContent>
+              </DialogContentText>
+            </DialogContent>
+          </div>
         </Dialog>
       </div>
     </main>
