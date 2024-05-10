@@ -245,3 +245,6 @@ network.addPC("Swtich2", PC1);
 network.printElements();
 network.deleteRoomNetwork("swtich2");
 network.printElements();
+
+
+export default {RouterNode, SwitchNode}
