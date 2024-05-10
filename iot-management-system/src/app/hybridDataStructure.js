@@ -71,8 +71,8 @@ class networkTree {
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
+      this.root = router;
     }
-    this.root = router;
   }
 
   addRouter(parentRouterName, newRouter) {
@@ -80,6 +80,7 @@ class networkTree {
       console.log("ERROR: Name already exists");
       return;
     }
+    this.nameList.push(newRouter.name);
     let parent = this.searchElement(parentRouterName, newRouter.name, 1);
     if (!parent) {
     } else {
@@ -247,4 +248,4 @@ network.deleteRoomNetwork("swtich2");
 network.printElements();
 
 
-export default {RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree}
+export {RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree}

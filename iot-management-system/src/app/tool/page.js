@@ -12,16 +12,24 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { IoMdAddCircle } from "react-icons/io";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-import { RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree } from  '../hybridDataStructure';
+import {
+  RouterNode,
+  SwitchNode,
+  wrlessRouterNode,
+  wiredNode,
+  wirelessNode,
+  networkTree,
+} from "../hybridDataStructure";
 import { Main } from "next/document";
 
 export default function Tool() {
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
-    routerName: '',
-    floorNo: '',
+    routerName: "",
+    floorNo: "",
+    parentName: "",
   });
   const handleRouterOpen = () => {
     setRouterAdd(true);
@@ -31,25 +39,29 @@ export default function Tool() {
     setRouterAdd(false);
   };
 
-  let mainNetwork = new networkTree();
+  const mainNetwork = useMemo(() => new networkTree(), []);
 
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
-  const addRouterFunction = (routerName, floorNo, parentName)=>{
-    if(mainNetwork.nameList.includes(routerName)){
-      alert("Name already present!")
-    }else{
-      let router = new RouterNode(routerName);
-      if(mainNetwork.root == null){
-        mainNetwork.setRoot(router)
+  const addRouterFunction = () => {
+    console.log("####",mainNetwork.nameList)
+    if (mainNetwork.nameList.includes(routerFormData.routerName)) {
+      alert("Name already present!");
+    } else {
+      let router = new RouterNode(
+        routerFormData.routerName,
+        routerFormData.floorNo
+      );
+      console.log(mainNetwork.root);
+      if (mainNetwork.root == null) {
+        mainNetwork.setRoot(router);
+      } else {
+        mainNetwork.addRouter(routerFormData.parentName, router);
       }
-      else{
-        mainNetwork.addRouter(parentName,router);
-      }
-      mainNetwork.printElements()
+      mainNetwork.printElements();
     }
-  }
+  };
 
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] flex flex-col">
@@ -146,12 +158,7 @@ export default function Tool() {
           </div>
         </div>
         {/* Router dialog box */}
-        <Dialog
-          open={routerAdd}
-          onClose={handleRouterClose}
-          className=""
-        >
-          
+        <Dialog open={routerAdd} onClose={handleRouterClose} className="">
           <div className="bg-[#CADCFC] ">
             <DialogTitle className="p-5  px-14">Add Router</DialogTitle>
             <DialogContent className="my-2">
@@ -164,36 +171,59 @@ export default function Tool() {
                       type="text"
                       id="routerName"
                       name="routerName"
+                      value={routerFormData.routerName}
+                      onChange={(e) =>
+                        setRouterFormData((prevState) => ({
+                          ...prevState,
+                          routerName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
                   <div>
-                    <label for="floorNo" className="">Floor Number</label>
+                    <label for="floorNo" className="">
+                      Floor Number
+                    </label>
                     <br></br>
                     <input
                       type="number"
                       id="floorNo"
                       name="floorNo"
+                      value={routerFormData.floorNo}
+                      onChange={(e) =>
+                        setRouterFormData((prevState) => ({
+                          ...prevState,
+                          floorNo: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
-            
-                <div>
-                  <label for="parentname">Parent Name</label>
-                  <br></br>
-                  <input
-                    type="text"
-                    id="parentname"
-                    name="parentname"
-                    required
-                    className="border-[1px] border-[#08134e] rounded-md my-2"
-                  />
-                </div>
+
+                  <div>
+                    <label for="parentname">Parent Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="parentname"
+                      name="parentname"
+                      value={routerFormData.parentName}
+                      onChange={(e) =>
+                        setRouterFormData((prevState) => ({
+                          ...prevState,
+                          parentName: e.target.value,
+                        }))
+                      }
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button>Submit</button>
+                  <button onClick={addRouterFunction}>Submit</button>
                   <button onClick={handleRouterClose}>Cancel</button>
                 </div>
               </DialogContentText>
