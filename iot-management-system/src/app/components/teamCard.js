@@ -5,21 +5,23 @@ import Image from "next/image";
 
 export default function teamCard({ name, links, photosrc }) {
   return (
-    <div class="relative p-5 text-center flex flex-col justify-end m-5 h-[200px] w-[300px] rounded-xl bg-[#062F80] shadow-2xl hover:scale-105 transition duration-150">
-      <div class="absolute origin-center -top-1/4 left-1/3 rounded-full bg-white border-white border-[3px] h-[110px] w-[110px]">
-        <Image className="rounded-full p-1 scale-110" src={photosrc} fill />
+    <div class="relative  text-center flex flex-col justify-end m-5 h-[330px] w-[230px] rounded-2xl bg-[#062F80] shadow-2xl hover:scale-105 transition duration-150">
+      <div class="relative origin-center rounded-t-2xl-  flex-1">
+        <Image className="rounded-t-2xl" src={photosrc}  fill />
       </div>
-      <div class=" text-[28px] mb-4">{name}</div>
-      <div class=" flex flex-row gap-8 mt-2 mx-auto">
-        <a href={links[0]}>
-          <FaGithub class="h-[30px] w-[30px] hover:scale-[1.1] transition duration-150" />
-        </a>
-        <a href={links[1]}>
-          <FaLinkedin class="h-[30px] w-[30px] hover:scale-[1.1] transition duration-150" />
-        </a>
-        <a href={links[2]}>
-          <BiLogoGmail class="h-[30px] w-[30px] hover:scale-[1.1] transition duration-150" />
-        </a>
+      <div className="p-5">
+        <div class=" text-[22px] mb-4">{name}</div>
+        <div class=" flex flex-row gap-8 mt-2 mx-auto justify-center">
+          <a href={links[0]}>
+            <FaGithub class="h-[20px] w-[20px] hover:scale-[1.1] transition duration-150" />
+          </a>
+          <a href={links[1]}>
+            <FaLinkedin class="h-[20px] w-[20px]  hover:scale-[1.1] transition duration-150" />
+          </a>
+          <a href={links[2]}>
+            <BiLogoGmail class="h-[20px] w-[20px] hover:scale-[1.1] transition duration-150" />
+          </a>
+        </div>
       </div>
     </div>
   );
