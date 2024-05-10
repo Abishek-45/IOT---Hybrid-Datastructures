@@ -247,4 +247,4 @@ network.deleteRoomNetwork("swtich2");
 network.printElements();
 
 
-export default {RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree}
+export  {RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree}

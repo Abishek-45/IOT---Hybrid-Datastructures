@@ -18,6 +18,7 @@ import { RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, netw
 import { Main } from "next/document";
 
 export default function Tool() {
+  const [mainNetwork] = useState(new networkTree());
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
     routerName: '',
@@ -31,7 +32,33 @@ export default function Tool() {
     setRouterAdd(false);
   };
 
-  let mainNetwork = new networkTree();
+  const [switchAdd, setSwitchAdd] = useState(false);
+  const [switchFormData, setSwitchFormData] = useState({
+    switchName: '',
+    floorNo: '',
+    roomName: '',
+  });
+  const handleSwitchOpen = () => {
+    setSwitchAdd(true);
+  };
+
+  const handleSwitchClose = () => {
+    setSwitchAdd(false);
+  };
+
+  const [deviceAdd, setDeviceAdd] = useState(false);
+  const [deviceormData, setDeviceFormData] = useState({
+    deviceName: '',
+    floorNo: '',
+    roomName: '',
+  });
+  const handleDeviceOpen = () => {
+    setDeviceAdd(true);
+  };
+
+  const handleDeviceClose = () => {
+    setDeviceAdd(false);
+  };
 
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
@@ -50,6 +77,7 @@ export default function Tool() {
       mainNetwork.printElements()
     }
   }
+
 
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] flex flex-col">
@@ -95,13 +123,13 @@ export default function Tool() {
                 <Accordion className="bg-red-200">
                   <AccordionSummary
                     aria-controls="panel1-content"
-                    id="panel1-header"
+                    id="panel1-header" 
                   >
                     Switch
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleSwitchOpen}>
                         <div>Switch</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
@@ -118,24 +146,8 @@ export default function Tool() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
-                        <div>Television</div>
-                        <IoMdAddCircle className="h-6 w-6" />
-                      </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
-                        <div>Light</div>
-                        <IoMdAddCircle className="h-6 w-6" />
-                      </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
-                        <div>Camera</div>
-                        <IoMdAddCircle className="h-6 w-6" />
-                      </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
-                        <div>Fan</div>
-                        <IoMdAddCircle className="h-6 w-6" />
-                      </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
-                        <div>Fire alarm</div>
+                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleDeviceOpen}>
+                        <div>IoT devices</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
                     </div>
@@ -200,6 +212,141 @@ export default function Tool() {
             </DialogContent>
           </div>
         </Dialog>
+
+        <Dialog
+          open={switchAdd}
+          onClose={handleSwitchClose}
+          className=""
+        >
+          
+          <div className="bg-[#CADCFC] ">
+            <DialogTitle className="p-5  px-14">Add Switch</DialogTitle>
+            <DialogContent className="my-2">
+              <DialogContentText className="pr-14 pl-8">
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <label for="switchName">Switch Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="switchName"
+                      name="switchName"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+                  <div>
+                    <label for="floorNo" className="">Floor Number</label>
+                    <br></br>
+                    <input
+                      type="number"
+                      id="floorNo"
+                      name="floorNo"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="roomName" className="">Room Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="roomName"
+                      name="roomName"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+            
+                <div>
+                  <label for="parentname">Parent Name</label>
+                  <br></br>
+                  <input
+                    type="text"
+                    id="parentname"
+                    name="parentname"
+                    required
+                    className="border-[1px] border-[#08134e] rounded-md my-2"
+                  />
+                </div>
+                </div>
+                <div className="flex flex-row justify-end gap-4 mt-5">
+                  <button>Submit</button>
+                  <button onClick={handleSwitchClose}>Cancel</button>
+                </div>
+              </DialogContentText>
+            </DialogContent>
+          </div>
+        </Dialog>
+
+        <Dialog
+          open={deviceAdd}
+          onClose={handleDeviceClose}
+          className=""
+        >
+          
+          <div className="bg-[#CADCFC] ">
+            <DialogTitle className="p-5  px-14">Add Device</DialogTitle>
+            <DialogContent className="my-2">
+              <DialogContentText className="pr-14 pl-8">
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <label for="DeviceName">Device Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="DeviceName"
+                      name="DeviceName"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+                  <div>
+                    <label for="floorNo" className="">Floor Number</label>
+                    <br></br>
+                    <input
+                      type="number"
+                      id="floorNo"
+                      name="floorNo"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="roomName" className="">Room Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="roomName"
+                      name="roomName"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
+            
+                <div>
+                  <label for="parentname">Parent Name</label>
+                  <br></br>
+                  <input
+                    type="text"
+                    id="parentname"
+                    name="parentname"
+                    required
+                    className="border-[1px] border-[#08134e] rounded-md my-2"
+                  />
+                </div>
+                </div>
+                <div className="flex flex-row justify-end gap-4 mt-5">
+                  <button>Submit</button>
+                  <button onClick={handleDeviceClose}>Cancel</button>
+                </div>
+              </DialogContentText>
+            </DialogContent>
+          </div>
+        </Dialog>
+
       </div>
     </main>
   );
