@@ -12,7 +12,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { IoMdAddCircle } from "react-icons/io";
 import Navbar from "../components/Navbar";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Tree from "react-d3-tree";
 
 import {
   RouterNode,
@@ -25,12 +26,14 @@ import {
 import { Main } from "next/document";
 
 export default function Tool() {
+  const [mainNetwork] = useState(new networkTree());
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
     floorNo: "",
     parentName: "",
   });
+  const [data, setData] = useState({});
   const handleRouterOpen = () => {
     setRouterAdd(true);
   };
@@ -39,13 +42,30 @@ export default function Tool() {
     setRouterAdd(false);
   };
 
-  const mainNetwork = useMemo(() => new networkTree(), []);
+  const renderNode = (node) => {
+    return (
+      <div key={node.name} className="node">
+        <div>Name: {node.name}</div>
+        <div>Floor No: {node.floorNo}</div>
+        <div>Connected Nodes:</div>
+        <ul>
+          {Array.from(node.routeTable.entries()).map(
+            ([connectedNode, info]) => (
+              <li key={connectedNode.name}>
+                <div>Connected Node Name: {connectedNode.name}</div>
+                <div>Other Info: {info}</div>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+    );
+  };
 
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   const addRouterFunction = () => {
-    console.log("####",mainNetwork.nameList)
     if (mainNetwork.nameList.includes(routerFormData.routerName)) {
       alert("Name already present!");
     } else {
@@ -53,13 +73,13 @@ export default function Tool() {
         routerFormData.routerName,
         routerFormData.floorNo
       );
-      console.log(mainNetwork.root);
       if (mainNetwork.root == null) {
         mainNetwork.setRoot(router);
       } else {
         mainNetwork.addRouter(routerFormData.parentName, router);
       }
       mainNetwork.printElements();
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
   };
 
@@ -67,7 +87,15 @@ export default function Tool() {
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] flex flex-col">
       <Navbar />
       <div className="flex flex-1 flex-row">
-        <div className="flex-1"></div>
+        <div className="flex-1">
+          <Tree
+            className="h-52 w-52"
+            translate={{ x: 550, y: 100 }}
+            orientation="vertical"
+            draggable
+            data={data}
+          />
+        </div>
         <div className="w-[400px] p-2 bg-slate-500">
           <div>
             <Accordion className="bg-[#CADCFC]">
