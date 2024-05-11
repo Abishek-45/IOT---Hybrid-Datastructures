@@ -22,9 +22,6 @@ export default function addIoTForm({
     if (!deviceFormData.floorNo && deviceFormData.floorNo !== 0) {
       newErrors.floorNo = "Floor Number is required";
     }
-    if (!deviceFormData.roomName) {
-      newErrors.roomName = "Room Name is required";
-    }
     if (!deviceFormData.parentName) {
       newErrors.parentName = "Parent Name is required";
     }
@@ -107,33 +104,6 @@ export default function addIoTForm({
                   </span>
                 )}
                   </div>
-
-                  <div>
-                    <label for="roomName" className="">
-                      Room Name
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="roomName"
-                      name="roomName"
-                      value={deviceFormData?.roomName}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          roomName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                    {errors.routerName && (
-                  <span className="text-red-500 text-[14px]">
-                    {errors.routerName}
-                  </span>
-                )}
-                  </div>
-
                   <div>
                     <label for="SSID" className="">
                       SSID

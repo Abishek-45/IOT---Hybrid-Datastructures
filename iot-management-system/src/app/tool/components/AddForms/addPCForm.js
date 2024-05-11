@@ -22,9 +22,6 @@ export default function addPCForm({
     if (!pcFormData.floorNo && pcFormData.floorNo !== 0) {
       newErrors.floorNo = "Floor Number is required";
     }
-    if (!pcFormData.roomName){
-      newErrors.roomName = "Room Name is required";
-    }
     if (!pcFormData.parentName) {
       newErrors.parentName = "Parent Name is required";
     }
@@ -101,31 +98,6 @@ export default function addPCForm({
                   <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
                 )}
             </div>
-
-            <div>
-              <label for="roomName" className="">
-                Room Name
-              </label>
-              <br></br>
-              <input
-                type="text"
-                id="roomName"
-                name="roomName"
-                value={pcFormData.roomName}
-                onChange={(e) =>
-                  setPCFormData((prevState) => ({
-                    ...prevState,
-                    roomName: e.target.value,
-                  }))
-                }
-                required
-                className="border-[1px] border-[#08134e] rounded-md my-2"
-              />
-              {errors.roomName && (
-                  <span className="text-red-500 text-[14px]">{errors.roomName}</span>
-                )}
-            </div>
-
             <div>
               <label for="ip" className="">
                 IP Address
