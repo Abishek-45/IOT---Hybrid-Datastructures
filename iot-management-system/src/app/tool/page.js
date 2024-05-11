@@ -300,7 +300,7 @@ export default function Tool() {
             data={data}
           />
         </div>
-        <div className="w-[400px] p-2 bg-slate-500">
+        <div className="w-[400px] p-2 bg-[#03379e]">
           <AccordionMenu
             handleRouterOpen={handleRouterOpen}
             handleSwitchOpen={handleSwitchOpen}
