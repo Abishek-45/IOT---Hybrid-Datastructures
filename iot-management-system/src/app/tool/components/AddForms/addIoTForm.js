@@ -19,9 +19,6 @@ export default function addIoTForm({
     if (!deviceFormData.deviceName) {
       newErrors.deviceName = "Device Name is required";
     }
-    if (!deviceFormData.floorNo && deviceFormData.floorNo !== 0) {
-      newErrors.floorNo = "Floor Number is required";
-    }
     if (!deviceFormData.parentName) {
       newErrors.parentName = "Parent Name is required";
     }
@@ -33,11 +30,6 @@ export default function addIoTForm({
     if (!deviceFormData.passwd) {
       newErrors.passwd = "passwd is required";
     }
-
-    if (!Number.isInteger(Number(deviceFormData.floorNo))) {
-      newErrors.floorNo = "Floor Number must be an integer";
-    }
-
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0;
@@ -71,36 +63,11 @@ export default function addIoTForm({
                         }))
                       }
                       required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.deviceName && (
                   <span className="text-red-500 text-[14px]">
                     {errors.deviceName}
-                  </span>
-                )}
-                  </div>
-                  <div>
-                    <label for="floorNo" className="">
-                      Floor Number
-                    </label>
-                    <br></br>
-                    <input
-                      type="number"
-                      id="floorNo"
-                      name="floorNo"
-                      value={deviceFormData.floorNo}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          floorNo: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                    {errors.floorNo && (
-                  <span className="text-red-500 text-[14px]">
-                    {errors.floorNo}
                   </span>
                 )}
                   </div>
@@ -121,7 +88,7 @@ export default function addIoTForm({
                         }))
                       }
                       required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.SSID && (
                   <span className="text-red-500 text-[14px]">
@@ -147,7 +114,7 @@ export default function addIoTForm({
                         }))
                       }
                       required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.passwd && (
                   <span className="text-red-500 text-[14px]">
@@ -171,7 +138,7 @@ export default function addIoTForm({
                           parentName: e.target.value,
                         }))
                       }
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.parentName && (
                   <span className="text-red-500 text-[14px]">
