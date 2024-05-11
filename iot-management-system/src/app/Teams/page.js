@@ -18,7 +18,7 @@ export default function Members() {
         "https://github.com/Aakash-Balasundaram",
         "https://www.linkedin.com/in/aakash-b-9a6749256/",
         "https://mail.google.com/mail/u/0/#inbox?compose=new"],
-      photo: "",
+      photo: "/Aakash.JPG",
     },
     {
       name: "Thanus Kumaar",
