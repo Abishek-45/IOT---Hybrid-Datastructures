@@ -34,10 +34,9 @@ class wrlessRouterNode {
 }
 
 class wiredNode {
-  constructor(PC_Name, floorNo, roomName, ip) {
+  constructor(PC_Name, floorNo,ip) {
     this.name = PC_Name;
     this.floorNo = floorNo;
-    this.roomName = roomName;
     this.ip = ip;
     this.state = 1;
     this.parent = null;
@@ -45,10 +44,9 @@ class wiredNode {
 }
 
 class wirelessNode {
-  constructor(Device_Name, floorNo, roomName, SSID, passwd = null) {
+  constructor(Device_Name, floorNo,SSID, passwd = null) {
     this.name = Device_Name;
     this.floorNo = floorNo;
-    this.roomName = roomName;
     this.SSID = SSID;
     this.passwd = passwd;
     this.state = 1;

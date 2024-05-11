@@ -84,7 +84,6 @@ export default function Tool() {
     deviceName: "",
     floorNo: "",
     roomName: "",
-    parentName: "",
     SSID: "",
     passwd: "",
   });
@@ -101,7 +100,6 @@ export default function Tool() {
   const [pcFormData, setPCFormData] = useState({
     PCName: "",
     floorNo: "",
-    roomName: "",
     parentName: "",
     ip: "",
   });
@@ -218,7 +216,6 @@ export default function Tool() {
       let newDevice = new wirelessNode(
         deviceFormData.deviceName,
         deviceFormData.floorNo,
-        deviceFormData.roomName,
         deviceFormData.SSID,
         deviceFormData.passwd
       );
@@ -248,7 +245,6 @@ export default function Tool() {
       let newPC = new wiredNode(
         pcFormData.PCName,
         pcFormData.floorNo,
-        pcFormData.roomName,
         pcFormData.ip
       );
       mainNetwork.addPC(pcFormData.parentName, newPC);
