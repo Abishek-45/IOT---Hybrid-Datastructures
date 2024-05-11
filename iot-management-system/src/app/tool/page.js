@@ -10,6 +10,8 @@ import AddWrRouterForm from "./components/AddForms/addWirelessRouterForm";
 import AddIoTForm from "./components/AddForms/addIoTForm";
 import AddPCForm from "./components/AddForms/addPCForm";
 
+import DeleteForm from "./components/DeleteForms/deleteForm";
+
 import AccordionMenu from "./components/AccordianMenu";
 
 import {
@@ -23,9 +25,8 @@ import {
 import { actionAsyncStorage } from "next/dist/client/components/action-async-storage-instance";
 
 export default function Tool() {
-  const [mainNetwork] = useState(
-    new networkTree(new RouterNode("Home Router", 0))
-  );
+  const [mainNetwork] = useState(new networkTree(new RouterNode("Home Router",0)));
+  const [toOpenDeleteForm, setToOpenDeleteForm] = useState(false);
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
@@ -33,6 +34,13 @@ export default function Tool() {
     parentName: "Home Router",
   });
   const [data, setData] = useState({});
+  const [deleteName, setDeleteName] = useState("");
+  const handleDeleteFormOpen = () => {
+    setToOpenDeleteForm(true);
+  };
+  const handleDeleteFormClose = () => {
+    setToOpenDeleteForm(false);
+  };
   const handleRouterOpen = () => {
     setRouterAdd(true);
   };
@@ -87,6 +95,7 @@ export default function Tool() {
     roomName: "",
     SSID: "",
     passwd: "",
+    parentName:"",
   });
 
   const handleDeviceOpen = () => {
@@ -246,7 +255,31 @@ export default function Tool() {
       mainNetwork.addPC(pcFormData.parentName, newPC);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+      }
     }
+  };
+
+  const deleteNodeFunction = ()=>{
+    if (mainNetwork.nameList.includes(deleteName)) {
+      let parentName = findParent(data, deleteName);
+      mainNetwork.deleteNode(parentName, deleteName);
+      setData(mainNetwork.convertToTreeData(mainNetwork.root))
+    }
+  }
+
+  const findParent = (tree, nodeName, parentNode = null) => {
+    if (tree.name === nodeName) {
+      return parentNode;
+    }
+    if (tree.children) {
+      for (let child of tree.children) {
+        let result = findParent(child, nodeName, tree.name);
+        if (result !== null) {
+          return result;
+        }
+      }
+    }
+    return null;
   };
 
   return (
@@ -269,6 +302,7 @@ export default function Tool() {
             handleWRouterOpen={handleWRouterOpen}
             handlePcOpen={handlePcOpen}
             handleDeviceOpen={handleDeviceOpen}
+            handleDeleteOpen={handleDeleteFormOpen}
           />
         </div>
         <AddRouterForm
@@ -289,15 +323,15 @@ export default function Tool() {
           controlVariable={wrAdd}
           handleCloseFunction={handleWRouterClose}
           handleSubmitFunction={addWrRouterFunction}
-          switchFormData={wrouterFormData}
-          setSwitchFormData={setwrouterFormData}
+          wrouterFormData={wrouterFormData}
+          setwrouterFormData={setwrouterFormData}
         />
         <AddIoTForm
           controlVariable={deviceAdd}
           handleCloseFunction={handleDeviceClose}
           handleSubmitFunction={addIoTFunction}
-          pcFormData={deviceFormData}
-          setPCFormData={setDeviceFormData}
+          deviceFormData={deviceFormData}
+          setDeviceFormData={setDeviceFormData}
         />
         <AddPCForm
           controlVariable={pcAdd}
@@ -305,6 +339,13 @@ export default function Tool() {
           handleSubmitFunction={addPCFunction}
           pcFormData={pcFormData}
           setPCFormData={setPCFormData}
+        />
+        <DeleteForm
+          controlVariable={toOpenDeleteForm}
+          handleCloseFunction={handleDeleteFormClose}
+          handleSubmitFunction={deleteNodeFunction}
+          toDeleteName={deleteName}
+          setToDeleteName={setDeleteName}
         />
       </div>
     </main>
