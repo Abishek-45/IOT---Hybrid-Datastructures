@@ -49,7 +49,7 @@ export default function Tool() {
 
   const [switchAdd, setSwitchAdd] = useState(false);
   const [switchFormData, setSwitchFormData] = useState({
-    routerName: "",
+    switchName: "",
     floorNo: "",
     roomName: "",
     parentName: "",
@@ -111,6 +111,22 @@ export default function Tool() {
     }
   };
 
+  const addSwitchFunction = () => {
+    if (mainNetwork.nameList.includes(switchFormData.switchName)) {
+      alert("Name already present!");
+    } else {
+      let sw = new SwitchNode(
+        switchFormData.switchName,
+        switchFormData.floorNo,
+        switchFormData.roomName
+      );
+      mainNetwork.addSwitch(switchFormData.parentName, sw);
+      console.log("#####################")
+      mainNetwork.printElements();
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] flex flex-col">
       <Navbar />
@@ -167,21 +183,30 @@ export default function Tool() {
                 <Accordion className="bg-red-200">
                   <AccordionSummary
                     aria-controls="panel1-content"
-                    id="panel1-header" 
+                    id="panel1-header"
                   >
                     Switch
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleSwitchOpen}>
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleSwitchOpen}
+                      >
                         <div> Add Switch</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleSwitchOpen}>
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleSwitchOpen}
+                      >
                         <div> Edit Switch</div>
                         <MdEdit className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleSwitchOpen}>
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleSwitchOpen}
+                      >
                         <div> Add Switch</div>
                         <RiDeleteBin5Fill className="h-6 w-6" />
                       </div>
@@ -226,15 +251,24 @@ export default function Tool() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <div className="flex flex-col gap-2">
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleDeviceOpen}>
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleDeviceOpen}
+                      >
                         <div> Add Device</div>
                         <IoMdAddCircle className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleDeviceOpen}>
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleDeviceOpen}
+                      >
                         <div> Edit Device</div>
                         <MdEdit className="h-6 w-6" />
                       </div>
-                      <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer" onClick={handleDeviceOpen}>
+                      <div
+                        className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                        onClick={handleDeviceOpen}
+                      >
                         <div> Remove Device</div>
                         <RiDeleteBin5Fill className="h-6 w-6" />
                       </div>
@@ -319,12 +353,7 @@ export default function Tool() {
           </div>
         </Dialog>
 
-        <Dialog
-          open={switchAdd}
-          onClose={handleSwitchClose}
-          className=""
-        >
-          
+        <Dialog open={switchAdd} onClose={handleSwitchClose} className="">
           <div className="bg-[#CADCFC] ">
             <DialogTitle className="p-5  px-14">Add Switch</DialogTitle>
             <DialogContent className="my-2">
@@ -337,48 +366,80 @@ export default function Tool() {
                       type="text"
                       id="switchName"
                       name="switchName"
+                      value={switchFormData.switchName}
+                      onChange={(e) =>
+                        setSwitchFormData((prevState) => ({
+                          ...prevState,
+                          switchName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
                   <div>
-                    <label for="floorNo" className="">Floor Number</label>
+                    <label for="floorNo" className="">
+                      Floor Number
+                    </label>
                     <br></br>
                     <input
                       type="number"
                       id="floorNo"
                       name="floorNo"
+                      value={switchFormData.floorNo}
+                      onChange={(e) =>
+                        setSwitchFormData((prevState) => ({
+                          ...prevState,
+                          floorNo: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
 
                   <div>
-                    <label for="roomName" className="">Room Name</label>
+                    <label for="roomName" className="">
+                      Room Name
+                    </label>
                     <br></br>
                     <input
                       type="text"
                       id="roomName"
                       name="roomName"
+                      value={switchFormData.roomName}
+                      onChange={(e) =>
+                        setSwitchFormData((prevState) => ({
+                          ...prevState,
+                          roomName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
-            
-                <div>
-                  <label for="parentname">Parent Name</label>
-                  <br></br>
-                  <input
-                    type="text"
-                    id="parentname"
-                    name="parentname"
-                    required
-                    className="border-[1px] border-[#08134e] rounded-md my-2"
-                  />
-                </div>
+
+                  <div>
+                    <label for="parentname">Parent Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="parentname"
+                      name="parentname"
+                      value={switchFormData.parentName}
+                      onChange={(e) =>
+                        setSwitchFormData((prevState) => ({
+                          ...prevState,
+                          parentName: e.target.value,
+                        }))
+                      }
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button>Submit</button>
+                  <button onClick={addSwitchFunction}>Submit</button>
                   <button onClick={handleSwitchClose}>Cancel</button>
                 </div>
               </DialogContentText>
@@ -386,12 +447,7 @@ export default function Tool() {
           </div>
         </Dialog>
 
-        <Dialog
-          open={deviceAdd}
-          onClose={handleDeviceClose}
-          className=""
-        >
-          
+        <Dialog open={deviceAdd} onClose={handleDeviceClose} className="">
           <div className="bg-[#CADCFC] ">
             <DialogTitle className="p-5  px-14">Add Device</DialogTitle>
             <DialogContent className="my-2">
@@ -409,7 +465,9 @@ export default function Tool() {
                     />
                   </div>
                   <div>
-                    <label for="floorNo" className="">Floor Number</label>
+                    <label for="floorNo" className="">
+                      Floor Number
+                    </label>
                     <br></br>
                     <input
                       type="number"
@@ -421,7 +479,9 @@ export default function Tool() {
                   </div>
 
                   <div>
-                    <label for="roomName" className="">Room Name</label>
+                    <label for="roomName" className="">
+                      Room Name
+                    </label>
                     <br></br>
                     <input
                       type="text"
@@ -431,18 +491,18 @@ export default function Tool() {
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
-            
-                <div>
-                  <label for="parentname">Parent Name</label>
-                  <br></br>
-                  <input
-                    type="text"
-                    id="parentname"
-                    name="parentname"
-                    required
-                    className="border-[1px] border-[#08134e] rounded-md my-2"
-                  />
-                </div>
+
+                  <div>
+                    <label for="parentname">Parent Name</label>
+                    <br></br>
+                    <input
+                      type="text"
+                      id="parentname"
+                      name="parentname"
+                      required
+                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
                   <button>Submit</button>
@@ -452,7 +512,6 @@ export default function Tool() {
             </DialogContent>
           </div>
         </Dialog>
-
       </div>
     </main>
   );
