@@ -72,7 +72,7 @@ export default function addSwitchForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
                 {errors.switchName && (
                   <span className="text-red-500 text-[14px]">{errors.switchName}</span>
@@ -95,7 +95,7 @@ export default function addSwitchForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
                 {errors.floorNo && (
                   <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
@@ -119,7 +119,7 @@ export default function addSwitchForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
                 {errors.roomName && (
                   <span className="text-red-500 text-[14px]">{errors.roomName}</span>
@@ -141,7 +141,7 @@ export default function addSwitchForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
                 {errors.networkip && (
                   <span className="text-red-500 text-[14px]">{errors.networkip}</span>
@@ -162,7 +162,7 @@ export default function addSwitchForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
                 {errors.parentName && (
                   <span className="text-red-500 text-[14px]">{errors.parentName}</span>
