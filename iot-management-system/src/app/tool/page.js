@@ -30,7 +30,7 @@ export default function Tool() {
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
     floorNo: "",
-    parentName: "Home Router",
+    parentName: "",
   });
   const [data, setData] = useState({});
   const [deleteName, setDeleteName] = useState("");
@@ -93,9 +93,9 @@ export default function Tool() {
   const [deviceFormData, setDeviceFormData] = useState({
     deviceName: "",
     floorNo: "",
-    roomName: "",
     SSID: "",
     passwd: "",
+    parentName:"",
   });
 
   const handleDeviceOpen = () => {
