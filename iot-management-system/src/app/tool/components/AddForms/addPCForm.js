@@ -19,9 +19,6 @@ export default function addPCForm({
     if (!pcFormData.PCName) {
       newErrors.PCName = "PC Name is required";
     }
-    if (!pcFormData.floorNo && pcFormData.floorNo !== 0) {
-      newErrors.floorNo = "Floor Number is required";
-    }
     if (!pcFormData.parentName) {
       newErrors.parentName = "Parent Name is required";
     }
@@ -29,11 +26,6 @@ export default function addPCForm({
     if (!pcFormData.ip) {
       newErrors.ip = "IP is required";
     }
-  
-    if (!Number.isInteger(Number(pcFormData.floorNo))) {
-      newErrors.floorNo = "Floor Number must be an integer";
-    }
-  
   
     setErrors(newErrors);
   
@@ -73,29 +65,6 @@ export default function addPCForm({
               />
               {errors.PCName && (
                   <span className="text-red-500 text-[14px]">{errors.PCName}</span>
-                )}
-            </div>
-            <div>
-              <label for="floorNo" className="">
-                Floor Number
-              </label>
-              <br></br>
-              <input
-                type="number"
-                id="floorNo"
-                name="floorNo"
-                value={pcFormData.floorNo}
-                onChange={(e) =>
-                  setPCFormData((prevState) => ({
-                    ...prevState,
-                    floorNo: e.target.value,
-                  }))
-                }
-                required
-                className="border-[1px] border-[#08134e] rounded-md my-2"
-              />
-              {errors.floorNo && (
-                  <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
                 )}
             </div>
             <div>
