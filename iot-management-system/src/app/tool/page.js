@@ -256,8 +256,7 @@ export default function Tool() {
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
       }
-    }
-  };
+    };
 
   const deleteNodeFunction = ()=>{
     if (mainNetwork.nameList.includes(deleteName)) {
