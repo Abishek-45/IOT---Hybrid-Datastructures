@@ -6,7 +6,14 @@ import { IoMdAddCircle } from "react-icons/io";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 
-export default function AccordionMenu({handleRouterOpen, handleSwitchOpen, handleWRouterOpen, handlePcOpen, handleDeviceOpen}) {
+export default function AccordionMenu({
+  handleRouterOpen,
+  handleSwitchOpen,
+  handleWRouterOpen,
+  handlePcOpen,
+  handleDeviceOpen,
+  handleDeleteOpen,
+}) {
   return (
     <div>
       <Accordion className="bg-[#CADCFC]">
@@ -36,7 +43,10 @@ export default function AccordionMenu({handleRouterOpen, handleSwitchOpen, handl
                   <div>Edit Router</div>
                   <MdEdit className="h-6 w-6" />
                 </div>
-                <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+                <div
+                  className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                  onClick={handleDeleteOpen}
+                >
                   <div>Remove Router</div>
                   <RiDeleteBin5Fill className="h-6 w-6" />
                 </div>
@@ -57,16 +67,13 @@ export default function AccordionMenu({handleRouterOpen, handleSwitchOpen, handl
                   <div> Add Switch</div>
                   <IoMdAddCircle className="h-6 w-6" />
                 </div>
-                <div
-                  className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
-                  onClick={handleSwitchOpen}
-                >
+                <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                   <div> Edit Switch</div>
                   <MdEdit className="h-6 w-6" />
                 </div>
                 <div
                   className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
-                  onClick={handleSwitchOpen}
+                  onClick={handleDeleteOpen}
                 >
                   <div>Remove Switch</div>
                   <RiDeleteBin5Fill className="h-6 w-6" />
@@ -92,7 +99,10 @@ export default function AccordionMenu({handleRouterOpen, handleSwitchOpen, handl
                   <div>Edit Router</div>
                   <MdEdit className="h-6 w-6" />
                 </div>
-                <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+                <div
+                  className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+                  onClick={handleDeleteOpen}
+                >
                   <div>Remove Router</div>
                   <RiDeleteBin5Fill className="h-6 w-6" />
                 </div>
@@ -113,16 +123,13 @@ export default function AccordionMenu({handleRouterOpen, handleSwitchOpen, handl
                   <div> Add Device</div>
                   <IoMdAddCircle className="h-6 w-6" />
                 </div>
-                <div
-                  className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
-                  onClick={handleDeviceOpen}
-                >
+                <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                   <div> Edit Device</div>
                   <MdEdit className="h-6 w-6" />
                 </div>
                 <div
                   className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
-                  onClick={handleDeviceOpen}
+                  onClick={handleDeleteOpen}
                 >
                   <div> Remove Device</div>
                   <RiDeleteBin5Fill className="h-6 w-6" />
@@ -144,16 +151,13 @@ export default function AccordionMenu({handleRouterOpen, handleSwitchOpen, handl
                   <div>Add PC</div>
                   <IoMdAddCircle className="h-6 w-6" />
                 </div>
-                <div
-                  className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
-                  onClick={handlePcOpen}
-                >
+                <div className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
                   <div>Edit PC</div>
                   <MdEdit className="h-6 w-6" />
                 </div>
                 <div
                   className="border-2 border-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
-                  onClick={handlePcOpen}
+                  onClick={handleDeleteOpen}
                 >
                   <div>Remove PC</div>
                   <RiDeleteBin5Fill className="h-6 w-6" />
