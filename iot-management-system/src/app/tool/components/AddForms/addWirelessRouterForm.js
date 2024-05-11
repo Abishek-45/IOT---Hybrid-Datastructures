@@ -66,7 +66,7 @@ export default function addWirelessRouterForm({
                   type="text"
                   id="routerName"
                   name="routerName"
-                  value={wrouterFormData?.routerName}
+                  value={wrouterFormData.routerName}
                   onChange={(e) => 
                     setwrouterFormData((prevState) => ({
                     ...prevState,
@@ -91,7 +91,7 @@ export default function addWirelessRouterForm({
                   type="number"
                   id="floorNo"
                   name="floorNo"
-                  value={wrouterFormData?.floorNo}
+                  value={wrouterFormData.floorNo}
                   onChange={(e) =>
                     setwrouterFormData((prevState) => ({
                       ...prevState,
@@ -117,7 +117,7 @@ export default function addWirelessRouterForm({
                   type="text"
                   id="roomName"
                   name="roomName"
-                  value={wrouterFormData?.roomName}
+                  value={wrouterFormData.roomName}
                   onChange={(e) =>
                     setwrouterFormData((prevState) => ({
                       ...prevState,
@@ -143,7 +143,7 @@ export default function addWirelessRouterForm({
                   type="text"
                   id="SSID"
                   name="SSID"
-                  value={wrouterFormData?.SSID}
+                  value={wrouterFormData.SSID}
                   onChange={(e) =>
                     setwrouterFormData((prevState) => ({
                       ...prevState,
@@ -169,7 +169,7 @@ export default function addWirelessRouterForm({
                   type="text"
                   id="password"
                   name="password"
-                  value={wrouterFormData?.passwd}
+                  value={wrouterFormData.passwd}
                   onChange={(e) =>
                     setwrouterFormData((prevState) => ({
                       ...prevState,
@@ -193,7 +193,7 @@ export default function addWirelessRouterForm({
                   type="text"
                   id="parentname"
                   name="parentname"
-                  value={wrouterFormData?.parentName}
+                  value={wrouterFormData.parentName}
                   onChange={(e) =>
                     setwrouterFormData((prevState) => ({
                       ...prevState,
