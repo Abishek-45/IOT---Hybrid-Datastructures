@@ -1,11 +1,9 @@
 "use client";
 
 import Accordion from "@mui/material/Accordion";
-import AccordionActions from "@mui/material/AccordionActions";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -17,6 +15,11 @@ import Navbar from "../components/Navbar";
 import { useEffect, useMemo, useState } from "react";
 import Tree from "react-d3-tree";
 
+import AddRouterForm from "./components/AddForms/addRouterForm";
+import AddSwitchForm from "./components/AddForms/addSwitchForm";
+import AddWrRouterForm from "./components/AddForms/addWirelessRouterForm";
+import AddIoTForm from "./components/AddForms/addIoTForm";
+import AddPCForm from "./components/AddForms/addPCForm";
 import {
   RouterNode,
   SwitchNode,
@@ -25,7 +28,6 @@ import {
   wirelessNode,
   networkTree,
 } from "../hybridDataStructure";
-import { Main } from "next/document";
 
 export default function Tool() {
   const [mainNetwork] = useState(new networkTree());
@@ -384,560 +386,41 @@ export default function Tool() {
           </div>
         </div>
         {/* Router dialog box */}
-        <Dialog open={routerAdd} onClose={handleRouterClose} className="">
-          <div className="bg-[#CADCFC] ">
-            <DialogTitle className="p-5  px-14">Add Router</DialogTitle>
-            <DialogContent className="my-2">
-              <DialogContentText className="pr-14 pl-8">
-                <div className="flex flex-col gap-3">
-                  <div>
-                    <label for="routerName">Router Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="routerName"
-                      name="routerName"
-                      value={routerFormData.routerName}
-                      onChange={(e) =>
-                        setRouterFormData((prevState) => ({
-                          ...prevState,
-                          routerName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                  <div>
-                    <label for="floorNo" className="">
-                      Floor Number
-                    </label>
-                    <br></br>
-                    <input
-                      type="number"
-                      id="floorNo"
-                      name="floorNo"
-                      value={routerFormData.floorNo}
-                      onChange={(e) =>
-                        setRouterFormData((prevState) => ({
-                          ...prevState,
-                          floorNo: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="parentname">Parent Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="parentname"
-                      name="parentname"
-                      value={routerFormData.parentName}
-                      onChange={(e) =>
-                        setRouterFormData((prevState) => ({
-                          ...prevState,
-                          parentName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button onClick={addRouterFunction}>Submit</button>
-                  <button onClick={handleRouterClose}>Cancel</button>
-                </div>
-              </DialogContentText>
-            </DialogContent>
-          </div>
-        </Dialog>
-
-        <Dialog open={switchAdd} onClose={handleSwitchClose} className="">
-          <div className="bg-[#CADCFC] ">
-            <DialogTitle className="p-5  px-14">Add Switch</DialogTitle>
-            <DialogContent className="my-2">
-              <DialogContentText className="pr-14 pl-8">
-                <div className="flex flex-col gap-3">
-                  <div>
-                    <label for="switchName">Switch Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="switchName"
-                      name="switchName"
-                      value={switchFormData.switchName}
-                      onChange={(e) =>
-                        setSwitchFormData((prevState) => ({
-                          ...prevState,
-                          switchName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                  <div>
-                    <label for="floorNo" className="">
-                      Floor Number
-                    </label>
-                    <br></br>
-                    <input
-                      type="number"
-                      id="floorNo"
-                      name="floorNo"
-                      value={switchFormData.floorNo}
-                      onChange={(e) =>
-                        setSwitchFormData((prevState) => ({
-                          ...prevState,
-                          floorNo: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="roomName" className="">
-                      Room Name
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="roomName"
-                      name="roomName"
-                      value={switchFormData.roomName}
-                      onChange={(e) =>
-                        setSwitchFormData((prevState) => ({
-                          ...prevState,
-                          roomName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="parentname">Parent Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="parentname"
-                      name="parentname"
-                      value={switchFormData.parentName}
-                      onChange={(e) =>
-                        setSwitchFormData((prevState) => ({
-                          ...prevState,
-                          parentName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button onClick={addSwitchFunction}>Submit</button>
-                  <button onClick={handleSwitchClose}>Cancel</button>
-                </div>
-              </DialogContentText>
-            </DialogContent>
-          </div>
-        </Dialog>
-
-        <Dialog open={wrAdd} onClose={handleWRouterClose} className="">
-          <div className="bg-[#CADCFC] ">
-            <DialogTitle className="p-5  px-14">
-              Add Wireless Router
-            </DialogTitle>
-            <DialogContent className="my-2">
-              <DialogContentText className="pr-14 pl-8">
-                <div className="flex flex-col gap-3">
-                  <div>
-                    <label for="switchName">Router Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="switchName"
-                      name="switchName"
-                      value={wrouterFormData.routerName}
-                      onChange={(e) =>
-                        setwrouterFormData((prevState) => ({
-                          ...prevState,
-                          routerName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                  <div>
-                    <label for="floorNo" className="">
-                      Floor Number
-                    </label>
-                    <br></br>
-                    <input
-                      type="number"
-                      id="floorNo"
-                      name="floorNo"
-                      value={wrouterFormData.floorNo}
-                      onChange={(e) =>
-                        setwrouterFormData((prevState) => ({
-                          ...prevState,
-                          floorNo: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="roomName" className="">
-                      Room Name
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="roomName"
-                      name="roomName"
-                      value={wrouterFormData.roomName}
-                      onChange={(e) =>
-                        setwrouterFormData((prevState) => ({
-                          ...prevState,
-                          roomName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="SSID" className="">
-                      SSID
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="SSID"
-                      name="SSID"
-                      value={wrouterFormData.SSID}
-                      onChange={(e) =>
-                        setwrouterFormData((prevState) => ({
-                          ...prevState,
-                          SSID: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="password" className="">
-                      Password
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="password"
-                      name="password"
-                      value={wrouterFormData.passwd}
-                      onChange={(e) =>
-                        setwrouterFormData((prevState) => ({
-                          ...prevState,
-                          passwd: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="parentname">Parent Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="parentname"
-                      name="parentname"
-                      value={wrouterFormData.parentName}
-                      onChange={(e) =>
-                        setwrouterFormData((prevState) => ({
-                          ...prevState,
-                          parentName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button onClick={addWrRouterFunction}>Submit</button>
-                  <button onClick={handleWRouterClose}>Cancel</button>
-                </div>
-              </DialogContentText>
-            </DialogContent>
-          </div>
-        </Dialog>
-
-        <Dialog open={deviceAdd} onClose={handleDeviceClose} className="">
-          <div className="bg-[#CADCFC] ">
-            <DialogTitle className="p-5  px-14">Add Device</DialogTitle>
-            <DialogContent className="my-2">
-              <DialogContentText className="pr-14 pl-8">
-                <div className="flex flex-col gap-3">
-                  <div>
-                    <label for="DeviceName">Device Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="DeviceName"
-                      name="DeviceName"
-                      value={deviceFormData.deviceName}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          deviceName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                  <div>
-                    <label for="floorNo" className="">
-                      Floor Number
-                    </label>
-                    <br></br>
-                    <input
-                      type="number"
-                      id="floorNo"
-                      name="floorNo"
-                      value={deviceFormData.floorNo}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          floorNo: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="roomName" className="">
-                      Room Name
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="roomName"
-                      name="roomName"
-                      value={deviceFormData.roomName}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          roomName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="SSID" className="">
-                      SSID
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="SSID"
-                      name="SSID"
-                      value={deviceFormData.SSID}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          SSID: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="passwd" className="">
-                      PassWord
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="passwd"
-                      name="passwd"
-                      value={deviceFormData.passwd}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          passwd: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="parentname">Parent Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="parentname"
-                      name="parentname"
-                      required
-                      value={deviceFormData.parentName}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          parentName: e.target.value,
-                        }))
-                      }
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button onClick={addIoTFunction}>Submit</button>
-                  <button onClick={handleDeviceClose}>Cancel</button>
-                </div>
-              </DialogContentText>
-            </DialogContent>
-          </div>
-        </Dialog>
-        <Dialog open={pcAdd} onClose={handlePcClose} className="">
-          <div className="bg-[#CADCFC] ">
-            <DialogTitle className="p-5  px-14">Add PC</DialogTitle>
-            <DialogContent className="my-2">
-              <DialogContentText className="pr-14 pl-8">
-                <div className="flex flex-col gap-3">
-                  <div>
-                    <label for="pcName">PC Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="pcName"
-                      name="pcName"
-                      value={pcFormData.PCName}
-                      onChange={(e) =>
-                        setPCFormData((prevState) => ({
-                          ...prevState,
-                          PCName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                  <div>
-                    <label for="floorNo" className="">
-                      Floor Number
-                    </label>
-                    <br></br>
-                    <input
-                      type="number"
-                      id="floorNo"
-                      name="floorNo"
-                      value={pcFormData.floorNo}
-                      onChange={(e) =>
-                        setPCFormData((prevState) => ({
-                          ...prevState,
-                          floorNo: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="roomName" className="">
-                      Room Name
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="roomName"
-                      name="roomName"
-                      value={pcFormData.roomName}
-                      onChange={(e) =>
-                        setPCFormData((prevState) => ({
-                          ...prevState,
-                          roomName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="networkIp" className="">
-                      IP Address
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="networkIp"
-                      name="networkIp"
-                      value={pcFormData.ip}
-                      onChange={(e) =>
-                        setPCFormData((prevState) => ({
-                          ...prevState,
-                          ip: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label for="parentname">Parent Name</label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="parentname"
-                      name="parentname"
-                      value={pcFormData.parentName}
-                      onChange={(e) =>
-                        setPCFormData((prevState) => ({
-                          ...prevState,
-                          parentName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button onClick={addPCFunction}>Submit</button>
-                  <button onClick={handlePcClose}>Cancel</button>
-                </div>
-              </DialogContentText>
-            </DialogContent>
-          </div>
-        </Dialog>
+        <AddRouterForm
+          controlVariable={routerAdd}
+          handleCloseFunction={handleRouterClose}
+          handleSubmitFunction={addRouterFunction}
+          routerFormData={routerFormData}
+          setRouterFormData={setRouterFormData}
+        />
+        <AddSwitchForm
+          controlVariable={switchAdd}
+          handleCloseFunction={handleSwitchClose}
+          handleSubmitFunction={addSwitchFunction}
+          switchFormData={switchFormData}
+          setSwitchFormData={setSwitchFormData}
+        />
+        <AddWrRouterForm
+          controlVariable={wrAdd}
+          handleCloseFunction={handleWRouterClose}
+          handleSubmitFunction={addWrRouterFunction}
+          switchFormData={wrouterFormData}
+          setSwitchFormData={setwrouterFormData}
+        />
+        <AddIoTForm
+          controlVariable={deviceAdd}
+          handleCloseFunction={handleDeviceClose}
+          handleSubmitFunction={addIoTFunction}
+          pcFormData={deviceFormData}
+          setPCFormData={setDeviceFormData}
+        />
+        <AddPCForm
+          controlVariable={pcAdd}
+          handleCloseFunction={handlePcClose}
+          handleSubmitFunction={addPCFunction}
+          pcFormData={pcFormData}
+          setPCFormData={setPCFormData}
+        />
       </div>
     </main>
   );
