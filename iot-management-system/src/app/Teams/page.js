@@ -33,7 +33,7 @@ export default function Members() {
       name: "Lalith",
       
       links: ["https://mail.google.com/mail/u/0/#inbox?compose=new"],
-      photo: "",
+      photo: "/Lalith.jpg",
     },
     {
       name: "Kavinilavan",
