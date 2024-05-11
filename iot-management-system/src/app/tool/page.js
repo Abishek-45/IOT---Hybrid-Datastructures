@@ -206,7 +206,19 @@ export default function Tool() {
   const addPCFunction = () => {
     if (mainNetwork.nameList.includes(pcFormData.PCName)) {
       alert("Name already present!");
-    } else {
+    }
+    if(!mainNetwork.nameList.includes(pcFormData.parentName)) {
+      alert("Parent do not exist");
+      return ;
+  } 
+    else {
+      let fl = mainNetwork.floorList.indexOf(pcFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(pcFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+        else{
       let newPC = new wiredNode(
         pcFormData.PCName,
         pcFormData.floorNo,
@@ -216,6 +228,7 @@ export default function Tool() {
       mainNetwork.addPC(pcFormData.parentName, newPC);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+      }
     }
   };
 
