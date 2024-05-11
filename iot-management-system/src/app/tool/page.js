@@ -202,7 +202,19 @@ export default function Tool() {
   const addIoTFunction = () => {
     if (mainNetwork.nameList.includes(deviceFormData.deviceName)) {
       alert("Name already present!");
-    } else {
+    }
+    if (mainNetwork.floorList.includes(deviceFormData.floorNo)){
+      alert("Floor already present!");
+      return ;
+    }
+    else {
+      let fl = mainNetwork.floorList.indexOf(deviceFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(deviceFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+      else{
       let newDevice = new wirelessNode(
         deviceFormData.deviceName,
         deviceFormData.floorNo,
@@ -213,6 +225,7 @@ export default function Tool() {
       mainNetwork.addIotDevice(deviceFormData.parentName, newDevice);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+      }
     }
   };
 
