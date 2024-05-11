@@ -21,12 +21,11 @@ class SwitchNode {
 }
 
 class wrlessRouterNode {
-  constructor(routerName, floorNo, roomName, ip, SSID, passwd = null) {
+  constructor(routerName, floorNo, roomName, SSID, passwd = null) {
     this.name = routerName;
     this.roomName = roomName;
     this.floorNo = floorNo;
     this.children = [];
-    this.ip = ip;
     this.SSID = SSID;
     this.passwd = passwd;
     this.subnetMask = "255.255.255.0";
@@ -109,7 +108,6 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentRouterName, newSwitch.name, 1);
-    console.log("PPPPPP:", parent)
     if (parent) {
       parent.routeTable.set(newSwitch, {
         names: [newSwitch.name],
@@ -126,12 +124,15 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentRouterName, newWrRouter.name, 1);
+    console.log("DDDDDDD:",parent);
     if (parent) {
+      console.log("PPPPPPPP",parent)
       parent.routeTable.set(newWrRouter, {
         names: [newWrRouter.name],
         networks: [],
       });
       newWrRouter.parent = parent;
+      this.nameList.push(newWrRouter.name);
     }
   }
 
@@ -230,33 +231,28 @@ class networkTree {
       children: []
     };
   
-    // Check if the node is a RouterNode and has a routeTable
     if (node instanceof RouterNode && node.routeTable) {
       for (let [childNode, _] of node.routeTable.entries()) {
         const childTreeData = this.convertToTreeData(childNode);
         treeData.children.push(childTreeData);
       }
     } else {
-      // Check if the node is a SwitchNode
       if (node instanceof SwitchNode) {
         for (let child of node.children) {
           const childTreeData = this.convertToTreeData(child);
           treeData.children.push(childTreeData);
         }
       }
-      // Check if the node is a wrlessRouterNode
       else if (node instanceof wrlessRouterNode) {
         for (let child of node.children) {
           const childTreeData = this.convertToTreeData(child);
           treeData.children.push(childTreeData);
         }
       }
-      // Check if the node is a wiredNode or wirelessNode
       else if (node instanceof wiredNode || node instanceof wirelessNode) {
         // No children for wiredNode or wirelessNode
       }
     }
-  
     return treeData;
   }
 }
