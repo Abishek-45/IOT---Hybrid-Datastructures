@@ -10,6 +10,8 @@ import AddWrRouterForm from "./components/AddForms/addWirelessRouterForm";
 import AddIoTForm from "./components/AddForms/addIoTForm";
 import AddPCForm from "./components/AddForms/addPCForm";
 
+import DeleteForm from "./components/DeleteForms/deleteForm";
+
 import AccordionMenu from "./components/AccordianMenu";
 
 import {
@@ -23,6 +25,7 @@ import {
 
 export default function Tool() {
   const [mainNetwork] = useState(new networkTree());
+  const [toOpenDeleteForm, setToOpenDeleteForm] = useState(false);
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
@@ -30,6 +33,13 @@ export default function Tool() {
     parentName: "",
   });
   const [data, setData] = useState({});
+  const [deleteName, setDeleteName] = useState("");
+  const handleDeleteFormOpen = () => {
+    setToOpenDeleteForm(true);
+  };
+  const handleDeleteFormClose = () => {
+    setToOpenDeleteForm(false);
+  };
   const handleRouterOpen = () => {
     setRouterAdd(true);
   };
@@ -191,6 +201,28 @@ export default function Tool() {
     }
   };
 
+  const deleteNodeFunction = ()=>{
+    if (mainNetwork.nameList.includes(deleteName)) {
+      let parentName = findParent(data, deleteName);
+      console.log(parentName);
+    }
+  }
+
+  const findParent = (tree, nodeName, parentNode = null) => {
+    if (tree.name === nodeName) {
+      return parentNode;
+    }
+    if (tree.children) {
+      for (let child of tree.children) {
+        let result = findParent(child, nodeName, tree.name);
+        if (result !== null) {
+          return result;
+        }
+      }
+    }
+    return null;
+  };
+
   return (
     <main className="min-h-screen m-0 p-1 bg-[#CADCFC] flex flex-col">
       <Navbar />
@@ -211,6 +243,7 @@ export default function Tool() {
             handleWRouterOpen={handleWRouterOpen}
             handlePcOpen={handlePcOpen}
             handleDeviceOpen={handleDeviceOpen}
+            handleDeleteOpen={handleDeleteFormOpen}
           />
         </div>
         <AddRouterForm
@@ -247,6 +280,13 @@ export default function Tool() {
           handleSubmitFunction={addPCFunction}
           pcFormData={pcFormData}
           setPCFormData={setPCFormData}
+        />
+        <DeleteForm
+          controlVariable={toOpenDeleteForm}
+          handleCloseFunction={handleDeleteFormClose}
+          handleSubmitFunction={deleteNodeFunction}
+          toDeleteName={deleteName}
+          setToDeleteName={setDeleteName}
         />
       </div>
     </main>
