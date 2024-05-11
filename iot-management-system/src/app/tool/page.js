@@ -81,7 +81,7 @@ export default function Tool() {
 
   const [deviceAdd, setDeviceAdd] = useState(false);
   const [deviceFormData, setDeviceFormData] = useState({
-    routerName: "",
+    deviceName: "",
     floorNo: "",
     roomName: "",
     parentName: "",
@@ -99,7 +99,7 @@ export default function Tool() {
 
   const [pcAdd, setPCAdd] = useState(false);
   const [pcFormData, setPCFormData] = useState({
-    routerName: "",
+    PCName: "",
     floorNo: "",
     roomName: "",
     parentName: "",
@@ -159,7 +159,39 @@ export default function Tool() {
         wrouterFormData.passwd
       );
       mainNetwork.addWrRouter(wrouterFormData.parentName, wrRouter);
-      console.log("################")
+      mainNetwork.printElements();
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const addIoTFunction = () => {
+    if (mainNetwork.nameList.includes(deviceFormData.deviceName)) {
+      alert("Name already present!");
+    } else {
+      let newDevice = new wirelessNode(
+        deviceFormData.deviceName,
+        deviceFormData.floorNo,
+        deviceFormData.roomName,
+        deviceFormData.SSID,
+        deviceFormData.passwd
+      );
+      mainNetwork.addIotDevice(deviceFormData.parentName, newDevice);
+      mainNetwork.printElements();
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const addPCFunction = () => {
+    if (mainNetwork.nameList.includes(pcFormData.PCName)) {
+      alert("Name already present!");
+    } else {
+      let newPC = new wiredNode(
+        pcFormData.PCName,
+        pcFormData.floorNo,
+        pcFormData.roomName,
+        pcFormData.ip
+      );
+      mainNetwork.addPC(pcFormData.parentName, newPC);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
@@ -670,6 +702,13 @@ export default function Tool() {
                       type="text"
                       id="DeviceName"
                       name="DeviceName"
+                      value={deviceFormData.deviceName}
+                      onChange={(e) =>
+                        setDeviceFormData((prevState) => ({
+                          ...prevState,
+                          deviceName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -683,6 +722,13 @@ export default function Tool() {
                       type="number"
                       id="floorNo"
                       name="floorNo"
+                      value={deviceFormData.floorNo}
+                      onChange={(e) =>
+                        setDeviceFormData((prevState) => ({
+                          ...prevState,
+                          floorNo: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -697,6 +743,13 @@ export default function Tool() {
                       type="text"
                       id="roomName"
                       name="roomName"
+                      value={deviceFormData.roomName}
+                      onChange={(e) =>
+                        setDeviceFormData((prevState) => ({
+                          ...prevState,
+                          roomName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -711,6 +764,13 @@ export default function Tool() {
                       type="text"
                       id="SSID"
                       name="SSID"
+                      value={deviceFormData.SSID}
+                      onChange={(e) =>
+                        setDeviceFormData((prevState) => ({
+                          ...prevState,
+                          SSID: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -725,6 +785,13 @@ export default function Tool() {
                       type="text"
                       id="passwd"
                       name="passwd"
+                      value={deviceFormData.passwd}
+                      onChange={(e) =>
+                        setDeviceFormData((prevState) => ({
+                          ...prevState,
+                          passwd: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -738,12 +805,19 @@ export default function Tool() {
                       id="parentname"
                       name="parentname"
                       required
+                      value={deviceFormData.parentName}
+                      onChange={(e) =>
+                        setDeviceFormData((prevState) => ({
+                          ...prevState,
+                          parentName: e.target.value,
+                        }))
+                      }
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button>Submit</button>
+                  <button onClick={addIoTFunction}>Submit</button>
                   <button onClick={handleDeviceClose}>Cancel</button>
                 </div>
               </DialogContentText>
@@ -763,6 +837,13 @@ export default function Tool() {
                       type="text"
                       id="pcName"
                       name="pcName"
+                      value={pcFormData.PCName}
+                      onChange={(e) =>
+                        setPCFormData((prevState) => ({
+                          ...prevState,
+                          PCName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -776,6 +857,13 @@ export default function Tool() {
                       type="number"
                       id="floorNo"
                       name="floorNo"
+                      value={pcFormData.floorNo}
+                      onChange={(e) =>
+                        setPCFormData((prevState) => ({
+                          ...prevState,
+                          floorNo: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -790,6 +878,13 @@ export default function Tool() {
                       type="text"
                       id="roomName"
                       name="roomName"
+                      value={pcFormData.roomName}
+                      onChange={(e) =>
+                        setPCFormData((prevState) => ({
+                          ...prevState,
+                          roomName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -804,6 +899,13 @@ export default function Tool() {
                       type="text"
                       id="networkIp"
                       name="networkIp"
+                      value={pcFormData.ip}
+                      onChange={(e) =>
+                        setPCFormData((prevState) => ({
+                          ...prevState,
+                          ip: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -816,13 +918,20 @@ export default function Tool() {
                       type="text"
                       id="parentname"
                       name="parentname"
+                      value={pcFormData.parentName}
+                      onChange={(e) =>
+                        setPCFormData((prevState) => ({
+                          ...prevState,
+                          parentName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button>Submit</button>
+                  <button onClick={addPCFunction}>Submit</button>
                   <button onClick={handlePcClose}>Cancel</button>
                 </div>
               </DialogContentText>
