@@ -117,8 +117,8 @@ export default function Tool() {
     if (mainNetwork.nameList.includes(routerFormData.routerName)) {
       alert("Name already present!");
     } 
-    if(!mainNetwork.nameList.includes(routerFormData.parentName)) {
-        alert("Parent do not exist");
+    if (mainNetwork.floorList.includes(routerFormData.floorNo)){
+      alert("Floor already present!");
     }
     else {
       let router = new RouterNode(

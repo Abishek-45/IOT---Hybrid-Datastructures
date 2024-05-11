@@ -60,6 +60,7 @@ class wirelessNode {
 class networkTree {
   constructor(root = null) {
     this.nameList = [];
+    this.floorList = [];
     this.ipList = [];
     this.root = root;
     if (root != null) {
@@ -70,6 +71,7 @@ class networkTree {
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
+      this.floorList.push(0);
       this.root = router;
     }
   }
@@ -88,6 +90,7 @@ class networkTree {
       });
       newRouter.parent = parent;
       this.nameList.push(newRouter.name);
+      this.floorList.push(newRouter.floorNo);
     }
   }
   printElements(node = this.root) {
