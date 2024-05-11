@@ -172,7 +172,19 @@ export default function Tool() {
   const addWrRouterFunction = () => {
     if (mainNetwork.nameList.includes(wrouterFormData.routerName)) {
       alert("Name already present!");
-    } else {
+    }
+    if(!mainNetwork.nameList.includes(wrouterFormData.parentName)) {
+      alert("Parent do not exist");
+      return ;
+  }  
+    else {
+      let fl = mainNetwork.floorList.indexOf(wrouterFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(wrouterFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+        else{
       let wrRouter = new wrlessRouterNode(
         wrouterFormData.routerName,
         wrouterFormData.floorNo,
@@ -183,6 +195,7 @@ export default function Tool() {
       mainNetwork.addWrRouter(wrouterFormData.parentName, wrRouter);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
     }
   };
 
