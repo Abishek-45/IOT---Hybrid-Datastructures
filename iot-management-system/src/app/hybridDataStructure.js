@@ -80,7 +80,6 @@ class networkTree {
       console.log("ERROR: Name already exists");
       return;
     }
-    this.nameList.push(newRouter.name);
     let parent = this.searchElement(parentRouterName, newRouter.name, 1);
     if (!parent) {
     } else {
@@ -89,6 +88,7 @@ class networkTree {
         networks: [],
       });
       newRouter.parent = parent;
+      this.nameList.push(newRouter.name);
     }
   }
   printElements(node = this.root) {
@@ -109,12 +109,14 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentRouterName, newSwitch.name, 1);
+    console.log("PPPPPP:", parent)
     if (parent) {
       parent.routeTable.set(newSwitch, {
         names: [newSwitch.name],
         networks: [],
       });
       newSwitch.parent = parent;
+      this.nameList.push(newSwitch.name);
     }
   }
 
@@ -228,10 +230,30 @@ class networkTree {
       children: []
     };
   
-    if (node.routeTable) {
+    // Check if the node is a RouterNode and has a routeTable
+    if (node instanceof RouterNode && node.routeTable) {
       for (let [childNode, _] of node.routeTable.entries()) {
         const childTreeData = this.convertToTreeData(childNode);
         treeData.children.push(childTreeData);
+      }
+    } else {
+      // Check if the node is a SwitchNode
+      if (node instanceof SwitchNode) {
+        for (let child of node.children) {
+          const childTreeData = this.convertToTreeData(child);
+          treeData.children.push(childTreeData);
+        }
+      }
+      // Check if the node is a wrlessRouterNode
+      else if (node instanceof wrlessRouterNode) {
+        for (let child of node.children) {
+          const childTreeData = this.convertToTreeData(child);
+          treeData.children.push(childTreeData);
+        }
+      }
+      // Check if the node is a wiredNode or wirelessNode
+      else if (node instanceof wiredNode || node instanceof wirelessNode) {
+        // No children for wiredNode or wirelessNode
       }
     }
   
