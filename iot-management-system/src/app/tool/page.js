@@ -142,7 +142,24 @@ export default function Tool() {
         switchFormData.roomName
       );
       mainNetwork.addSwitch(switchFormData.parentName, sw);
-      console.log("#####################");
+      mainNetwork.printElements();
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const addWrRouterFunction = () => {
+    if (mainNetwork.nameList.includes(wrouterFormData.routerName)) {
+      alert("Name already present!");
+    } else {
+      let wrRouter = new wrlessRouterNode(
+        wrouterFormData.routerName,
+        wrouterFormData.floorNo,
+        wrouterFormData.roomName,
+        wrouterFormData.SSID,
+        wrouterFormData.passwd
+      );
+      mainNetwork.addWrRouter(wrouterFormData.parentName, wrRouter);
+      console.log("################")
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
@@ -517,6 +534,13 @@ export default function Tool() {
                       type="text"
                       id="switchName"
                       name="switchName"
+                      value={wrouterFormData.routerName}
+                      onChange={(e) =>
+                        setwrouterFormData((prevState) => ({
+                          ...prevState,
+                          routerName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -530,6 +554,13 @@ export default function Tool() {
                       type="number"
                       id="floorNo"
                       name="floorNo"
+                      value={wrouterFormData.floorNo}
+                      onChange={(e) =>
+                        setwrouterFormData((prevState) => ({
+                          ...prevState,
+                          floorNo: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -544,6 +575,13 @@ export default function Tool() {
                       type="text"
                       id="roomName"
                       name="roomName"
+                      value={wrouterFormData.roomName}
+                      onChange={(e) =>
+                        setwrouterFormData((prevState) => ({
+                          ...prevState,
+                          roomName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -558,6 +596,13 @@ export default function Tool() {
                       type="text"
                       id="SSID"
                       name="SSID"
+                      value={wrouterFormData.SSID}
+                      onChange={(e) =>
+                        setwrouterFormData((prevState) => ({
+                          ...prevState,
+                          SSID: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -572,6 +617,13 @@ export default function Tool() {
                       type="text"
                       id="password"
                       name="password"
+                      value={wrouterFormData.passwd}
+                      onChange={(e) =>
+                        setwrouterFormData((prevState) => ({
+                          ...prevState,
+                          passwd: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
@@ -584,13 +636,20 @@ export default function Tool() {
                       type="text"
                       id="parentname"
                       name="parentname"
+                      value={wrouterFormData.parentName}
+                      onChange={(e) =>
+                        setwrouterFormData((prevState) => ({
+                          ...prevState,
+                          parentName: e.target.value,
+                        }))
+                      }
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
                   </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button>Submit</button>
+                  <button onClick={addWrRouterFunction}>Submit</button>
                   <button onClick={handleWRouterClose}>Cancel</button>
                 </div>
               </DialogContentText>
