@@ -15,8 +15,7 @@ export default function AddRouterForm({
 
   const validateForm = () => {
     const newErrors = {};
-  
-    // Check for empty fields
+ 
     if (!routerFormData.routerName) {
       newErrors.routerName = "Router Name is required";
     }
@@ -27,17 +26,13 @@ export default function AddRouterForm({
       newErrors.parentName = "Parent Name is required";
     }
   
-    // Check if floor number is an integer
     if (!Number.isInteger(Number(routerFormData.floorNo))) {
       newErrors.floorNo = "Floor Number must be an integer";
     }
   
-    // Add additional validation logic for uniqueness
-    // (e.g., checking if Router or Parent name is repeated)
   
     setErrors(newErrors);
   
-    // Return true if there are no errors, false otherwise
     return Object.keys(newErrors).length === 0;
   };
   
@@ -109,13 +104,8 @@ export default function AddRouterForm({
                   id="parentName"
                   name="parentName"
                   value={routerFormData.parentName}
-                  onChange={(e) =>
-                    setRouterFormData((prevState) => ({
-                      ...prevState,
-                      parentName: e.target.value,
-                    }))
-                  }
                   required
+                  disabled
                   className="border-[1px] border-[#08134e] rounded-md mt-2 block"
                 />
                 {errors.parentName && (

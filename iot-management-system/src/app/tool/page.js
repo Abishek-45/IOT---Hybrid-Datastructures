@@ -27,7 +27,7 @@ export default function Tool() {
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
     floorNo: "",
-    parentName: "",
+    parentName: "Home Router",
   });
   const [data, setData] = useState({});
   const handleRouterOpen = () => {
@@ -116,14 +116,19 @@ export default function Tool() {
   const addRouterFunction = () => {
     if (mainNetwork.nameList.includes(routerFormData.routerName)) {
       alert("Name already present!");
-    } else {
+    } 
+    if(!mainNetwork.nameList.includes(routerFormData.parentName)) {
+        alert("Parent do not exist");
+    }
+    else {
       let router = new RouterNode(
         routerFormData.routerName,
         routerFormData.floorNo
       );
       if (mainNetwork.root == null) {
         mainNetwork.setRoot(router);
-      } else {
+      } 
+      else {
         mainNetwork.addRouter(routerFormData.parentName, router);
       }
       mainNetwork.printElements();
@@ -134,7 +139,11 @@ export default function Tool() {
   const addSwitchFunction = () => {
     if (mainNetwork.nameList.includes(switchFormData.switchName)) {
       alert("Name already present!");
-    } else {
+    }
+    if(!mainNetwork.nameList.includes(switchFormData.parentName)) {
+      alert("Parent do not exist");
+  } 
+    else {
       let sw = new SwitchNode(
         switchFormData.switchName,
         switchFormData.floorNo,
