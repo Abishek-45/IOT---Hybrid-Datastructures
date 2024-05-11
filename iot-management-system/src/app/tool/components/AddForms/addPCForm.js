@@ -17,7 +17,7 @@ export default function addPCForm({
     const newErrors = {};
  
     if (!pcFormData.PCName) {
-      newErrors.PCName = "Switch Name is required";
+      newErrors.PCName = "PC Name is required";
     }
     if (!pcFormData.floorNo && pcFormData.floorNo !== 0) {
       newErrors.floorNo = "Floor Number is required";

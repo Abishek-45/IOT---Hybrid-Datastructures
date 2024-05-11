@@ -15,14 +15,14 @@ export default function addWirelessRouterForm({
 
   const validateForm = () => {
     const newErrors = {};
- 
+
     if (!wrouterFormData.routerName) {
-      newErrors.routerName = "Switch Name is required";
+      newErrors.routerName = "Device Name is required";
     }
     if (!wrouterFormData.floorNo && wrouterFormData.floorNo !== 0) {
       newErrors.floorNo = "Floor Number is required";
     }
-    if (!wrouterFormData.roomName){
+    if (!wrouterFormData.roomName) {
       newErrors.roomName = "Room Name is required";
     }
     if (!wrouterFormData.parentName) {
@@ -36,17 +36,15 @@ export default function addWirelessRouterForm({
     if (!wrouterFormData.passwd) {
       newErrors.passwd = "passwd is required";
     }
-  
+
     if (!Number.isInteger(Number(wrouterFormData.floorNo))) {
       newErrors.floorNo = "Floor Number must be an integer";
     }
-  
-  
+
     setErrors(newErrors);
-  
+
     return Object.keys(newErrors).length === 0;
   };
-  
 
   const handleFormSubmit = () => {
     const isValid = validateForm();
@@ -69,17 +67,19 @@ export default function addWirelessRouterForm({
                   id="routerName"
                   name="routerName"
                   value={wrouterFormData?.routerName}
-                  onChange={(e) =>
+                  onChange={(e) => 
                     setwrouterFormData((prevState) => ({
-                      ...prevState,
-                      routerName: e.target.value,
-                    }))
-                  }
+                    ...prevState,
+                    routerName: e.target.value,
+                  }))
+                }
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
                 {errors.routerName && (
-                  <span className="text-red-500 text-[14px]">{errors.routerName}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.routerName}
+                  </span>
                 )}
               </div>
               <div>
@@ -102,7 +102,9 @@ export default function addWirelessRouterForm({
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
                 {errors.floorNo && (
-                  <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.floorNo}
+                  </span>
                 )}
               </div>
 
@@ -125,8 +127,10 @@ export default function addWirelessRouterForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
-                {errors.roomName && (
-                  <span className="text-red-500 text-[14px]">{errors.roomName}</span>
+                {errors.routerName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.routerName}
+                  </span>
                 )}
               </div>
 
@@ -150,7 +154,9 @@ export default function addWirelessRouterForm({
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
                 {errors.SSID && (
-                  <span className="text-red-500 text-[14px]">{errors.SSID}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.SSID}
+                  </span>
                 )}
               </div>
 
@@ -174,7 +180,9 @@ export default function addWirelessRouterForm({
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
                 {errors.passwd && (
-                  <span className="text-red-500 text-[14px]">{errors.passwd}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.passwd}
+                  </span>
                 )}
               </div>
 
@@ -196,7 +204,9 @@ export default function addWirelessRouterForm({
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
                 {errors.parentName && (
-                  <span className="text-red-500 text-[14px]">{errors.parentName}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.parentName}
+                  </span>
                 )}
               </div>
             </div>
