@@ -328,15 +328,15 @@ export default function Tool() {
           controlVariable={wrAdd}
           handleCloseFunction={handleWRouterClose}
           handleSubmitFunction={addWrRouterFunction}
-          switchFormData={wrouterFormData}
-          setSwitchFormData={setwrouterFormData}
+          wrouterFormData={wrouterFormData}
+          setwrouterFormData={setwrouterFormData}
         />
         <AddIoTForm
           controlVariable={deviceAdd}
           handleCloseFunction={handleDeviceClose}
           handleSubmitFunction={addIoTFunction}
-          pcFormData={deviceFormData}
-          setPCFormData={setDeviceFormData}
+          deviceFormData={deviceFormData}
+          setDeviceFormData={setDeviceFormData}
         />
         <AddPCForm
           controlVariable={pcAdd}
