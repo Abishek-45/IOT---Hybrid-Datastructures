@@ -2,6 +2,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useState } from "react";
 
 export default function addSwitchForm({
   controlVariable,
@@ -10,6 +11,45 @@ export default function addSwitchForm({
   switchFormData,
   setSwitchFormData,
 }) {
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+ 
+    if (!switchFormData.switchName) {
+      newErrors.switchName = "Switch Name is required";
+    }
+    if (!switchFormData.floorNo && switchFormData.floorNo !== 0) {
+      newErrors.floorNo = "Floor Number is required";
+    }
+    if (!switchFormData.roomName){
+      newErrors.roomName = "Room Name is required";
+    }
+    if (!switchFormData.parentName) {
+      newErrors.parentName = "Parent Name is required";
+    }
+
+    if (!switchFormData.networkip) {
+      newErrors.networkip = "Network IP is required";
+    }
+  
+    if (!Number.isInteger(Number(switchFormData.floorNo))) {
+      newErrors.floorNo = "Floor Number must be an integer";
+    }
+  
+  
+    setErrors(newErrors);
+  
+    return Object.keys(newErrors).length === 0;
+  };
+  
+
+  const handleFormSubmit = () => {
+    const isValid = validateForm();
+    if (isValid) {
+      handleSubmitFunction();
+    }
+  };
   return (
     <Dialog open={controlVariable} onClose={handleCloseFunction} className="">
       <div className="bg-[#CADCFC] ">
@@ -34,6 +74,9 @@ export default function addSwitchForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.switchName && (
+                  <span className="text-red-500 text-[14px]">{errors.switchName}</span>
+                )}
               </div>
               <div>
                 <label for="floorNo" className="">
@@ -54,6 +97,9 @@ export default function addSwitchForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.floorNo && (
+                  <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
+                )}
               </div>
 
               <div>
@@ -75,11 +121,35 @@ export default function addSwitchForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.roomName && (
+                  <span className="text-red-500 text-[14px]">{errors.roomName}</span>
+                )}
               </div>
-
+              <div className="flex flex-col gap-3">
+              <div>
+                <label for="networkip">Network IP</label>
+                <br></br>
+                <input
+                  type="text"
+                  id="networkip"
+                  name="networkip"
+                  value={switchFormData.networkip}
+                  onChange={(e) =>
+                    setSwitchFormData((prevState) => ({
+                      ...prevState,
+                      networkip: e.target.value,
+                    }))
+                  }
+                  required
+                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                />
+                {errors.networkip && (
+                  <span className="text-red-500 text-[14px]">{errors.networkip}</span>
+                )}
+              </div>
               <div>
                 <label for="parentname">Parent Name</label>
-                <br></br>
+                <br />
                 <input
                   type="text"
                   id="parentname"
@@ -94,11 +164,15 @@ export default function addSwitchForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.parentName && (
+                  <span className="text-red-500 text-[14px]">{errors.parentName}</span>
+                )}
               </div>
             </div>
             <div className="flex flex-row justify-end gap-4 mt-5">
-              <button onClick={handleSubmitFunction}>Submit</button>
+              <button onClick={handleFormSubmit}>Submit</button>
               <button onClick={handleCloseFunction}>Cancel</button>
+            </div>
             </div>
           </DialogContentText>
         </DialogContent>
