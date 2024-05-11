@@ -24,13 +24,13 @@ import {
 } from "../hybridDataStructure";
 
 export default function Tool() {
-  const [mainNetwork] = useState(new networkTree());
+  const [mainNetwork] = useState(new networkTree(new RouterNode("Home Router",0)));
   const [toOpenDeleteForm, setToOpenDeleteForm] = useState(false);
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
     floorNo: "",
-    parentName: "",
+    parentName: "Home Router",
   });
   const [data, setData] = useState({});
   const [deleteName, setDeleteName] = useState("");
@@ -48,6 +48,11 @@ export default function Tool() {
     setRouterAdd(false);
   };
 
+  useEffect(()=>{
+    setData(mainNetwork.convertToTreeData(mainNetwork.root));
+  },[])
+
+
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
@@ -56,6 +61,7 @@ export default function Tool() {
     switchName: "",
     floorNo: "",
     roomName: "",
+    networkip: "",
     parentName: "",
   });
   const handleSwitchOpen = () => {
@@ -88,7 +94,6 @@ export default function Tool() {
     deviceName: "",
     floorNo: "",
     roomName: "",
-    parentName: "",
     SSID: "",
     passwd: "",
   });
@@ -105,7 +110,6 @@ export default function Tool() {
   const [pcFormData, setPCFormData] = useState({
     PCName: "",
     floorNo: "",
-    roomName: "",
     parentName: "",
     ip: "",
   });
@@ -121,14 +125,21 @@ export default function Tool() {
   const addRouterFunction = () => {
     if (mainNetwork.nameList.includes(routerFormData.routerName)) {
       alert("Name already present!");
-    } else {
+      return ;
+    } 
+    if (mainNetwork.floorList.includes(routerFormData.floorNo)){
+      alert("Floor already present!");
+      return ;
+    }
+    else {
       let router = new RouterNode(
         routerFormData.routerName,
         routerFormData.floorNo
       );
       if (mainNetwork.root == null) {
         mainNetwork.setRoot(router);
-      } else {
+      } 
+      else {
         mainNetwork.addRouter(routerFormData.parentName, router);
       }
       mainNetwork.printElements();
@@ -139,22 +150,49 @@ export default function Tool() {
   const addSwitchFunction = () => {
     if (mainNetwork.nameList.includes(switchFormData.switchName)) {
       alert("Name already present!");
-    } else {
+      return ;
+    }
+    if(!mainNetwork.nameList.includes(switchFormData.parentName)) {
+      alert("Parent do not exist");
+      return ;
+  } 
+    else {
+      let fl = mainNetwork.floorList.indexOf(switchFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(switchFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+        else{
       let sw = new SwitchNode(
         switchFormData.switchName,
         switchFormData.floorNo,
         switchFormData.roomName
+
       );
       mainNetwork.addSwitch(switchFormData.parentName, sw);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
     }
   };
 
   const addWrRouterFunction = () => {
     if (mainNetwork.nameList.includes(wrouterFormData.routerName)) {
       alert("Name already present!");
-    } else {
+    }
+    if(!mainNetwork.nameList.includes(wrouterFormData.parentName)) {
+      alert("Parent do not exist");
+      return ;
+  }  
+    else {
+      let fl = mainNetwork.floorList.indexOf(wrouterFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(wrouterFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+        else{
       let wrRouter = new wrlessRouterNode(
         wrouterFormData.routerName,
         wrouterFormData.floorNo,
@@ -166,38 +204,63 @@ export default function Tool() {
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
+    }
   };
 
   const addIoTFunction = () => {
     if (mainNetwork.nameList.includes(deviceFormData.deviceName)) {
       alert("Name already present!");
-    } else {
+    }
+    if (mainNetwork.floorList.includes(deviceFormData.floorNo)){
+      alert("Floor already present!");
+      return ;
+    }
+    else {
+      let fl = mainNetwork.floorList.indexOf(deviceFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(deviceFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+      else{
       let newDevice = new wirelessNode(
         deviceFormData.deviceName,
         deviceFormData.floorNo,
-        deviceFormData.roomName,
         deviceFormData.SSID,
         deviceFormData.passwd
       );
       mainNetwork.addIotDevice(deviceFormData.parentName, newDevice);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+      }
     }
   };
 
   const addPCFunction = () => {
     if (mainNetwork.nameList.includes(pcFormData.PCName)) {
       alert("Name already present!");
-    } else {
+    }
+    if(!mainNetwork.nameList.includes(pcFormData.parentName)) {
+      alert("Parent do not exist");
+      return ;
+  } 
+    else {
+      let fl = mainNetwork.floorList.indexOf(pcFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(pcFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+        else{
       let newPC = new wiredNode(
         pcFormData.PCName,
         pcFormData.floorNo,
-        pcFormData.roomName,
         pcFormData.ip
       );
       mainNetwork.addPC(pcFormData.parentName, newPC);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+      }
     }
   };
 
