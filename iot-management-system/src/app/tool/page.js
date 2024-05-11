@@ -51,6 +51,7 @@ export default function Tool() {
     switchName: "",
     floorNo: "",
     roomName: "",
+    networkip: "",
     parentName: "",
   });
   const handleSwitchOpen = () => {
@@ -116,9 +117,11 @@ export default function Tool() {
   const addRouterFunction = () => {
     if (mainNetwork.nameList.includes(routerFormData.routerName)) {
       alert("Name already present!");
+      return ;
     } 
     if (mainNetwork.floorList.includes(routerFormData.floorNo)){
       alert("Floor already present!");
+      return ;
     }
     else {
       let router = new RouterNode(
@@ -139,19 +142,30 @@ export default function Tool() {
   const addSwitchFunction = () => {
     if (mainNetwork.nameList.includes(switchFormData.switchName)) {
       alert("Name already present!");
+      return ;
     }
     if(!mainNetwork.nameList.includes(switchFormData.parentName)) {
       alert("Parent do not exist");
+      return ;
   } 
     else {
+      let fl = mainNetwork.floorList.indexOf(switchFormData.floorNo);
+      let pn = mainNetwork.nameList.indexOf(switchFormData.parentName);
+      if(pn !== fl+1 )
+        {
+          alert("Parent name and floor no doesn't match");
+        }
+        else{
       let sw = new SwitchNode(
         switchFormData.switchName,
         switchFormData.floorNo,
         switchFormData.roomName
+
       );
       mainNetwork.addSwitch(switchFormData.parentName, sw);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
     }
   };
 
