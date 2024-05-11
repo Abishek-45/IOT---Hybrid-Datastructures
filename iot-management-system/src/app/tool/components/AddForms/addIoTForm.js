@@ -24,7 +24,7 @@ export default function addIoTForm({
                       type="text"
                       id="DeviceName"
                       name="DeviceName"
-                      value={deviceFormData.deviceName}
+                      value={deviceFormData?.deviceName}
                       onChange={(e) =>
                         setDeviceFormData((prevState) => ({
                           ...prevState,
@@ -44,7 +44,7 @@ export default function addIoTForm({
                       type="number"
                       id="floorNo"
                       name="floorNo"
-                      value={deviceFormData.floorNo}
+                      value={deviceFormData?.floorNo}
                       onChange={(e) =>
                         setDeviceFormData((prevState) => ({
                           ...prevState,
@@ -65,7 +65,7 @@ export default function addIoTForm({
                       type="text"
                       id="roomName"
                       name="roomName"
-                      value={deviceFormData.roomName}
+                      value={deviceFormData?.roomName}
                       onChange={(e) =>
                         setDeviceFormData((prevState) => ({
                           ...prevState,
@@ -86,7 +86,7 @@ export default function addIoTForm({
                       type="text"
                       id="SSID"
                       name="SSID"
-                      value={deviceFormData.SSID}
+                      value={deviceFormData?.SSID}
                       onChange={(e) =>
                         setDeviceFormData((prevState) => ({
                           ...prevState,
@@ -107,7 +107,7 @@ export default function addIoTForm({
                       type="text"
                       id="passwd"
                       name="passwd"
-                      value={deviceFormData.passwd}
+                      value={deviceFormData?.passwd}
                       onChange={(e) =>
                         setDeviceFormData((prevState) => ({
                           ...prevState,
@@ -127,7 +127,7 @@ export default function addIoTForm({
                       id="parentname"
                       name="parentname"
                       required
-                      value={deviceFormData.parentName}
+                      value={deviceFormData?.parentName}
                       onChange={(e) =>
                         setDeviceFormData((prevState) => ({
                           ...prevState,
