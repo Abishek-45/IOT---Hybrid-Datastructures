@@ -2,6 +2,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useState } from "react";
 
 export default function addWirelessRouterForm({
   controlVariable,
@@ -10,6 +11,47 @@ export default function addWirelessRouterForm({
   wrouterFormData,
   setwrouterFormData,
 }) {
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!wrouterFormData.routerName) {
+      newErrors.routerName = "Device Name is required";
+    }
+    if (!wrouterFormData.floorNo && wrouterFormData.floorNo !== 0) {
+      newErrors.floorNo = "Floor Number is required";
+    }
+    if (!wrouterFormData.roomName) {
+      newErrors.roomName = "Room Name is required";
+    }
+    if (!wrouterFormData.parentName) {
+      newErrors.parentName = "Parent Name is required";
+    }
+
+    if (!wrouterFormData.SSID) {
+      newErrors.SSID = "SSID is required";
+    }
+
+    if (!wrouterFormData.passwd) {
+      newErrors.passwd = "passwd is required";
+    }
+
+    if (!Number.isInteger(Number(wrouterFormData.floorNo))) {
+      newErrors.floorNo = "Floor Number must be an integer";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleFormSubmit = () => {
+    const isValid = validateForm();
+    if (isValid) {
+      handleSubmitFunction();
+    }
+  };
   return (
     <Dialog open={controlVariable} onClose={handleCloseFunction} className="">
       <div className="bg-[#CADCFC] ">
@@ -22,18 +64,23 @@ export default function addWirelessRouterForm({
                 <br></br>
                 <input
                   type="text"
-                  id="switchName"
-                  name="switchName"
+                  id="routerName"
+                  name="routerName"
                   value={wrouterFormData?.routerName}
-                  onChange={(e) =>
+                  onChange={(e) => 
                     setwrouterFormData((prevState) => ({
-                      ...prevState,
-                      routerName: e.target.value,
-                    }))
-                  }
+                    ...prevState,
+                    routerName: e.target.value,
+                  }))
+                }
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.routerName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.routerName}
+                  </span>
+                )}
               </div>
               <div>
                 <label for="floorNo" className="">
@@ -54,6 +101,11 @@ export default function addWirelessRouterForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.floorNo && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.floorNo}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -75,6 +127,11 @@ export default function addWirelessRouterForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.routerName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.routerName}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -96,6 +153,11 @@ export default function addWirelessRouterForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.SSID && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.SSID}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -117,6 +179,11 @@ export default function addWirelessRouterForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.passwd && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.passwd}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -136,10 +203,15 @@ export default function addWirelessRouterForm({
                   required
                   className="border-[1px] border-[#08134e] rounded-md my-2"
                 />
+                {errors.parentName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.parentName}
+                  </span>
+                )}
               </div>
             </div>
             <div className="flex flex-row justify-end gap-4 mt-5">
-              <button onClick={handleSubmitFunction}>Submit</button>
+              <button onClick={handleFormSubmit}>Submit</button>
               <button onClick={handleCloseFunction}>Cancel</button>
             </div>
           </DialogContentText>

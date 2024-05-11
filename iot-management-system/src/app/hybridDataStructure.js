@@ -34,10 +34,9 @@ class wrlessRouterNode {
 }
 
 class wiredNode {
-  constructor(PC_Name, floorNo, roomName, ip) {
+  constructor(PC_Name, floorNo,ip) {
     this.name = PC_Name;
     this.floorNo = floorNo;
-    this.roomName = roomName;
     this.ip = ip;
     this.state = 1;
     this.parent = null;
@@ -45,10 +44,9 @@ class wiredNode {
 }
 
 class wirelessNode {
-  constructor(Device_Name, floorNo, roomName, SSID, passwd = null) {
+  constructor(Device_Name, floorNo,SSID, passwd = null) {
     this.name = Device_Name;
     this.floorNo = floorNo;
-    this.roomName = roomName;
     this.SSID = SSID;
     this.passwd = passwd;
     this.state = 1;
@@ -60,6 +58,7 @@ class wirelessNode {
 class networkTree {
   constructor(root = null) {
     this.nameList = [];
+    this.floorList = [];
     this.ipList = [];
     this.root = root;
     if (root != null) {
@@ -70,6 +69,7 @@ class networkTree {
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
+      this.floorList.push(0);
       this.root = router;
     }
   }
@@ -88,6 +88,7 @@ class networkTree {
       });
       newRouter.parent = parent;
       this.nameList.push(newRouter.name);
+      this.floorList.push(newRouter.floorNo);
     }
   }
   printElements(node = this.root) {

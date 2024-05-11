@@ -2,6 +2,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useState } from "react";
 
 export default function addIoTForm({
   controlVariable,
@@ -10,6 +11,44 @@ export default function addIoTForm({
   deviceFormData,
   setDeviceFormData,
 }) {
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!deviceFormData.deviceName) {
+      newErrors.deviceName = "Device Name is required";
+    }
+    if (!deviceFormData.floorNo && deviceFormData.floorNo !== 0) {
+      newErrors.floorNo = "Floor Number is required";
+    }
+    if (!deviceFormData.parentName) {
+      newErrors.parentName = "Parent Name is required";
+    }
+
+    if (!deviceFormData.SSID) {
+      newErrors.SSID = "SSID is required";
+    }
+
+    if (!deviceFormData.passwd) {
+      newErrors.passwd = "passwd is required";
+    }
+
+    if (!Number.isInteger(Number(deviceFormData.floorNo))) {
+      newErrors.floorNo = "Floor Number must be an integer";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleFormSubmit = () => {
+    const isValid = validateForm();
+    if (isValid) {
+      handleSubmitFunction();
+    }
+  };
   return (
     <Dialog open={controlVariable} onClose={handleCloseFunction} className="">
           <div className="bg-[#CADCFC] ">
@@ -34,6 +73,11 @@ export default function addIoTForm({
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
+                    {errors.deviceName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.deviceName}
+                  </span>
+                )}
                   </div>
                   <div>
                     <label for="floorNo" className="">
@@ -54,29 +98,12 @@ export default function addIoTForm({
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
+                    {errors.floorNo && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.floorNo}
+                  </span>
+                )}
                   </div>
-
-                  <div>
-                    <label for="roomName" className="">
-                      Room Name
-                    </label>
-                    <br></br>
-                    <input
-                      type="text"
-                      id="roomName"
-                      name="roomName"
-                      value={deviceFormData?.roomName}
-                      onChange={(e) =>
-                        setDeviceFormData((prevState) => ({
-                          ...prevState,
-                          roomName: e.target.value,
-                        }))
-                      }
-                      required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
-                    />
-                  </div>
-
                   <div>
                     <label for="SSID" className="">
                       SSID
@@ -96,6 +123,11 @@ export default function addIoTForm({
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
+                    {errors.SSID && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.SSID}
+                  </span>
+                )}
                   </div>
 
                   <div>
@@ -117,6 +149,11 @@ export default function addIoTForm({
                       required
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
+                    {errors.passwd && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.passwd}
+                  </span>
+                )}
                   </div>
 
                   <div>
@@ -136,10 +173,15 @@ export default function addIoTForm({
                       }
                       className="border-[1px] border-[#08134e] rounded-md my-2"
                     />
+                    {errors.parentName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.parentName}
+                  </span>
+                )}
                   </div>
                 </div>
                 <div className="flex flex-row justify-end gap-4 mt-5">
-                  <button onClick={handleSubmitFunction}>Submit</button>
+                  <button onClick={handleFormSubmit}>Submit</button>
                   <button onClick={handleCloseFunction}>Cancel</button>
                 </div>
               </DialogContentText>
