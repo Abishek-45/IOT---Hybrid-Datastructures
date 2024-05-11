@@ -34,9 +34,8 @@ class wrlessRouterNode {
 }
 
 class wiredNode {
-  constructor(PC_Name, floorNo,ip) {
+  constructor(PC_Name, floorNo, ip) {
     this.name = PC_Name;
-    this.floorNo = floorNo;
     this.ip = ip;
     this.state = 1;
     this.parent = null;
@@ -44,9 +43,8 @@ class wiredNode {
 }
 
 class wirelessNode {
-  constructor(Device_Name, floorNo,SSID, passwd = null) {
+  constructor(Device_Name, floorNo, SSID, passwd = null) {
     this.name = Device_Name;
-    this.floorNo = floorNo;
     this.SSID = SSID;
     this.passwd = passwd;
     this.state = 1;
@@ -125,9 +123,9 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentRouterName, newWrRouter.name, 1);
-    console.log("DDDDDDD:",parent);
+    console.log("DDDDDDD:", parent);
     if (parent) {
-      console.log("PPPPPPPP",parent)
+      console.log("PPPPPPPP", parent);
       parent.routeTable.set(newWrRouter, {
         names: [newWrRouter.name],
         networks: [],
@@ -172,46 +170,18 @@ class networkTree {
     pcNode.parent = parent;
   }
 
-  //Logic needs to be changed (here we are not using parent node so the if condition in for loop will not work properly)
-  deleteSearch(nodename, node = this.root) {
-    console.log(node)
-    if (!node instanceof RouterNode) {
-      console.log("###");
-      return node;
-    }
-    if (node.name == nodename) {
-      console.log("$$$");
-
-      return node;
-    }
-    for (let [child, childValue] of node.routeTable.entries()) {
-      if (childValue.names.includes(nodename)) {
-        childValue.names = childValue.names.filter((item) => item !== nodename);
-        return this.deleteSearch(nodename, child);
+  deleteNode(parentName, nodeName) {
+    let parent = this.searchElement(parentName, nodeName, 2);
+    if(parent instanceof RouterNode){
+      for (let [child, _] of parent.routeTable.entries()) {
+        if(child.name == nodeName){
+          parent.routeTable.delete(child);
+        }
       }
+    } else if(parent instanceof SwitchNode || parent instanceof wrlessRouterNode){
+      parent.children = parent.children.filter(child => child.name !== nodeName);
     }
-  }
 
-  deleteDevice(nodename) {
-    let delNode = this.deleteSearch(nodename);
-    delNode.parent.children = delNode.parent.children.filter(
-      (node) => node !== nodename
-    );
-  }
-
-  deleteRoomNetwork(nodename) {
-    let delNode = this.deleteSearch(nodename);
-    console.log(delNode)
-    if (delNode) {
-      delNode.children = null;
-      delNode.parent.routeTable.delete(delNode);
-    }
-  }
-
-  deleteFloorNetwork(nodename) {
-    let delNode = this.deleteSearch(nodename);
-    delNode.routeTable = null;
-    delNode.parent.routeTable.delete(delNode);
   }
 
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
@@ -221,6 +191,11 @@ class networkTree {
       for (let [child, childValue] of node.routeTable.entries()) {
         if (childValue.names.includes(parentNodeName)) {
           if (mode == 1) childValue.names.push(childNodeName);
+          if (mode == 2) {
+            childValue.names = childValue.names.filter(
+              (item) => item != childNodeName
+            );
+          }
           return this.searchElement(parentNodeName, childNodeName, mode, child);
         }
       }
@@ -229,9 +204,9 @@ class networkTree {
   convertToTreeData(node) {
     const treeData = {
       name: node.name,
-      children: []
+      children: [],
     };
-  
+
     if (node instanceof RouterNode && node.routeTable) {
       for (let [childNode, _] of node.routeTable.entries()) {
         const childTreeData = this.convertToTreeData(childNode);
@@ -243,14 +218,12 @@ class networkTree {
           const childTreeData = this.convertToTreeData(child);
           treeData.children.push(childTreeData);
         }
-      }
-      else if (node instanceof wrlessRouterNode) {
+      } else if (node instanceof wrlessRouterNode) {
         for (let child of node.children) {
           const childTreeData = this.convertToTreeData(child);
           treeData.children.push(childTreeData);
         }
-      }
-      else if (node instanceof wiredNode || node instanceof wirelessNode) {
+      } else if (node instanceof wiredNode || node instanceof wirelessNode) {
         // No children for wiredNode or wirelessNode
       }
     }
@@ -268,7 +241,13 @@ let Router6 = new RouterNode("Router6", 1);
 let Router7 = new RouterNode("Router7", 1);
 let Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
 let Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
-let PC1 = new wiredNode("PC1", "1", "Bathroom", "192.168.152.2", "255.255.255.0");
+let PC1 = new wiredNode(
+  "PC1",
+  "1",
+  "Bathroom",
+  "192.168.152.2",
+  "255.255.255.0"
+);
 network.addRouter(network.root.name, Router2);
 network.addRouter(network.root.name, Router3);
 network.addRouter("Router2", Router4);
@@ -278,9 +257,16 @@ network.addSwitch("Router4", Switch1);
 network.addSwitch("Router2", Switch2);
 network.addPC("Swtich2", PC1);
 network.printElements();
-network.deleteRoomNetwork("swtich2");
+network.deleteNode("Router4","Swtich1");
+console.log("##################")
 network.printElements();
-console.log(network.convertToTreeData(Router1))
+console.log(network.convertToTreeData(Router1));
 
-
-export  {RouterNode, SwitchNode, wrlessRouterNode, wiredNode, wirelessNode, networkTree}
+export {
+  RouterNode,
+  SwitchNode,
+  wrlessRouterNode,
+  wiredNode,
+  wirelessNode,
+  networkTree,
+};

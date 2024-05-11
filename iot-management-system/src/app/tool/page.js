@@ -30,7 +30,7 @@ export default function Tool() {
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
     floorNo: "",
-    parentName: "",
+    parentName: "Home Router",
   });
   const [data, setData] = useState({});
   const [deleteName, setDeleteName] = useState("");
@@ -267,7 +267,8 @@ export default function Tool() {
   const deleteNodeFunction = ()=>{
     if (mainNetwork.nameList.includes(deleteName)) {
       let parentName = findParent(data, deleteName);
-      console.log(parentName);
+      mainNetwork.deleteNode(parentName, deleteName);
+      setData(mainNetwork.convertToTreeData(mainNetwork.root))
     }
   }
 
