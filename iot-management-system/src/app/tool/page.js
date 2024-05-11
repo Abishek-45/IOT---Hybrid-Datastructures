@@ -22,7 +22,7 @@ import {
 } from "../hybridDataStructure";
 
 export default function Tool() {
-  const [mainNetwork] = useState(new networkTree());
+  const [mainNetwork] = useState(new networkTree(new RouterNode("Home Router",0)));
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
     routerName: "",
@@ -37,6 +37,11 @@ export default function Tool() {
   const handleRouterClose = () => {
     setRouterAdd(false);
   };
+
+  useEffect(()=>{
+    setData(mainNetwork.convertToTreeData(mainNetwork.root));
+  },[])
+
 
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);

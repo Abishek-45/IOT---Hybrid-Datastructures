@@ -1,25 +1,64 @@
+import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function addRouterForm({
+export default function AddRouterForm({
   controlVariable,
   handleCloseFunction,
   handleSubmitFunction,
   routerFormData,
   setRouterFormData,
 }) {
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+  
+    // Check for empty fields
+    if (!routerFormData.routerName) {
+      newErrors.routerName = "Router Name is required";
+    }
+    if (!routerFormData.floorNo && routerFormData.floorNo !== 0) {
+      newErrors.floorNo = "Floor Number is required";
+    }
+    if (!routerFormData.parentName) {
+      newErrors.parentName = "Parent Name is required";
+    }
+  
+    // Check if floor number is an integer
+    if (!Number.isInteger(Number(routerFormData.floorNo))) {
+      newErrors.floorNo = "Floor Number must be an integer";
+    }
+  
+    // Add additional validation logic for uniqueness
+    // (e.g., checking if Router or Parent name is repeated)
+  
+    setErrors(newErrors);
+  
+    // Return true if there are no errors, false otherwise
+    return Object.keys(newErrors).length === 0;
+  };
+  
+
+  const handleFormSubmit = () => {
+    const isValid = validateForm();
+    if (isValid) {
+      handleSubmitFunction();
+    }
+  };
+
   return (
     <Dialog open={controlVariable} onClose={handleCloseFunction} className="">
       <div className="bg-[#CADCFC] ">
-        <DialogTitle className="p-5  px-14">Add Router</DialogTitle>
+        <DialogTitle className="p-5 px-14">Add Router</DialogTitle>
         <DialogContent className="my-2">
           <DialogContentText className="pr-14 pl-8">
             <div className="flex flex-col gap-3">
               <div>
-                <label for="routerName">Router Name</label>
-                <br></br>
+                <label htmlFor="routerName">Router Name</label>
+                <br />
                 <input
                   type="text"
                   id="routerName"
@@ -32,14 +71,17 @@ export default function addRouterForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block"
                 />
+                {errors.routerName && (
+                  <span className="text-red-500 text-[14px]">{errors.routerName}</span>
+                )}
               </div>
               <div>
-                <label for="floorNo" className="">
+                <label htmlFor="floorNo" className="">
                   Floor Number
                 </label>
-                <br></br>
+                <br />
                 <input
                   type="number"
                   id="floorNo"
@@ -52,17 +94,20 @@ export default function addRouterForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block"
                 />
+                {errors.floorNo && (
+                  <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
+                )}
               </div>
 
               <div>
-                <label for="parentname">Parent Name</label>
-                <br></br>
+                <label htmlFor="parentName">Parent Name</label>
+                <br />
                 <input
                   type="text"
-                  id="parentname"
-                  name="parentname"
+                  id="parentName"
+                  name="parentName"
                   value={routerFormData.parentName}
                   onChange={(e) =>
                     setRouterFormData((prevState) => ({
@@ -71,12 +116,15 @@ export default function addRouterForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md my-2"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block"
                 />
+                {errors.parentName && (
+                  <span className="text-red-500 text-[14px]">{errors.parentName}</span>
+                )}
               </div>
             </div>
             <div className="flex flex-row justify-end gap-4 mt-5">
-              <button onClick={handleSubmitFunction}>Submit</button>
+              <button onClick={handleFormSubmit}>Submit</button>
               <button onClick={handleCloseFunction}>Cancel</button>
             </div>
           </DialogContentText>
