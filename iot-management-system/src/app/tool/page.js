@@ -28,7 +28,6 @@ import {
   wirelessNode,
   networkTree,
 } from "../hybridDataStructure";
-import { actionAsyncStorage } from "next/dist/client/components/action-async-storage-instance";
 
 export default function Tool() {
   const [mainNetwork] = useState(
@@ -130,6 +129,13 @@ export default function Tool() {
     parentName: "",
   });
   const [deviceToEdit, setDeviceToEdit] = useState("");
+  const [openDeviceEditForm, setOpenDeviceEditForm] = useState(false);
+  const editDeviceCloseFunction = () => {
+    setOpenDeviceEditForm(false);
+  };
+  const editDeviceOpenFunction = () => {
+    setOpenDeviceEditForm(true);
+  };
   const handleDeviceOpen = () => {
     setDeviceAdd(true);
   };
@@ -145,6 +151,13 @@ export default function Tool() {
     ip: "",
   });
   const [pcToEdit, setPCToEdit] = useState("");
+  const [openPCEditForm, setOpenPCEditForm] = useState(false);
+  const editPCCloseFunction = () => {
+    setOpenPCEditForm(false);
+  };
+  const editPCOpenFunction = () => {
+    setOpenPCEditForm(true);
+  };
   const handlePcOpen = () => {
     setPCAdd(true);
   };
@@ -325,7 +338,7 @@ export default function Tool() {
         switchFormData.networkip
       );
       let oldParent = findParent(data, switchToEdit);
-      console.log("$$$$$$$$$$$$$",oldParent)
+      console.log("$$$$$$$$$$$$$", oldParent);
       mainNetwork.editSwitch(
         switchFormData.parentName,
         oldParent,
@@ -359,8 +372,41 @@ export default function Tool() {
     }
   };
 
+  const editPCFunction = () => {
+    if (!mainNetwork.nameList.includes(pcToEdit)) {
+      alert("Given PC name is not present in network");
+      return;
+    } else {
+      let newPC = new wiredNode(pcFormData.PCName, pcFormData.ip);
+      let oldParent = findParent(data, pcToEdit);
+      mainNetwork.editPC(pcFormData.parentName, oldParent, pcToEdit, newPC);
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const editDeviceFunction = () => {
+    if (!mainNetwork.nameList.includes(deviceToEdit)) {
+      alert("Given Device name is not present in network");
+      return;
+    } else {
+      let newDevice = new wirelessNode(
+        deviceFormData.deviceName,
+        deviceFormData.SSID,
+        deviceFormData.passwd
+      );
+      let oldParent = findParent(data, deviceToEdit);
+      mainNetwork.editDevice(
+        deviceFormData.parentName,
+        oldParent,
+        deviceToEdit,
+        newDevice
+      );
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
   const deleteNodeFunction = () => {
-    console.log(deleteName, mainNetwork.nameList)
+    console.log(deleteName, mainNetwork.nameList);
     if (mainNetwork.nameList.includes(deleteName)) {
       let parentName = findParent(data, deleteName);
       mainNetwork.deleteNode(parentName, deleteName);
@@ -407,6 +453,8 @@ export default function Tool() {
             handleRouterEdit={editRouterOpenFunction}
             handleSwitchEdit={editSwitchOpenFunction}
             handleWRouterEdit={editWRouterOpenFunction}
+            handlePCEdit={editPCOpenFunction}
+            handleDeviceEdit={editDeviceOpenFunction}
           />
         </div>
         <AddRouterForm
@@ -477,6 +525,24 @@ export default function Tool() {
           setwrouterFormData={setwrouterFormData}
           wrouterToEdit={wrouterToEdit}
           setwrouterToEdit={setWRouterToEdit}
+        />
+        <EditPCForm
+          controlVariable={openPCEditForm}
+          handleCloseFunction={editPCCloseFunction}
+          handleSubmitFunction={editPCFunction}
+          pcFormData={pcFormData}
+          setPCFormData={setPCFormData}
+          PCToEdit={pcToEdit}
+          setPCToEdit={setPCToEdit}
+        />
+        <EditIoTForm
+          controlVariable={openDeviceEditForm}
+          handleCloseFunction={editDeviceCloseFunction}
+          handleSubmitFunction={editDeviceFunction}
+          deviceFormData={deviceFormData}
+          setDeviceFormData={setDeviceFormData}
+          deviceToEdit={deviceToEdit}
+          setDeviceToEdit={setDeviceToEdit}
         />
       </div>
     </main>
