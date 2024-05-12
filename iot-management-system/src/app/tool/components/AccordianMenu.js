@@ -22,13 +22,13 @@ export default function AccordionMenu({
     setExpanded(newExpanded ? panel : false);
   };
   return (
-    <div className="bg-[#CADCFC] p-4 rounded-lg">
+    <div className="bg-[#CADCFC] p-4 rounded-lg mt-2">
       <div className="ml-2 text-xl font-bold text-black mb-4">Components</div>
       {/* Router device acccordian */}
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
-        className=" text-white bg-blue-500 rounded-md"
+        className=" text-white bg-blue-500"
       >
         <AccordionSummary aria-controls="panel1-content" id="panel1-header">
           Router
@@ -60,7 +60,7 @@ export default function AccordionMenu({
       <Accordion
         expanded={expanded === "panel2"}
         onChange={handleChange("panel2")}
-        className="text-white bg-blue-600 rounded-md"
+        className="text-white bg-blue-600"
       >
         <AccordionSummary aria-controls="panel2-content" id="panel2-header">
           Switch
@@ -92,7 +92,7 @@ export default function AccordionMenu({
       <Accordion
         expanded={expanded === "panel3"}
         onChange={handleChange("panel3")}
-        className=" text-white bg-blue-700 rounded-md"
+        className=" text-white bg-blue-700"
       >
         <AccordionSummary aria-controls="panel3-content" id="panel3-header">
           Wireless Router
@@ -124,7 +124,7 @@ export default function AccordionMenu({
       <Accordion
         expanded={expanded === "panel4"}
         onChange={handleChange("panel4")}
-        className="text-white bg-blue-800 rounded-md"
+        className="text-white bg-blue-800"
       >
         <AccordionSummary aria-controls="panel4-content" id="panel4-header">
           IoT devices
@@ -156,7 +156,7 @@ export default function AccordionMenu({
       <Accordion
         expanded={expanded === "panel5"}
         onChange={handleChange("panel5")}
-        className="text-white bg-blue-900 rounded-md"
+        className="text-white bg-blue-900"
       >
         <AccordionSummary aria-controls="panel5-content" id="panel5-header">
           PC/Workstation
