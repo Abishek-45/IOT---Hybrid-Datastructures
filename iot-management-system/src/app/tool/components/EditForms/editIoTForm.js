@@ -65,34 +65,11 @@ export default function AddIoTForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2 mb-4"
                 />
                 {errors.deviceName && (
                   <span className="text-red-500 text-[14px]">
                     {errors.deviceName}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label htmlFor="parentName">Parent Name</label>
-                <br />
-                <input
-                  type="text"
-                  id="parentName"
-                  name="parentName"
-                  required
-                  value={deviceFormData.parentName}
-                  onChange={(e) =>
-                    setDeviceFormData((prevState) => ({
-                      ...prevState,
-                      parentName: e.target.value,
-                    }))
-                  }
-                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
-                />
-                {errors.parentName && (
-                  <span className="text-red-500 text-[14px]">
-                    {errors.parentName}
                   </span>
                 )}
               </div>
@@ -118,6 +95,29 @@ export default function AddIoTForm({
                     {errors.deviceName}
                   </span>
                 )}
+              <div>
+                <label htmlFor="parentName">Parent Name</label>
+                <br />
+                <input
+                  type="text"
+                  id="parentName"
+                  name="parentName"
+                  required
+                  value={deviceFormData.parentName}
+                  onChange={(e) =>
+                    setDeviceFormData((prevState) => ({
+                      ...prevState,
+                      parentName: e.target.value,
+                    }))
+                  }
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
+                />
+                {errors.parentName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.parentName}
+                  </span>
+                )}
+              </div>
               </div>
               <div>
                 <label htmlFor="SSID" className="">

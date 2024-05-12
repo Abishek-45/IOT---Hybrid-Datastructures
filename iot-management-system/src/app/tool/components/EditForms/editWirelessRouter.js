@@ -74,6 +74,29 @@ export default function addWirelessRouterForm({
                   }))
                 }
                   required
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2 mb-4"
+                />
+                {errors.routerName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.routerName}
+                  </span>
+                )}
+              </div>
+              <div>
+                <label for="switchName">New Router Name</label>
+                <br></br>
+                <input
+                  type="text"
+                  id="routerName"
+                  name="routerName"
+                  value={wrouterFormData.routerName}
+                  onChange={(e) => 
+                    setwrouterFormData((prevState) => ({
+                    ...prevState,
+                    routerName: e.target.value,
+                  }))
+                }
+                  required
                   className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
                 {errors.routerName && (
@@ -206,29 +229,6 @@ export default function addWirelessRouterForm({
                 {errors.parentName && (
                   <span className="text-red-500 text-[14px]">
                     {errors.parentName}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label for="switchName">New Router Name</label>
-                <br></br>
-                <input
-                  type="text"
-                  id="routerName"
-                  name="routerName"
-                  value={wrouterFormData.routerName}
-                  onChange={(e) => 
-                    setwrouterFormData((prevState) => ({
-                    ...prevState,
-                    routerName: e.target.value,
-                  }))
-                }
-                  required
-                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
-                />
-                {errors.routerName && (
-                  <span className="text-red-500 text-[14px]">
-                    {errors.routerName}
                   </span>
                 )}
               </div>
