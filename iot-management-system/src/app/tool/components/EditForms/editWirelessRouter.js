@@ -4,7 +4,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 
-export default function addWirelessRouterForm({
+export default function EditWirelessRouterForm({
   controlVariable,
   handleCloseFunction,
   handleSubmitFunction,

@@ -43,7 +43,7 @@ class wiredNode {
 }
 
 class wirelessNode {
-  constructor(Device_Name, floorNo, SSID, passwd = null) {
+  constructor(Device_Name, SSID, passwd = null) {
     this.name = Device_Name;
     this.SSID = SSID;
     this.passwd = passwd;
@@ -136,13 +136,16 @@ class networkTree {
   }
 
   addIotDevice(parentWrRouterName, Device) {
+    console.log("DEVICE",Device.name)
     if (this.nameList.includes(Device.name)) {
       console.log("ERROR: Name already exists");
       return;
     }
     let parent = this.searchElement(parentWrRouterName, Device.name, 0);
+    console.log("IOT, ", parent, Device);
     if (parent) {
       if (parent.SSID == Device.SSID) {
+        console.log("####",parent.passwd, Device.passwd)
         if (parent.passwd) {
           if (parent.passwd == Device.passwd) {
             parent.children.push(Device);
@@ -158,6 +161,7 @@ class networkTree {
         console.log("ERROR: Incorrect SSID");
       }
     }
+    console.log("IOT, ", parent);
   }
 
   addPC(parentNodeName, pcNode) {

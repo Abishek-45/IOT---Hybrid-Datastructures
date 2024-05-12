@@ -4,7 +4,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 
-export default function AddIoTForm({
+export default function EditIoTForm({
   controlVariable,
   handleCloseFunction,
   handleSubmitFunction,
