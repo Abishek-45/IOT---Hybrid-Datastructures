@@ -190,7 +190,8 @@ export default function Tool() {
         let sw = new SwitchNode(
           switchFormData.switchName,
           switchFormData.floorNo,
-          switchFormData.roomName
+          switchFormData.roomName,
+          switchFormData.networkip
         );
         mainNetwork.addSwitch(switchFormData.parentName, sw);
         mainNetwork.printElements();
