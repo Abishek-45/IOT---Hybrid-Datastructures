@@ -145,32 +145,30 @@ class networkTree {
   }
 
   addIotDevice(parentWrRouterName, Device) {
-    console.log("DEVICE",Device.name)
     if (this.nameList.includes(Device.name)) {
       console.log("ERROR: Name already exists");
       return;
     }
     let parent = this.searchElement(parentWrRouterName, Device.name, 0);
-    console.log("IOT, ", parent, Device);
     if (parent) {
-      if (parent.SSID == Device.SSID) {
-        console.log("####",parent.passwd, Device.passwd)
-        if (parent.passwd) {
-          if (parent.passwd == Device.passwd) {
+      if(parent instanceof(wrlessRouterNode)){
+        if (parent.SSID == Device.SSID) {
+          if (parent.passwd) {
+            if (parent.passwd == Device.passwd) {
+              parent.children.push(Device);
+              Device.parent = parent;
+            } else {
+              alert("ERROR: The password doesn't match");
+            }
+          } else {
             parent.children.push(Device);
             Device.parent = parent;
-          } else {
-            console.log("ERROR: The password doesn't match");
           }
         } else {
-          parent.children.push(Device);
-          Device.parent = parent;
+          alert("ERROR: Incorrect SSID");
         }
-      } else {
-        console.log("ERROR: Incorrect SSID");
       }
-    }
-    console.log("IOT, ", parent);
+      }
   }
 
   addPC(parentNodeName, pcNode) {
@@ -179,8 +177,25 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentNodeName, pcNode.name, 0);
-    parent.children.push(pcNode);
-    pcNode.parent = parent;
+    if(parent){
+      if(parent instanceof(SwitchNode)){
+        console.log("#########",parent)
+        const paParts = parent.network_ip.split(".");
+        console.log(paParts)
+        const Parts = pcNode.ip.split(".");
+        if(paParts[0]==Parts[0] && paParts[1]==Parts[1] && paParts[2]==Parts[2]){
+          parent.children.push(pcNode);
+          pcNode.parent = parent;
+        }
+        else{
+          alert("IP doesn't match with network ip");
+        }
+      }
+      else{
+        alert("Invalid Parent Type for PC");
+      }
+    }
+    
   }
 
   deleteNode(parentName, nodeName) {
@@ -244,36 +259,6 @@ class networkTree {
   }
 }
 
-let Router1 = new RouterNode("Router1", 0);
-let network = new networkTree(Router1);
-let Router2 = new RouterNode("Router2", 1);
-let Router3 = new RouterNode("Router3", 1);
-let Router4 = new RouterNode("Router4", 1);
-let Router5 = new RouterNode("Router5", 1);
-let Router6 = new RouterNode("Router6", 1);
-let Router7 = new RouterNode("Router7", 1);
-let Switch1 = new SwitchNode("Swtich1", 1, "Bedroom1", "179.18.1.160");
-let Switch2 = new SwitchNode("Swtich2", 1, "Bedroom2", "179.18.2.158");
-let PC1 = new wiredNode(
-  "PC1",
-  "1",
-  "Bathroom",
-  "192.168.152.2",
-  "255.255.255.0"
-);
-network.addRouter(network.root.name, Router2);
-network.addRouter(network.root.name, Router3);
-network.addRouter("Router2", Router4);
-network.addRouter("Router3", Router5);
-network.addRouter("Router2", Router6);
-network.addSwitch("Router4", Switch1);
-network.addSwitch("Router2", Switch2);
-network.addPC("Swtich2", PC1);
-network.printElements();
-network.deleteNode("Router4","Swtich1");
-console.log("##################")
-network.printElements();
-console.log(network.convertToTreeData(Router1));
 
 export {
   RouterNode,
