@@ -72,6 +72,27 @@ export default function EditSwitchForm({
                     }))
                   }
                   required
+                  className="border-[1px] border-[#08134e] rounded-md block pl-2 mb-4"
+                />
+                {errors.switchName && (
+                  <span className="text-red-500 text-[14px]">{errors.switchName}</span>
+                )}
+              </div>
+              <div>
+                <label for="switchName">New Switch Name</label>
+                <br></br>
+                <input
+                  type="text"
+                  id="switchName"
+                  name="switchName"
+                  value={switchFormData.switchName}
+                  onChange={(e) =>
+                    setSwitchFormData((prevState) => ({
+                      ...prevState,
+                      switchName: e.target.value,
+                    }))
+                  }
+                  required
                   className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
                 {errors.switchName && (
@@ -166,27 +187,6 @@ export default function EditSwitchForm({
                 />
                 {errors.parentName && (
                   <span className="text-red-500 text-[14px]">{errors.parentName}</span>
-                )}
-              </div>
-              <div>
-                <label for="switchName">New Switch Name</label>
-                <br></br>
-                <input
-                  type="text"
-                  id="switchName"
-                  name="switchName"
-                  value={switchFormData.switchName}
-                  onChange={(e) =>
-                    setSwitchFormData((prevState) => ({
-                      ...prevState,
-                      switchName: e.target.value,
-                    }))
-                  }
-                  required
-                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
-                />
-                {errors.switchName && (
-                  <span className="text-red-500 text-[14px]">{errors.switchName}</span>
                 )}
               </div>
             </div>

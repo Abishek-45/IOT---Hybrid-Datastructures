@@ -61,6 +61,27 @@ export default function EditPCForm({
                   }))
                 }
                 required
+                className="border-[1px] border-[#08134e] rounded-md block pl-2 mb-4"
+              />
+              {errors.PCName && (
+                  <span className="text-red-500 text-[14px]">{errors.PCName}</span>
+                )}
+            </div>
+            <div>
+              <label for="pcName">New PC Name</label>
+              <br></br>
+              <input
+                type="text"
+                id="pcName"
+                name="pcName"
+                value={pcFormData.PCName}
+                onChange={(e) =>
+                  setPCFormData((prevState) => ({
+                    ...prevState,
+                    PCName: e.target.value,
+                  }))
+                }
+                required
                 className="border-[1px] border-[#08134e] rounded-md block pl-2"
               />
               {errors.PCName && (
@@ -86,27 +107,6 @@ export default function EditPCForm({
               />
               {errors.parentName && (
                   <span className="text-red-500 text-[14px]">{errors.parentName}</span>
-                )}
-            </div>
-            <div>
-              <label for="pcName">New PC Name</label>
-              <br></br>
-              <input
-                type="text"
-                id="pcName"
-                name="pcName"
-                value={pcFormData.PCName}
-                onChange={(e) =>
-                  setPCFormData((prevState) => ({
-                    ...prevState,
-                    PCName: e.target.value,
-                  }))
-                }
-                required
-                className="border-[1px] border-[#08134e] rounded-md block pl-2"
-              />
-              {errors.PCName && (
-                  <span className="text-red-500 text-[14px]">{errors.PCName}</span>
                 )}
             </div>
             <div>
