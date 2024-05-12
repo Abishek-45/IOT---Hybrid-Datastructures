@@ -34,7 +34,7 @@ class wrlessRouterNode {
 }
 
 class wiredNode {
-  constructor(PC_Name, floorNo, ip) {
+  constructor(PC_Name,ip){
     this.name = PC_Name;
     this.ip = ip;
     this.state = 1;
@@ -56,7 +56,7 @@ class wirelessNode {
 class networkTree {
   constructor(root = null) {
     this.nameList = [];
-    this.floorList = [];
+    this.floorList = {};
     this.ipList = [];
     this.root = root;
     if (root != null) {
@@ -67,7 +67,7 @@ class networkTree {
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
-      this.floorList.push(0);
+      this.floorList["Home Router"]=0;
       this.root = router;
     }
   }
@@ -86,11 +86,10 @@ class networkTree {
       });
       newRouter.parent = parent;
       this.nameList.push(newRouter.name);
-      this.floorList.push(newRouter.floorNo);
+      this.floorList[newRouter.name]=newRouter.floorNo;
     }
   }
   printElements(node = this.root) {
-    // modification needed
     if (node.parent) console.log("Parent Node: ", node.parent.name);
     console.log("Current Node: ", node.name);
     console.log("\n");
@@ -108,12 +107,19 @@ class networkTree {
     }
     let parent = this.searchElement(parentRouterName, newSwitch.name, 1);
     if (parent) {
-      parent.routeTable.set(newSwitch, {
-        names: [newSwitch.name],
-        networks: [],
-      });
-      newSwitch.parent = parent;
-      this.nameList.push(newSwitch.name);
+      if(parent instanceof(RouterNode) && parentRouterName !== "Home Router"){
+        parent.routeTable.set(newSwitch, {
+          names: [newSwitch.name],
+          networks: [],
+        });
+        newSwitch.parent = parent;
+        this.nameList.push(newSwitch.name);
+        this.floorList[newSwitch.name]=newSwitch.floorNo;
+      }
+      else{
+        alert("Invalid Parent Type for Switch");
+      }
+      
     }
   }
 
@@ -123,15 +129,18 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentRouterName, newWrRouter.name, 1);
-    console.log("DDDDDDD:", parent);
     if (parent) {
-      console.log("PPPPPPPP", parent);
-      parent.routeTable.set(newWrRouter, {
-        names: [newWrRouter.name],
-        networks: [],
-      });
-      newWrRouter.parent = parent;
-      this.nameList.push(newWrRouter.name);
+      if(parent instanceof(RouterNode) && parentRouterName !== "Home Router"){
+        parent.routeTable.set(newWrRouter, {
+          names: [newWrRouter.name],
+          networks: [],
+        });
+        newWrRouter.parent = parent;
+        this.nameList.push(newWrRouter.name);
+      }
+      else{
+        alert("Invalid Parent Type for WireLess Router");
+      }
     }
   }
 
