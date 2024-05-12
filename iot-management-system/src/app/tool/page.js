@@ -238,7 +238,7 @@ export default function Tool() {
       alert("Parent do not exist");
       return;
     } else {
-      const parts = pcFormData.networkip.split(".");
+      const parts = pcFormData.ip.split(".");
         if (parts.length !== 4) {
           alert("Invalid IP");
           return ;
