@@ -360,9 +360,9 @@ export default function Tool() {
   };
 
   const deleteNodeFunction = () => {
+    console.log(deleteName, mainNetwork.nameList)
     if (mainNetwork.nameList.includes(deleteName)) {
       let parentName = findParent(data, deleteName);
-      console.log(parentName);
       mainNetwork.deleteNode(parentName, deleteName);
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
