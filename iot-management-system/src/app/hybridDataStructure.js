@@ -219,6 +219,27 @@ class networkTree {
       this.floorList[newRouter.name] = newRouter.floorNo;
     }
   }
+  editSwitch(parentName, oldSwitchName, newSwitch){
+    this.deleteNode(parentName, oldSwitchName);
+    if (this.nameList.includes(newSwitch.name)) {
+      console.log("ERROR: Name already exists");
+      return;
+    }
+    let parent = this.searchElement(parentName, newSwitch.name, 1);
+    if (parent) {
+      if (parent instanceof RouterNode && parentName !== "Home Router") {
+        parent.routeTable.set(newSwitch, {
+          names: [newSwitch.name],
+          networks: [],
+        });
+        newSwitch.parent = parent;
+        this.nameList.push(newSwitch.name);
+        this.floorList[newSwitch.name] = newSwitch.floorNo;
+      } else {
+        alert("Invalid Parent Type for Switch");
+      }
+    }
+  }
 
   deleteNode(parentName, nodeName) {
     let parent = this.searchElement(parentName, nodeName, 2);
@@ -228,9 +249,6 @@ class networkTree {
           parent.routeTable.delete(child);
         }
       }
-      console.log("#$",this.floorList)
-      delete this.floorList[nodeName];
-      console.log("#$",this.floorList)
     } else if (
       parent instanceof SwitchNode ||
       parent instanceof wrlessRouterNode
@@ -239,6 +257,9 @@ class networkTree {
         (child) => child.name !== nodeName
       );
     }
+    console.log("#$",this.floorList)
+    delete this.floorList[nodeName];
+    console.log("#$",this.floorList)
     this.nameList = this.nameList.filter((item) => item != nodeName);
   }
 

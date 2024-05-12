@@ -82,6 +82,13 @@ export default function Tool() {
     parentName: "",
   });
   const [switchToEdit, setSwitchToEdit] = useState("");
+  const [openSwitchEditForm, setOpenSwitchEditForm] = useState(false);
+  const editSwitchCloseFunction = () => {
+    setOpenSwitchEditForm(false);
+  };
+  const editSwitchOpenFunction = () => {
+    setOpenSwitchEditForm(true);
+  };
   const handleSwitchOpen = () => {
     setSwitchAdd(true);
   };
@@ -286,11 +293,6 @@ export default function Tool() {
   };
 
   const editRouterFunction = () => {
-    console.log(
-      routerToEdit,
-      mainNetwork.nameList,
-      mainNetwork.nameList.includes(routerToEdit)
-    );
     if (!mainNetwork.nameList.includes(routerToEdit)) {
       alert("Given router name is not present in network");
       return;
@@ -299,8 +301,23 @@ export default function Tool() {
         routerFormData.routerName,
         routerFormData.floorNo
       );
-      console.log("ROUTER:",router)
       mainNetwork.editRouter(routerFormData.parentName, routerToEdit, router);
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const editSwitchFunction = () => {
+    if (!mainNetwork.nameList.includes(switchToEdit)) {
+      alert("Given switch name is not present in network");
+      return;
+    } else {
+      let Switch = new SwitchNode(
+        switchFormData.switchName,
+        switchFormData.floorNo,
+        switchFormData.roomName,
+        switchFormData.networkip
+      );
+      mainNetwork.editSwitch(switchFormData.parentName, switchToEdit, Switch);
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
   };
@@ -351,6 +368,7 @@ export default function Tool() {
             handleDeviceOpen={handleDeviceOpen}
             handleDeleteOpen={handleDeleteFormOpen}
             handleRouterEdit={editRouterOpenFunction}
+            handleSwitchEdit={editSwitchOpenFunction}
           />
         </div>
         <AddRouterForm
@@ -403,6 +421,15 @@ export default function Tool() {
           setRouterFormData={setRouterFormData}
           routerToEdit={routerToEdit}
           setRouterToEdit={setRouterToEdit}
+        />
+        <EditSwitchForm
+          controlVariable={openSwitchEditForm}
+          handleCloseFunction={editSwitchCloseFunction}
+          handleSubmitFunction={editSwitchFunction}
+          switchFormData={switchFormData}
+          setSwitchFormData={setSwitchFormData}
+          switchToEdit={switchToEdit}
+          setSwitchToEdit={setSwitchToEdit}
         />
       </div>
     </main>
