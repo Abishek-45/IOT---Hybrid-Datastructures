@@ -7,6 +7,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 
 import { useState } from "react";
+import EditPCForm from "./EditForms/editPCForm";
 
 export default function AccordionMenu({
   handleRouterOpen,
@@ -18,6 +19,8 @@ export default function AccordionMenu({
   handleRouterEdit,
   handleSwitchEdit,
   handleWRouterEdit,
+  handlePCEdit,
+  handleDeviceEdit,
 }) {
   const [expanded, setExpanded] = useState("panel1");
 
@@ -150,7 +153,9 @@ export default function AccordionMenu({
               <div> Add Device</div>
               <IoMdAddCircle className="h-6 w-6" />
             </div>
-            <div className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+            <div className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+            onClick={handleDeviceEdit}
+            >
               <div> Edit Device</div>
               <MdEdit className="h-6 w-6" />
             </div>
@@ -182,7 +187,9 @@ export default function AccordionMenu({
               <div>Add PC</div>
               <IoMdAddCircle className="h-6 w-6" />
             </div>
-            <div className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+            <div className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+            onClick={handlePCEdit}
+            >
               <div>Edit PC</div>
               <MdEdit className="h-6 w-6" />
             </div>
