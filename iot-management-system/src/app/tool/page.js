@@ -12,6 +12,12 @@ import AddPCForm from "./components/AddForms/addPCForm";
 
 import DeleteForm from "./components/DeleteForms/deleteForm";
 
+import EditRouterForm from "./components/EditForms/editRouterForm";
+import EditSwitchForm from "./components/EditForms/editSwitchForm";
+import EditWirelessRouterForm from "./components/EditForms/editWirelessRouter";
+import EditPCForm from "./components/EditForms/editPCForm";
+import EditIoTForm from "./components/EditForms/editIoTForm";
+
 import AccordionMenu from "./components/AccordianMenu";
 
 import {
@@ -33,6 +39,15 @@ export default function Tool() {
     floorNo: "",
     parentName: "Home Router",
   });
+  const [routerToEdit, setRouterToEdit] = useState("");
+  const [openRouterEditForm, setOpenRouterEditForm] = useState(false);
+  const editRouterCloseFunction = ()=>{
+    setOpenRouterEditForm(false);
+  }
+  const editRouterOpenFunction = ()=>{
+    setOpenRouterEditForm(true);
+  }
+
   const [data, setData] = useState({});
   const [deleteName, setDeleteName] = useState("");
   const handleDeleteFormOpen = () => {
@@ -64,6 +79,7 @@ export default function Tool() {
     networkip: "",
     parentName: "",
   });
+  const [switchToEdit, setSwitchToEdit] = useState("")
   const handleSwitchOpen = () => {
     setSwitchAdd(true);
   };
@@ -81,6 +97,7 @@ export default function Tool() {
     SSID: "",
     passwd: "",
   });
+  const [wrouterToEdit, setWRouterToEdit] = useState("")
   const handleWRouterOpen = () => {
     setWRouterAdd(true);
   };
@@ -92,12 +109,11 @@ export default function Tool() {
   const [deviceAdd, setDeviceAdd] = useState(false);
   const [deviceFormData, setDeviceFormData] = useState({
     deviceName: "",
-    roomName: "",
     SSID: "",
     passwd: "",
     parentName:"",
   });
-
+  const [deviceToEdit, setDeviceToEdit] = useState("")
   const handleDeviceOpen = () => {
     setDeviceAdd(true);
   };
@@ -112,7 +128,7 @@ export default function Tool() {
     parentName: "",
     ip: "",
   });
-
+  const [pcToEdit, setPCToEdit] = useState("")
   const handlePcOpen = () => {
     setPCAdd(true);
   };
@@ -126,7 +142,7 @@ export default function Tool() {
       alert("Name already present!");
       return;
     }
-    if (mainNetwork.floorList.includes(routerFormData.floorNo)) {
+    if (Object.values(mainNetwork.floorList).includes(routerFormData.floorNo)) {
       alert("Floor already present!");
       return;
     } else {
@@ -153,10 +169,9 @@ export default function Tool() {
       alert("Parent do not exist");
       return;
     } else {
-      let fl = mainNetwork.floorList.indexOf(switchFormData.floorNo);
-      let pn = mainNetwork.nameList.indexOf(switchFormData.parentName);
-      if (pn !== fl + 1) {
+      if (mainNetwork.floorList[switchFormData.parentName]!==switchFormData.floorNo) {
         alert("Parent name and floor no doesn't match");
+        return;
       } else {
         const parts = switchFormData.networkip.split(".");
         if (parts.length !== 4) {
@@ -192,10 +207,9 @@ export default function Tool() {
       alert("Parent do not exist");
       return;
     } else {
-      let fl = mainNetwork.floorList.indexOf(wrouterFormData.floorNo);
-      let pn = mainNetwork.nameList.indexOf(wrouterFormData.parentName);
-      if (pn !== fl + 1) {
+      if (mainNetwork.floorList[wrouterFormData.parentName]!==wrouterFormData.floorNo) {
         alert("Parent name and floor no doesn't match");
+        return;
       } else {
         let wrRouter = new wrlessRouterNode(
           wrouterFormData.routerName,
@@ -215,10 +229,7 @@ export default function Tool() {
     if (mainNetwork.nameList.includes(deviceFormData.deviceName)) {
       alert("Name already present!");
     }
-    if (mainNetwork.floorList.includes(deviceFormData.floorNo)) {
-      alert("Floor already present!");
-      return;
-    } else {
+    else {
       let newDevice = new wirelessNode(
         deviceFormData.deviceName,
         deviceFormData.SSID,
@@ -261,6 +272,7 @@ export default function Tool() {
   const deleteNodeFunction = ()=>{
     if (mainNetwork.nameList.includes(deleteName)) {
       let parentName = findParent(data, deleteName);
+      console.log(parentName)
       mainNetwork.deleteNode(parentName, deleteName);
       setData(mainNetwork.convertToTreeData(mainNetwork.root))
     }
@@ -302,6 +314,7 @@ export default function Tool() {
             handlePcOpen={handlePcOpen}
             handleDeviceOpen={handleDeviceOpen}
             handleDeleteOpen={handleDeleteFormOpen}
+            handleRouterEdit = {editRouterOpenFunction}
           />
         </div>
         <AddRouterForm
@@ -346,6 +359,7 @@ export default function Tool() {
           toDeleteName={deleteName}
           setToDeleteName={setDeleteName}
         />
+        <EditRouterForm controlVariable={openRouterEditForm} handleCloseFunction={editRouterCloseFunction} routerFormData={routerFormData} setRouterFormData={setRouterFormData} />
       </div>
     </main>
   );
