@@ -1,8 +1,11 @@
+
+
+
 class RouterNode {
   constructor(routerName, floorNo) {
     this.name = routerName;
     this.floorNo = floorNo;
-    this.routeTable = new Map(); // routerObject : { names: [], networks: [] },
+    this.routeTable = new Map(); 
     this.subnetMask = "255.255.255.0";
     this.parent = null;
   }
@@ -56,8 +59,7 @@ class wirelessNode {
 class networkTree {
   constructor(root = null) {
     this.nameList = [];
-    this.floorList = {};
-    this.ipList = [];
+    this.floorList = {}; 
     this.root = root;
     if (root != null) {
       this.nameList.push(root.name);
@@ -102,7 +104,7 @@ class networkTree {
 
   addSwitch(parentRouterName, newSwitch) {
     if (this.nameList.includes(newSwitch.name)) {
-      console.log("ERROR: Name already exists");
+      console.log("ERROR: Name already exists");s
       return;
     }
     let parent = this.searchElement(parentRouterName, newSwitch.name, 1);
@@ -173,15 +175,12 @@ class networkTree {
 
   addPC(parentNodeName, pcNode) {
     if (this.nameList.includes(pcNode.name)) {
-      console.log("ERROR: Name already exists");
       return;
     }
     let parent = this.searchElement(parentNodeName, pcNode.name, 0);
     if(parent){
       if(parent instanceof(SwitchNode)){
-        console.log("#########",parent)
         const paParts = parent.network_ip.split(".");
-        console.log(paParts)
         const Parts = pcNode.ip.split(".");
         if(paParts[0]==Parts[0] && paParts[1]==Parts[1] && paParts[2]==Parts[2]){
           parent.children.push(pcNode);
@@ -230,6 +229,7 @@ class networkTree {
       }
     }
   }
+  
   convertToTreeData(node) {
     const treeData = {
       name: node.name,
