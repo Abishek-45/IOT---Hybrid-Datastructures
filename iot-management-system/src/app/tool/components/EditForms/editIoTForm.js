@@ -10,6 +10,8 @@ export default function EditIoTForm({
   handleSubmitFunction,
   deviceFormData,
   setDeviceFormData,
+  deviceToEdit,
+  setDeviceToEdit,
 }) {
   const [errors, setErrors] = useState({});
 
@@ -57,13 +59,8 @@ export default function EditIoTForm({
                   type="text"
                   id="deviceName"
                   name="deviceName"
-                  value={deviceFormData.deviceName}
-                  onChange={(e) =>
-                    setDeviceFormData((prevState) => ({
-                      ...prevState,
-                      deviceName: e.target.value,
-                    }))
-                  }
+                  value={deviceToEdit}
+                  onChange={(e) => setDeviceToEdit(e.target.value)}
                   required
                   className="border-[1px] border-[#08134e] rounded-md block pl-2 mb-4"
                 />
@@ -95,29 +92,29 @@ export default function EditIoTForm({
                     {errors.deviceName}
                   </span>
                 )}
-              <div>
-                <label htmlFor="parentName">Parent Name</label>
-                <br />
-                <input
-                  type="text"
-                  id="parentName"
-                  name="parentName"
-                  required
-                  value={deviceFormData.parentName}
-                  onChange={(e) =>
-                    setDeviceFormData((prevState) => ({
-                      ...prevState,
-                      parentName: e.target.value,
-                    }))
-                  }
-                  className="border-[1px] border-[#08134e] rounded-md block pl-2"
-                />
-                {errors.parentName && (
-                  <span className="text-red-500 text-[14px]">
-                    {errors.parentName}
-                  </span>
-                )}
-              </div>
+                <div>
+                  <label htmlFor="parentName">Parent Name</label>
+                  <br />
+                  <input
+                    type="text"
+                    id="parentName"
+                    name="parentName"
+                    required
+                    value={deviceFormData.parentName}
+                    onChange={(e) =>
+                      setDeviceFormData((prevState) => ({
+                        ...prevState,
+                        parentName: e.target.value,
+                      }))
+                    }
+                    className="border-[1px] border-[#08134e] rounded-md block pl-2"
+                  />
+                  {errors.parentName && (
+                    <span className="text-red-500 text-[14px]">
+                      {errors.parentName}
+                    </span>
+                  )}
+                </div>
               </div>
               <div>
                 <label htmlFor="SSID" className="">
