@@ -107,6 +107,13 @@ export default function Tool() {
     passwd: "",
   });
   const [wrouterToEdit, setWRouterToEdit] = useState("");
+  const [openWRouterEditForm, setOpenWRouterEditForm] = useState(false);
+  const editWRouterCloseFunction = () => {
+    setOpenWRouterEditForm(false);
+  };
+  const editWRouterOpenFunction = () => {
+    setOpenWRouterEditForm(true);
+  };
   const handleWRouterOpen = () => {
     setWRouterAdd(true);
   };
@@ -317,7 +324,37 @@ export default function Tool() {
         switchFormData.roomName,
         switchFormData.networkip
       );
-      mainNetwork.editSwitch(switchFormData.parentName, switchToEdit, Switch);
+      let oldParent = findParent(data, switchToEdit);
+      console.log("$$$$$$$$$$$$$",oldParent)
+      mainNetwork.editSwitch(
+        switchFormData.parentName,
+        oldParent,
+        switchToEdit,
+        Switch
+      );
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const editWRouterFunction = () => {
+    if (!mainNetwork.nameList.includes(wrouterToEdit)) {
+      alert("Given router name is not present in network");
+      return;
+    } else {
+      let WRouter = new wrlessRouterNode(
+        wrouterFormData.routerName,
+        wrouterFormData.floorNo,
+        wrouterFormData.roomName,
+        wrouterFormData.SSID,
+        wrouterFormData.passwd
+      );
+      let oldParent = findParent(data, wrouterToEdit);
+      mainNetwork.editWRouter(
+        wrouterFormData.parentName,
+        oldParent,
+        wrouterToEdit,
+        WRouter
+      );
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
   };
@@ -369,6 +406,7 @@ export default function Tool() {
             handleDeleteOpen={handleDeleteFormOpen}
             handleRouterEdit={editRouterOpenFunction}
             handleSwitchEdit={editSwitchOpenFunction}
+            handleWRouterEdit={editWRouterOpenFunction}
           />
         </div>
         <AddRouterForm
@@ -430,6 +468,15 @@ export default function Tool() {
           setSwitchFormData={setSwitchFormData}
           switchToEdit={switchToEdit}
           setSwitchToEdit={setSwitchToEdit}
+        />
+        <EditWirelessRouterForm
+          controlVariable={openWRouterEditForm}
+          handleCloseFunction={editWRouterCloseFunction}
+          handleSubmitFunction={editWRouterFunction}
+          wrouterFormData={wrouterFormData}
+          setwrouterFormData={setwrouterFormData}
+          wrouterToEdit={wrouterToEdit}
+          setwrouterToEdit={setWRouterToEdit}
         />
       </div>
     </main>
