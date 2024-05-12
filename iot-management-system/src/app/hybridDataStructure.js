@@ -177,9 +177,7 @@ class networkTree {
     let parent = this.searchElement(parentNodeName, pcNode.name, 0);
     if (parent) {
       if (parent instanceof SwitchNode) {
-        console.log("#########", parent);
         const paParts = parent.network_ip.split(".");
-        console.log(paParts);
         const Parts = pcNode.ip.split(".");
         if (
           paParts[0] == Parts[0] &&
@@ -219,8 +217,13 @@ class networkTree {
       this.floorList[newRouter.name] = newRouter.floorNo;
     }
   }
-  editSwitch(parentName, oldSwitchName, newSwitch){
-    this.deleteNode(parentName, oldSwitchName);
+  editSwitch(parentName, oldParent, oldSwitchName, newSwitch){
+    console.log("Before Editing")
+    this.printElements()
+    this.deleteNode(oldParent, oldSwitchName);
+    console.log("Before Editing but after deleting")
+    this.printElements()
+    console.log(parentName, oldSwitchName, newSwitch);
     if (this.nameList.includes(newSwitch.name)) {
       console.log("ERROR: Name already exists");
       return;
@@ -241,6 +244,27 @@ class networkTree {
     }
   }
 
+  editWRouter(parentRouterName, oldParent, oldWRouterName, newWrRouter){
+    this.deleteNode(oldParent, oldWRouterName);
+    if (this.nameList.includes(newWrRouter.name)) {
+      console.log("ERROR: Name already exists");
+      return;
+    }
+    let parent = this.searchElement(parentRouterName, newWrRouter.name, 1);
+    if (parent) {
+      if (parent instanceof RouterNode && parentRouterName !== "Home Router") {
+        parent.routeTable.set(newWrRouter, {
+          names: [newWrRouter.name],
+          networks: [],
+        });
+        newWrRouter.parent = parent;
+        this.nameList.push(newWrRouter.name);
+      } else {
+        alert("Invalid Parent Type for WireLess Router");
+      }
+    }
+  }
+
   deleteNode(parentName, nodeName) {
     let parent = this.searchElement(parentName, nodeName, 2);
     if (parent instanceof RouterNode) {
@@ -257,10 +281,10 @@ class networkTree {
         (child) => child.name !== nodeName
       );
     }
-    console.log("#$",this.floorList)
     delete this.floorList[nodeName];
-    console.log("#$",this.floorList)
     this.nameList = this.nameList.filter((item) => item != nodeName);
+    console.log("Before Editing but after deleting inside delete function")
+    this.printElements()
   }
 
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
