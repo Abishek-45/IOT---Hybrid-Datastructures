@@ -55,12 +55,12 @@ export default function addWirelessRouterForm({
   return (
     <Dialog open={controlVariable} onClose={handleCloseFunction} className="">
       <div className="bg-[#CADCFC] ">
-        <DialogTitle className="p-5  px-14">Add Wireless Router</DialogTitle>
+        <DialogTitle className="p-5  px-14">Edit Wireless Router</DialogTitle>
         <DialogContent className="my-2">
           <DialogContentText className="pr-14 pl-8">
             <div className="flex flex-col gap-3">
               <div>
-                <label for="switchName">Router Name</label>
+                <label for="switchName">Current Router Name</label>
                 <br></br>
                 <input
                   type="text"
