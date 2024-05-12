@@ -16,6 +16,8 @@ export default function AccordionMenu({
   handleDeviceOpen,
   handleDeleteOpen,
   handleRouterEdit,
+  handleSwitchEdit,
+  handleWRouterEdit,
 }) {
   const [expanded, setExpanded] = useState("panel1");
 
@@ -78,7 +80,10 @@ export default function AccordionMenu({
               <div> Add Switch</div>
               <IoMdAddCircle className="h-6 w-6" />
             </div>
-            <div className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+            <div
+              className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+              onClick={handleSwitchEdit}
+            >
               <div> Edit Switch</div>
               <MdEdit className="h-6 w-6" />
             </div>
@@ -110,7 +115,10 @@ export default function AccordionMenu({
               <div>Add Router</div>
               <IoMdAddCircle className="h-6 w-6" />
             </div>
-            <div className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer">
+            <div
+              className="bg-white text-black rounded-xl p-2 flex flex-row justify-between cursor-pointer"
+              onClick={handleWRouterEdit}
+            >
               <div>Edit Router</div>
               <MdEdit className="h-6 w-6" />
             </div>
