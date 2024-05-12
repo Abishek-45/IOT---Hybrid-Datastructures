@@ -68,12 +68,33 @@ export default function EditRouterForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2 mb-4"
                 />
                 {errors.routerName && (
                   <span className="text-red-500 text-[14px]">{errors.routerName}</span>
                 )}
               </div>
+              <div>
+                <label htmlFor="newRouterName">New Router Name</label>
+                <br />
+                <input
+                    type="text"
+                    id="newRouterName"
+                    name="routerName"
+                    value={routerFormData.routerName}
+                    onChange={(e) =>
+                    setRouterFormData((prevState) => ({
+                        ...prevState,
+                        routerName: e.target.value,
+                    }))
+                    }
+                    required
+                    className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
+                />
+                {errors.routerName && (
+                    <span className="text-red-500 text-[14px]">{errors.routerName}</span>
+                )}
+            </div>
               <div>
                 <label htmlFor="floorNo" className="">
                   Floor Number
@@ -114,27 +135,6 @@ export default function EditRouterForm({
                   <span className="text-red-500 text-[14px]">{errors.parentName}</span>
                 )}
               </div>
-            </div>
-            <div>
-                <label htmlFor="newRouterName">New Router Name</label>
-                <br />
-                <input
-                    type="text"
-                    id="newRouterName"
-                    name="routerName"
-                    value={routerFormData.routerName}
-                    onChange={(e) =>
-                    setRouterFormData((prevState) => ({
-                        ...prevState,
-                        routerName: e.target.value,
-                    }))
-                    }
-                    required
-                    className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
-                />
-                {errors.routerName && (
-                    <span className="text-red-500 text-[14px]">{errors.routerName}</span>
-                )}
             </div>
 
             <div className="flex flex-row justify-end gap-4 mt-5">
