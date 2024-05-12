@@ -142,7 +142,7 @@ export default function Tool() {
       alert("Name already present!");
       return;
     }
-    if (mainNetwork.floorList.includes(routerFormData.floorNo)) {
+    if (Object.values(mainNetwork.floorList).includes(routerFormData.floorNo)) {
       alert("Floor already present!");
       return;
     } else {
@@ -169,10 +169,9 @@ export default function Tool() {
       alert("Parent do not exist");
       return;
     } else {
-      let fl = mainNetwork.floorList.indexOf(switchFormData.floorNo);
-      let pn = mainNetwork.nameList.indexOf(switchFormData.parentName);
-      if (pn !== fl + 1) {
+      if (mainNetwork.floorList[switchFormData.parentName]!==switchFormData.floorNo) {
         alert("Parent name and floor no doesn't match");
+        return;
       } else {
         const parts = switchFormData.networkip.split(".");
         if (parts.length !== 4) {
@@ -208,10 +207,9 @@ export default function Tool() {
       alert("Parent do not exist");
       return;
     } else {
-      let fl = mainNetwork.floorList.indexOf(wrouterFormData.floorNo);
-      let pn = mainNetwork.nameList.indexOf(wrouterFormData.parentName);
-      if (pn !== fl + 1) {
+      if (mainNetwork.floorList[wrouterFormData.parentName]!==wrouterFormData.floorNo) {
         alert("Parent name and floor no doesn't match");
+        return;
       } else {
         let wrRouter = new wrlessRouterNode(
           wrouterFormData.routerName,
