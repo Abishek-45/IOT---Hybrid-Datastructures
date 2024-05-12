@@ -17,7 +17,7 @@ export default function EditRouterForm({
 
   const validateForm = () => {
     const newErrors = {};
- 
+
     if (!routerFormData.routerName) {
       newErrors.routerName = "Router Name is required";
     }
@@ -27,17 +27,15 @@ export default function EditRouterForm({
     if (!routerFormData.parentName) {
       newErrors.parentName = "Parent Name is required";
     }
-  
+
     if (!Number.isInteger(Number(routerFormData.floorNo))) {
       newErrors.floorNo = "Floor Number must be an integer";
     }
-  
-  
+
     setErrors(newErrors);
-  
+
     return Object.keys(newErrors).length === 0;
   };
-  
 
   const handleFormSubmit = () => {
     const isValid = validateForm();
@@ -60,6 +58,24 @@ export default function EditRouterForm({
                   type="text"
                   id="routerName"
                   name="routerName"
+                  value={routerToEdit}
+                  onChange={(e) => setRouterToEdit(e.target.value)}
+                  required
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2 mb-4"
+                />
+                {errors.routerName && (
+                  <span className="text-red-500 text-[14px]">
+                    {errors.routerName}
+                  </span>
+                )}
+              </div>
+              <div>
+                <label htmlFor="newRouterName">New Router Name</label>
+                <br />
+                <input
+                  type="text"
+                  id="newRouterName"
+                  name="routerName"
                   value={routerFormData.routerName}
                   onChange={(e) =>
                     setRouterFormData((prevState) => ({
@@ -68,33 +84,14 @@ export default function EditRouterForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2 mb-4"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
                 />
                 {errors.routerName && (
-                  <span className="text-red-500 text-[14px]">{errors.routerName}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.routerName}
+                  </span>
                 )}
               </div>
-              <div>
-                <label htmlFor="newRouterName">New Router Name</label>
-                <br />
-                <input
-                    type="text"
-                    id="newRouterName"
-                    name="routerName"
-                    value={routerFormData.routerName}
-                    onChange={(e) =>
-                    setRouterFormData((prevState) => ({
-                        ...prevState,
-                        routerName: e.target.value,
-                    }))
-                    }
-                    required
-                    className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
-                />
-                {errors.routerName && (
-                    <span className="text-red-500 text-[14px]">{errors.routerName}</span>
-                )}
-            </div>
               <div>
                 <label htmlFor="floorNo" className="">
                   Floor Number
@@ -115,7 +112,9 @@ export default function EditRouterForm({
                   className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
                 />
                 {errors.floorNo && (
-                  <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.floorNo}
+                  </span>
                 )}
               </div>
 
@@ -132,7 +131,9 @@ export default function EditRouterForm({
                   className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
                 />
                 {errors.parentName && (
-                  <span className="text-red-500 text-[14px]">{errors.parentName}</span>
+                  <span className="text-red-500 text-[14px]">
+                    {errors.parentName}
+                  </span>
                 )}
               </div>
             </div>
