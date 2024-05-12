@@ -34,7 +34,7 @@ class wrlessRouterNode {
 }
 
 class wiredNode {
-  constructor(PC_Name,ip){
+  constructor(PC_Name, ip) {
     this.name = PC_Name;
     this.ip = ip;
     this.state = 1;
@@ -61,13 +61,14 @@ class networkTree {
     this.root = root;
     if (root != null) {
       this.nameList.push(root.name);
+      this.floorList[root.name] = root.floorNo;
     }
   }
 
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
-      this.floorList["Home Router"]=0;
+      this.floorList["Home Router"] = 0;
       this.root = router;
     }
   }
@@ -86,7 +87,7 @@ class networkTree {
       });
       newRouter.parent = parent;
       this.nameList.push(newRouter.name);
-      this.floorList[newRouter.name]=newRouter.floorNo;
+      this.floorList[newRouter.name] = newRouter.floorNo;
     }
   }
   printElements(node = this.root) {
@@ -107,19 +108,17 @@ class networkTree {
     }
     let parent = this.searchElement(parentRouterName, newSwitch.name, 1);
     if (parent) {
-      if(parent instanceof(RouterNode) && parentRouterName !== "Home Router"){
+      if (parent instanceof RouterNode && parentRouterName !== "Home Router") {
         parent.routeTable.set(newSwitch, {
           names: [newSwitch.name],
           networks: [],
         });
         newSwitch.parent = parent;
         this.nameList.push(newSwitch.name);
-        this.floorList[newSwitch.name]=newSwitch.floorNo;
-      }
-      else{
+        this.floorList[newSwitch.name] = newSwitch.floorNo;
+      } else {
         alert("Invalid Parent Type for Switch");
       }
-      
     }
   }
 
@@ -130,15 +129,14 @@ class networkTree {
     }
     let parent = this.searchElement(parentRouterName, newWrRouter.name, 1);
     if (parent) {
-      if(parent instanceof(RouterNode) && parentRouterName !== "Home Router"){
+      if (parent instanceof RouterNode && parentRouterName !== "Home Router") {
         parent.routeTable.set(newWrRouter, {
           names: [newWrRouter.name],
           networks: [],
         });
         newWrRouter.parent = parent;
         this.nameList.push(newWrRouter.name);
-      }
-      else{
+      } else {
         alert("Invalid Parent Type for WireLess Router");
       }
     }
@@ -151,7 +149,7 @@ class networkTree {
     }
     let parent = this.searchElement(parentWrRouterName, Device.name, 0);
     if (parent) {
-      if(parent instanceof(wrlessRouterNode)){
+      if (parent instanceof wrlessRouterNode) {
         if (parent.SSID == Device.SSID) {
           if (parent.passwd) {
             if (parent.passwd == Device.passwd) {
@@ -168,7 +166,7 @@ class networkTree {
           alert("ERROR: Incorrect SSID");
         }
       }
-      }
+    }
   }
 
   addPC(parentNodeName, pcNode) {
@@ -177,40 +175,71 @@ class networkTree {
       return;
     }
     let parent = this.searchElement(parentNodeName, pcNode.name, 0);
-    if(parent){
-      if(parent instanceof(SwitchNode)){
-        console.log("#########",parent)
+    if (parent) {
+      if (parent instanceof SwitchNode) {
+        console.log("#########", parent);
         const paParts = parent.network_ip.split(".");
-        console.log(paParts)
+        console.log(paParts);
         const Parts = pcNode.ip.split(".");
-        if(paParts[0]==Parts[0] && paParts[1]==Parts[1] && paParts[2]==Parts[2]){
+        if (
+          paParts[0] == Parts[0] &&
+          paParts[1] == Parts[1] &&
+          paParts[2] == Parts[2]
+        ) {
           parent.children.push(pcNode);
           pcNode.parent = parent;
-        }
-        else{
+        } else {
           alert("IP doesn't match with network ip");
         }
-      }
-      else{
+      } else {
         alert("Invalid Parent Type for PC");
       }
     }
-    
+  }
+
+  editRouter(parentRouterName, oldRouterName, newRouter) {
+    this.deleteNode(parentRouterName, oldRouterName);
+    if (this.nameList.includes(newRouter.name)) {
+      console.log("ERROR: Name already exists");
+      return;
+    }
+    if (Object.values(this.floorList).includes(newRouter.floorNo)) {
+      alert("Floor already present!");
+      return;
+    }
+    let parent = this.searchElement(parentRouterName, newRouter.name, 1);
+    if (!parent) {
+    } else {
+      parent.routeTable.set(newRouter, {
+        names: [newRouter.name],
+        networks: [],
+      });
+      newRouter.parent = parent;
+      this.nameList.push(newRouter.name);
+      this.floorList[newRouter.name] = newRouter.floorNo;
+    }
   }
 
   deleteNode(parentName, nodeName) {
     let parent = this.searchElement(parentName, nodeName, 2);
-    if(parent instanceof RouterNode){
+    if (parent instanceof RouterNode) {
       for (let [child, _] of parent.routeTable.entries()) {
-        if(child.name == nodeName){
+        if (child.name == nodeName) {
           parent.routeTable.delete(child);
         }
       }
-      delete this.floorList[nodeName]
-    } else if(parent instanceof SwitchNode || parent instanceof wrlessRouterNode){
-      parent.children = parent.children.filter(child => child.name !== nodeName);
+      console.log("#$",this.floorList)
+      delete this.floorList[nodeName];
+      console.log("#$",this.floorList)
+    } else if (
+      parent instanceof SwitchNode ||
+      parent instanceof wrlessRouterNode
+    ) {
+      parent.children = parent.children.filter(
+        (child) => child.name !== nodeName
+      );
     }
-    this.nameList = this.nameList.filter((item)=> item!=nodeName);
+    this.nameList = this.nameList.filter((item) => item != nodeName);
   }
 
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
@@ -235,31 +264,41 @@ class networkTree {
       name: node.name,
       children: [],
     };
-
+  
+    if (node instanceof RouterNode) {
+      treeData.attributes = { floorNo: node.floorNo };
+    } else if (node instanceof SwitchNode || node instanceof wrlessRouterNode) {
+      treeData.attributes = { floorNo: node.floorNo, roomName: node.roomName };
+      if (node instanceof SwitchNode) {
+        treeData.attributes.networkIP = node.network_ip;
+      } else if (node instanceof wrlessRouterNode) {
+        treeData.attributes.SSID = node.SSID;
+        treeData.attributes.password = node.passwd;
+      }
+    } else if (node instanceof wiredNode || node instanceof wirelessNode) {
+      treeData.attributes = { ip: node.ip };
+      if (node instanceof wirelessNode) {
+        treeData.attributes.SSID = node.SSID;
+        treeData.attributes.password = node.passwd;
+      }
+    }
+  
     if (node instanceof RouterNode && node.routeTable) {
       for (let [childNode, _] of node.routeTable.entries()) {
         const childTreeData = this.convertToTreeData(childNode);
         treeData.children.push(childTreeData);
       }
-    } else {
-      if (node instanceof SwitchNode) {
-        for (let child of node.children) {
-          const childTreeData = this.convertToTreeData(child);
-          treeData.children.push(childTreeData);
-        }
-      } else if (node instanceof wrlessRouterNode) {
-        for (let child of node.children) {
-          const childTreeData = this.convertToTreeData(child);
-          treeData.children.push(childTreeData);
-        }
-      } else if (node instanceof wiredNode || node instanceof wirelessNode) {
-        // No children for wiredNode or wirelessNode
+    } else if (node instanceof SwitchNode || node instanceof wrlessRouterNode) {
+      for (let child of node.children) {
+        const childTreeData = this.convertToTreeData(child);
+        treeData.children.push(childTreeData);
       }
     }
+  
     return treeData;
   }
+  
 }
-
 
 export {
   RouterNode,
