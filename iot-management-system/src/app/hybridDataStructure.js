@@ -205,72 +205,25 @@ class networkTree {
 
   editRouter(parentRouterName, oldRouterName, newRouter) {
     this.deleteNode(parentRouterName, oldRouterName);
-    if (this.nameList.includes(newRouter.name)) {
-      console.log("ERROR: Name already exists");
-      return;
-    }
-    if (Object.values(this.floorList).includes(newRouter.floorNo)) {
-      alert("Floor already present!");
-      return;
-    }
-    let parent = this.searchElement(parentRouterName, newRouter.name, 1);
-    if (!parent) {
-    } else {
-      parent.routeTable.set(newRouter, {
-        names: [newRouter.name],
-        networks: [],
-      });
-      newRouter.parent = parent;
-      this.nameList.push(newRouter.name);
-      this.floorList[newRouter.name] = newRouter.floorNo;
-    }
+    this.addRouter(parentRouterName,newRouter)
   }
   editSwitch(parentName, oldParent, oldSwitchName, newSwitch){
-    console.log("Before Editing")
-    this.printElements()
     this.deleteNode(oldParent, oldSwitchName);
-    console.log("Before Editing but after deleting")
-    this.printElements()
-    console.log(parentName, oldSwitchName, newSwitch);
-    if (this.nameList.includes(newSwitch.name)) {
-      console.log("ERROR: Name already exists");
-      return;
-    }
-    let parent = this.searchElement(parentName, newSwitch.name, 1);
-    if (parent) {
-      if (parent instanceof RouterNode && parentName !== "Home Router") {
-        parent.routeTable.set(newSwitch, {
-          names: [newSwitch.name],
-          networks: [],
-        });
-        newSwitch.parent = parent;
-        this.nameList.push(newSwitch.name);
-        this.floorList[newSwitch.name] = newSwitch.floorNo;
-      } else {
-        alert("Invalid Parent Type for Switch");
-      }
-    }
+    this.addSwitch(parentName,newSwitch)
   }
 
   editWRouter(parentRouterName, oldParent, oldWRouterName, newWrRouter){
     this.deleteNode(oldParent, oldWRouterName);
-    if (this.nameList.includes(newWrRouter.name)) {
-      console.log("ERROR: Name already exists");
-      return;
-    }
-    let parent = this.searchElement(parentRouterName, newWrRouter.name, 1);
-    if (parent) {
-      if (parent instanceof RouterNode && parentRouterName !== "Home Router") {
-        parent.routeTable.set(newWrRouter, {
-          names: [newWrRouter.name],
-          networks: [],
-        });
-        newWrRouter.parent = parent;
-        this.nameList.push(newWrRouter.name);
-      } else {
-        alert("Invalid Parent Type for WireLess Router");
-      }
-    }
+    this.addWrRouter(parentRouterName,newWrRouter)
+  }
+  editPC(parentNodeName, oldParent, oldPCName, pcNode){
+    this.deleteNode(oldParent, oldPCName);
+    this.addPC(parentNodeName, pcNode)
+  }
+
+  editDevice(parentNodeName, oldParent, oldDeviceName, deviceNode){
+    this.deleteNode(oldParent, oldDeviceName);
+    this.addIotDevice(parentNodeName, deviceNode)
   }
 
   deleteNode(parentName, nodeName) {
