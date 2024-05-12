@@ -4,7 +4,7 @@ export default function Doc() {
     return (
         <main className="min-h-screen flex flex-col justify-center items-center bg-[#CADCFC]">
             <Navbar />
-            <div className="container mx-auto p-8 bg-[#CADCFC] rounded-lg shadow-lg mt-8">
+            <div className="container mx-auto p-8 bg-[#CADCFC] rounded-lg shadow-lg mt-11 mb-11">
                 <div className="max-w-[80%] mx-auto">
                 <h1 className="font-bold text-4xl text-gray-900">Documentation</h1>
                 <br />
