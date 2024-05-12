@@ -206,10 +206,11 @@ class networkTree {
           parent.routeTable.delete(child);
         }
       }
+      delete this.floorList[nodeName]
     } else if(parent instanceof SwitchNode || parent instanceof wrlessRouterNode){
       parent.children = parent.children.filter(child => child.name !== nodeName);
     }
-
+    this.nameList = this.nameList.filter((item)=> item!=nodeName);
   }
 
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
