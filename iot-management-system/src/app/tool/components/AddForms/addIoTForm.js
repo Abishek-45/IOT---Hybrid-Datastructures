@@ -63,7 +63,7 @@ export default function addIoTForm({
                         }))
                       }
                       required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.deviceName && (
                   <span className="text-red-500 text-[14px]">
@@ -88,7 +88,7 @@ export default function addIoTForm({
                         }))
                       }
                       required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.SSID && (
                   <span className="text-red-500 text-[14px]">
@@ -114,7 +114,7 @@ export default function addIoTForm({
                         }))
                       }
                       required
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.passwd && (
                   <span className="text-red-500 text-[14px]">
@@ -138,7 +138,7 @@ export default function addIoTForm({
                           parentName: e.target.value,
                         }))
                       }
-                      className="border-[1px] border-[#08134e] rounded-md my-2"
+                      className="border-[1px] border-[#08134e] rounded-md block pl-2"
                     />
                     {errors.parentName && (
                   <span className="text-red-500 text-[14px]">

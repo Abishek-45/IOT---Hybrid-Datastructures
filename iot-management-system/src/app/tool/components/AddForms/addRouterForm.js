@@ -66,7 +66,7 @@ export default function AddRouterForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md mt-2 block"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
                 />
                 {errors.routerName && (
                   <span className="text-red-500 text-[14px]">{errors.routerName}</span>
@@ -89,7 +89,7 @@ export default function AddRouterForm({
                     }))
                   }
                   required
-                  className="border-[1px] border-[#08134e] rounded-md mt-2 block"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
                 />
                 {errors.floorNo && (
                   <span className="text-red-500 text-[14px]">{errors.floorNo}</span>
@@ -106,7 +106,7 @@ export default function AddRouterForm({
                   value={routerFormData.parentName}
                   required
                   disabled
-                  className="border-[1px] border-[#08134e] rounded-md mt-2 block"
+                  className="border-[1px] border-[#08134e] rounded-md mt-2 block pl-2"
                 />
                 {errors.parentName && (
                   <span className="text-red-500 text-[14px]">{errors.parentName}</span>

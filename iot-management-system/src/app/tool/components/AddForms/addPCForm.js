@@ -61,7 +61,7 @@ export default function addPCForm({
                   }))
                 }
                 required
-                className="border-[1px] border-[#08134e] rounded-md my-2"
+                className="border-[1px] border-[#08134e] rounded-md block pl-2"
               />
               {errors.PCName && (
                   <span className="text-red-500 text-[14px]">{errors.PCName}</span>
@@ -84,7 +84,7 @@ export default function addPCForm({
                   }))
                 }
                 required
-                className="border-[1px] border-[#08134e] rounded-md my-2"
+                className="border-[1px] border-[#08134e] rounded-md block pl-2"
               />
               {errors.ip && (
                   <span className="text-red-500 text-[14px]">{errors.ip}</span>
@@ -106,7 +106,7 @@ export default function addPCForm({
                   }))
                 }
                 required
-                className="border-[1px] border-[#08134e] rounded-md my-2"
+                className="border-[1px] border-[#08134e] rounded-md block pl-2"
               />
               {errors.parentName && (
                   <span className="text-red-500 text-[14px]">{errors.parentName}</span>
