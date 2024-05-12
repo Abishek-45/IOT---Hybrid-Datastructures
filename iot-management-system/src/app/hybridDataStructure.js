@@ -155,15 +155,19 @@ class networkTree {
             if (parent.passwd == Device.passwd) {
               parent.children.push(Device);
               Device.parent = parent;
+              this.nameList.push(Device.name)
             } else {
               alert("ERROR: The password doesn't match");
+              return
             }
           } else {
             parent.children.push(Device);
             Device.parent = parent;
+            this.nameList.push(Device.name)
           }
         } else {
           alert("ERROR: Incorrect SSID");
+          return
         }
       }
     }
@@ -186,11 +190,14 @@ class networkTree {
         ) {
           parent.children.push(pcNode);
           pcNode.parent = parent;
+          this.nameList.push(pcNode.name)
         } else {
           alert("IP doesn't match with network ip");
+          return;
         }
       } else {
         alert("Invalid Parent Type for PC");
+        return;
       }
     }
   }
