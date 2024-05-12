@@ -58,7 +58,7 @@ export default function addSwitchForm({
           <DialogContentText className="pr-14 pl-8">
             <div className="flex flex-col gap-3">
               <div>
-                <label for="switchName">Switch Name</label>
+                <label for="switchName">Current Switch Name</label>
                 <br></br>
                 <input
                   type="text"

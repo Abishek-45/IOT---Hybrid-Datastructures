@@ -99,7 +99,7 @@ export default function addIoTForm({
 
                   <div>
                     <label for="passwd" className="">
-                      PassWord
+                      Password
                     </label>
                     <br></br>
                     <input

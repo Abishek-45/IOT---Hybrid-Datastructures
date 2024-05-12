@@ -52,7 +52,7 @@ export default function AddRouterForm({
           <DialogContentText className="pr-14 pl-8">
             <div className="flex flex-col gap-3">
               <div>
-                <label htmlFor="routerName">Router Name</label>
+                <label htmlFor="routerName">Current Router Name</label>
                 <br />
                 <input
                   type="text"

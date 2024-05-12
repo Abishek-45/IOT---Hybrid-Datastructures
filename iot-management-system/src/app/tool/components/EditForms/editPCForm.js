@@ -42,12 +42,54 @@ export default function addPCForm({
   return (
     <Dialog open={controlVariable} onClose={handleCloseFunction} className="">
     <div className="bg-[#CADCFC] ">
-      <DialogTitle className="p-5  px-14">Add PC</DialogTitle>
+      <DialogTitle className="p-5  px-14">Edit PC</DialogTitle>
       <DialogContent className="my-2">
         <DialogContentText className="pr-14 pl-8">
           <div className="flex flex-col gap-3">
             <div>
-              <label for="pcName">PC Name</label>
+              <label for="pcName">Current PC Name</label>
+              <br></br>
+              <input
+                type="text"
+                id="pcName"
+                name="pcName"
+                value={pcFormData.PCName}
+                onChange={(e) =>
+                  setPCFormData((prevState) => ({
+                    ...prevState,
+                    PCName: e.target.value,
+                  }))
+                }
+                required
+                className="border-[1px] border-[#08134e] rounded-md block pl-2"
+              />
+              {errors.PCName && (
+                  <span className="text-red-500 text-[14px]">{errors.PCName}</span>
+                )}
+            </div>
+            <div>
+              <label for="parentname">Parent Name</label>
+              <br></br>
+              <input
+                type="text"
+                id="parentname"
+                name="parentname"
+                value={pcFormData.parentName}
+                onChange={(e) =>
+                  setPCFormData((prevState) => ({
+                    ...prevState,
+                    parentName: e.target.value,
+                  }))
+                }
+                required
+                className="border-[1px] border-[#08134e] rounded-md block pl-2"
+              />
+              {errors.parentName && (
+                  <span className="text-red-500 text-[14px]">{errors.parentName}</span>
+                )}
+            </div>
+            <div>
+              <label for="pcName">New PC Name</label>
               <br></br>
               <input
                 type="text"
@@ -88,28 +130,6 @@ export default function addPCForm({
               />
               {errors.ip && (
                   <span className="text-red-500 text-[14px]">{errors.ip}</span>
-                )}
-            </div>
-
-            <div>
-              <label for="parentname">Parent Name</label>
-              <br></br>
-              <input
-                type="text"
-                id="parentname"
-                name="parentname"
-                value={pcFormData.parentName}
-                onChange={(e) =>
-                  setPCFormData((prevState) => ({
-                    ...prevState,
-                    parentName: e.target.value,
-                  }))
-                }
-                required
-                className="border-[1px] border-[#08134e] rounded-md block pl-2"
-              />
-              {errors.parentName && (
-                  <span className="text-red-500 text-[14px]">{errors.parentName}</span>
                 )}
             </div>
           </div>
