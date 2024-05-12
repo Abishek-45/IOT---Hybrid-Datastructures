@@ -8,6 +8,8 @@ export default function EditSwitchForm({
   controlVariable,
   handleCloseFunction,
   handleSubmitFunction,
+  switchToEdit,
+  setSwitchToEdit,
   switchFormData,
   setSwitchFormData,
 }) {
@@ -64,12 +66,9 @@ export default function EditSwitchForm({
                   type="text"
                   id="switchName"
                   name="switchName"
-                  value={switchFormData.switchName}
+                  value={switchToEdit}
                   onChange={(e) =>
-                    setSwitchFormData((prevState) => ({
-                      ...prevState,
-                      switchName: e.target.value,
-                    }))
+                    setSwitchToEdit(e.target.value)
                   }
                   required
                   className="border-[1px] border-[#08134e] rounded-md block pl-2 mb-4"

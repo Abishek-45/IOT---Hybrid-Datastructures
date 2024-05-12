@@ -31,7 +31,9 @@ import {
 import { actionAsyncStorage } from "next/dist/client/components/action-async-storage-instance";
 
 export default function Tool() {
-  const [mainNetwork] = useState(new networkTree(new RouterNode("Home Router",0)));
+  const [mainNetwork] = useState(
+    new networkTree(new RouterNode("Home Router", 0))
+  );
   const [toOpenDeleteForm, setToOpenDeleteForm] = useState(false);
   const [routerAdd, setRouterAdd] = useState(false);
   const [routerFormData, setRouterFormData] = useState({
@@ -41,12 +43,12 @@ export default function Tool() {
   });
   const [routerToEdit, setRouterToEdit] = useState("");
   const [openRouterEditForm, setOpenRouterEditForm] = useState(false);
-  const editRouterCloseFunction = ()=>{
+  const editRouterCloseFunction = () => {
     setOpenRouterEditForm(false);
-  }
-  const editRouterOpenFunction = ()=>{
+  };
+  const editRouterOpenFunction = () => {
     setOpenRouterEditForm(true);
-  }
+  };
 
   const [data, setData] = useState({});
   const [deleteName, setDeleteName] = useState("");
@@ -79,7 +81,14 @@ export default function Tool() {
     networkip: "",
     parentName: "",
   });
-  const [switchToEdit, setSwitchToEdit] = useState("")
+  const [switchToEdit, setSwitchToEdit] = useState("");
+  const [openSwitchEditForm, setOpenSwitchEditForm] = useState(false);
+  const editSwitchCloseFunction = () => {
+    setOpenSwitchEditForm(false);
+  };
+  const editSwitchOpenFunction = () => {
+    setOpenSwitchEditForm(true);
+  };
   const handleSwitchOpen = () => {
     setSwitchAdd(true);
   };
@@ -97,7 +106,14 @@ export default function Tool() {
     SSID: "",
     passwd: "",
   });
-  const [wrouterToEdit, setWRouterToEdit] = useState("")
+  const [wrouterToEdit, setWRouterToEdit] = useState("");
+  const [openWRouterEditForm, setOpenWRouterEditForm] = useState(false);
+  const editWRouterCloseFunction = () => {
+    setOpenWRouterEditForm(false);
+  };
+  const editWRouterOpenFunction = () => {
+    setOpenWRouterEditForm(true);
+  };
   const handleWRouterOpen = () => {
     setWRouterAdd(true);
   };
@@ -111,9 +127,9 @@ export default function Tool() {
     deviceName: "",
     SSID: "",
     passwd: "",
-    parentName:"",
+    parentName: "",
   });
-  const [deviceToEdit, setDeviceToEdit] = useState("")
+  const [deviceToEdit, setDeviceToEdit] = useState("");
   const handleDeviceOpen = () => {
     setDeviceAdd(true);
   };
@@ -128,7 +144,7 @@ export default function Tool() {
     parentName: "",
     ip: "",
   });
-  const [pcToEdit, setPCToEdit] = useState("")
+  const [pcToEdit, setPCToEdit] = useState("");
   const handlePcOpen = () => {
     setPCAdd(true);
   };
@@ -169,22 +185,29 @@ export default function Tool() {
       alert("Parent do not exist");
       return;
     } else {
-      if (mainNetwork.floorList[switchFormData.parentName]!==switchFormData.floorNo) {
+      if (
+        mainNetwork.floorList[switchFormData.parentName] !==
+        switchFormData.floorNo
+      ) {
         alert("Parent name and floor no doesn't match");
         return;
       } else {
         const parts = switchFormData.networkip.split(".");
         if (parts.length !== 4) {
           alert("Invalid IP");
-          return ;
-      }
-        if(parseInt(parts[0]) > 255 || parseInt(parts[1]) > 255 || parseInt(parts[2]) > 255  ){
-          alert("Invalid IP");
-          return ;
+          return;
         }
-        if(parseInt(parts[3])!==0){
+        if (
+          parseInt(parts[0]) > 255 ||
+          parseInt(parts[1]) > 255 ||
+          parseInt(parts[2]) > 255
+        ) {
           alert("Invalid IP");
-          return ;
+          return;
+        }
+        if (parseInt(parts[3]) !== 0) {
+          alert("Invalid IP");
+          return;
         }
 
         let sw = new SwitchNode(
@@ -208,7 +231,10 @@ export default function Tool() {
       alert("Parent do not exist");
       return;
     } else {
-      if (mainNetwork.floorList[wrouterFormData.parentName]!==wrouterFormData.floorNo) {
+      if (
+        mainNetwork.floorList[wrouterFormData.parentName] !==
+        wrouterFormData.floorNo
+      ) {
         alert("Parent name and floor no doesn't match");
         return;
       } else {
@@ -229,8 +255,7 @@ export default function Tool() {
   const addIoTFunction = () => {
     if (mainNetwork.nameList.includes(deviceFormData.deviceName)) {
       alert("Name already present!");
-    }
-    else {
+    } else {
       let newDevice = new wirelessNode(
         deviceFormData.deviceName,
         deviceFormData.SSID,
@@ -251,33 +276,97 @@ export default function Tool() {
       return;
     } else {
       const parts = pcFormData.ip.split(".");
-        if (parts.length !== 4) {
-          alert("Invalid IP");
-          return ;
+      if (parts.length !== 4) {
+        alert("Invalid IP");
+        return;
       }
-        if(parseInt(parts[0]) > 255 || parseInt(parts[1]) > 255 || parseInt(parts[2]) > 255){
-          alert("Invalid IP");
-          return ;
-        }
-        if(parseInt(parts[3])==0 || parseInt(parts[3])==255){
-          alert("Invalid IP");
-          return ;
-        }
+      if (
+        parseInt(parts[0]) > 255 ||
+        parseInt(parts[1]) > 255 ||
+        parseInt(parts[2]) > 255
+      ) {
+        alert("Invalid IP");
+        return;
+      }
+      if (parseInt(parts[3]) == 0 || parseInt(parts[3]) == 255) {
+        alert("Invalid IP");
+        return;
+      }
       let newPC = new wiredNode(pcFormData.PCName, pcFormData.ip);
       mainNetwork.addPC(pcFormData.parentName, newPC);
       mainNetwork.printElements();
       setData(mainNetwork.convertToTreeData(mainNetwork.root));
-      }
-    };
+    }
+  };
 
-  const deleteNodeFunction = ()=>{
+  const editRouterFunction = () => {
+    if (!mainNetwork.nameList.includes(routerToEdit)) {
+      alert("Given router name is not present in network");
+      return;
+    } else {
+      let router = new RouterNode(
+        routerFormData.routerName,
+        routerFormData.floorNo
+      );
+      mainNetwork.editRouter(routerFormData.parentName, routerToEdit, router);
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const editSwitchFunction = () => {
+    if (!mainNetwork.nameList.includes(switchToEdit)) {
+      alert("Given switch name is not present in network");
+      return;
+    } else {
+      let Switch = new SwitchNode(
+        switchFormData.switchName,
+        switchFormData.floorNo,
+        switchFormData.roomName,
+        switchFormData.networkip
+      );
+      let oldParent = findParent(data, switchToEdit);
+      console.log("$$$$$$$$$$$$$",oldParent)
+      mainNetwork.editSwitch(
+        switchFormData.parentName,
+        oldParent,
+        switchToEdit,
+        Switch
+      );
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const editWRouterFunction = () => {
+    if (!mainNetwork.nameList.includes(wrouterToEdit)) {
+      alert("Given router name is not present in network");
+      return;
+    } else {
+      let WRouter = new wrlessRouterNode(
+        wrouterFormData.routerName,
+        wrouterFormData.floorNo,
+        wrouterFormData.roomName,
+        wrouterFormData.SSID,
+        wrouterFormData.passwd
+      );
+      let oldParent = findParent(data, wrouterToEdit);
+      mainNetwork.editWRouter(
+        wrouterFormData.parentName,
+        oldParent,
+        wrouterToEdit,
+        WRouter
+      );
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
+    }
+  };
+
+  const deleteNodeFunction = () => {
+    console.log(deleteName, mainNetwork.nameList)
     if (mainNetwork.nameList.includes(deleteName)) {
       let parentName = findParent(data, deleteName);
-      console.log(parentName)
       mainNetwork.deleteNode(parentName, deleteName);
-      setData(mainNetwork.convertToTreeData(mainNetwork.root))
+      setData(mainNetwork.convertToTreeData(mainNetwork.root));
     }
-  }
+  };
 
   const findParent = (tree, nodeName, parentNode = null) => {
     if (tree.name === nodeName) {
@@ -315,7 +404,9 @@ export default function Tool() {
             handlePcOpen={handlePcOpen}
             handleDeviceOpen={handleDeviceOpen}
             handleDeleteOpen={handleDeleteFormOpen}
-            handleRouterEdit = {editRouterOpenFunction}
+            handleRouterEdit={editRouterOpenFunction}
+            handleSwitchEdit={editSwitchOpenFunction}
+            handleWRouterEdit={editWRouterOpenFunction}
           />
         </div>
         <AddRouterForm
@@ -360,7 +451,33 @@ export default function Tool() {
           toDeleteName={deleteName}
           setToDeleteName={setDeleteName}
         />
-        <EditRouterForm controlVariable={openRouterEditForm} handleCloseFunction={editRouterCloseFunction} routerFormData={routerFormData} setRouterFormData={setRouterFormData} />
+        <EditRouterForm
+          controlVariable={openRouterEditForm}
+          handleCloseFunction={editRouterCloseFunction}
+          handleSubmitFunction={editRouterFunction}
+          routerFormData={routerFormData}
+          setRouterFormData={setRouterFormData}
+          routerToEdit={routerToEdit}
+          setRouterToEdit={setRouterToEdit}
+        />
+        <EditSwitchForm
+          controlVariable={openSwitchEditForm}
+          handleCloseFunction={editSwitchCloseFunction}
+          handleSubmitFunction={editSwitchFunction}
+          switchFormData={switchFormData}
+          setSwitchFormData={setSwitchFormData}
+          switchToEdit={switchToEdit}
+          setSwitchToEdit={setSwitchToEdit}
+        />
+        <EditWirelessRouterForm
+          controlVariable={openWRouterEditForm}
+          handleCloseFunction={editWRouterCloseFunction}
+          handleSubmitFunction={editWRouterFunction}
+          wrouterFormData={wrouterFormData}
+          setwrouterFormData={setwrouterFormData}
+          wrouterToEdit={wrouterToEdit}
+          setwrouterToEdit={setWRouterToEdit}
+        />
       </div>
     </main>
   );

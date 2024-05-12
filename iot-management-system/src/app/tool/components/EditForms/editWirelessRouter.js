@@ -10,6 +10,8 @@ export default function EditWirelessRouterForm({
   handleSubmitFunction,
   wrouterFormData,
   setwrouterFormData,
+  wrouterToEdit,
+  setwrouterToEdit,
 }) {
   const [errors, setErrors] = useState({});
 
@@ -66,13 +68,8 @@ export default function EditWirelessRouterForm({
                   type="text"
                   id="routerName"
                   name="routerName"
-                  value={wrouterFormData.routerName}
-                  onChange={(e) => 
-                    setwrouterFormData((prevState) => ({
-                    ...prevState,
-                    routerName: e.target.value,
-                  }))
-                }
+                  value={wrouterToEdit}
+                  onChange={(e) => setwrouterToEdit(e.target.value)}
                   required
                   className="border-[1px] border-[#08134e] rounded-md block pl-2 mb-4"
                 />
@@ -90,12 +87,12 @@ export default function EditWirelessRouterForm({
                   id="routerName"
                   name="routerName"
                   value={wrouterFormData.routerName}
-                  onChange={(e) => 
+                  onChange={(e) =>
                     setwrouterFormData((prevState) => ({
-                    ...prevState,
-                    routerName: e.target.value,
-                  }))
-                }
+                      ...prevState,
+                      routerName: e.target.value,
+                    }))
+                  }
                   required
                   className="border-[1px] border-[#08134e] rounded-md block pl-2"
                 />
