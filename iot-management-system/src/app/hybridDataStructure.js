@@ -1,6 +1,8 @@
-
-
-
+/*
+This is RouterNode Class which stores its name,floorNo which its denoted by , 
+a routing table of map data structure in which it stores it's children's details
+and a parent variable to link the node to its parent 
+*/
 class RouterNode {
   constructor(routerName, floorNo) {
     this.name = routerName;
@@ -11,6 +13,11 @@ class RouterNode {
   }
 }
 
+/*
+This is SwitchNode Class which stores its name,floorNo under which the switch has been connected,room name which it is denoted by
+a children array in which it stores it's children's details,network_ip to store its unique network_ip
+and a parent variable to link the node to its parent 
+*/
 class SwitchNode {
   constructor(switchName, floorNo, roomName, network_ip) {
     this.name = switchName;
@@ -22,7 +29,11 @@ class SwitchNode {
     this.parent = null;
   }
 }
-
+/*
+This is WiFi-Router Node Class which stores its name,floorNo under which the switch has been connected,room name which it is denoted by
+a children array in which it stores it's children's details,SSID to store its unique SSID , password to secure the network
+and a parent variable to link the node to its parent 
+*/
 class wrlessRouterNode {
   constructor(routerName, floorNo, roomName, SSID, passwd = null) {
     this.name = routerName;
@@ -36,6 +47,11 @@ class wrlessRouterNode {
   }
 }
 
+/*
+This is PCNode Class which stores its name,
+ip to store its unique address which should be matched with its parent network_ip
+and a parent variable to link the node to its parent 
+*/
 class wiredNode {
   constructor(PC_Name, ip) {
     this.name = PC_Name;
@@ -45,6 +61,11 @@ class wiredNode {
   }
 }
 
+/*
+This is IoT Device Node Class which stores its name,SSID to store its unique SSID , 
+password to secure the network and to match with its parent SSID and passwd,
+and a parent variable to link the node to its parent 
+*/
 class wirelessNode {
   constructor(Device_Name, SSID, passwd = null) {
     this.name = Device_Name;
@@ -56,6 +77,10 @@ class wirelessNode {
   }
 }
 
+/*
+This is Main Network Tree which has a namelist array to store the added components after each add function
+and floor list to store the floor No of each router to check
+*/
 class networkTree {
   constructor(root = null) {
     this.nameList = [];
@@ -67,6 +92,10 @@ class networkTree {
     }
   }
 
+  /*
+This Funtcion is used to set the root of the network tree as home router with floor value 0
+      Time Complexity : O(1)
+*/
   setRoot(router) {
     if (router != null) {
       this.nameList.push(router.name);
@@ -75,6 +104,10 @@ class networkTree {
     }
   }
 
+/*
+This Funtcion is used to add the router node to the specified parentName with its floor no
+    Time Complexity : O(1)
+*/
   addRouter(parentRouterName, newRouter) {
     if (this.nameList.includes(newRouter.name)) {
       console.log("ERROR: Name already exists");
@@ -103,6 +136,11 @@ class networkTree {
     }
   }
 
+
+  /*
+This Funtcion is used to add the switch node to the specified parentName with its room Name , network_ip
+    Time Complexity : O(n)
+*/
   addSwitch(parentRouterName, newSwitch) {
     if (this.nameList.includes(newSwitch.name)) {
       console.log("ERROR: Name already exists");s
@@ -124,6 +162,10 @@ class networkTree {
     }
   }
 
+  /*
+This Funtcion is used to add the WiFi-Router node to the specified parentName with its room Name , SSID and passwd
+    Time Complexity : O(n) 
+*/
   addWrRouter(parentRouterName, newWrRouter) {
     if (this.nameList.includes(newWrRouter.name)) {
       console.log("ERROR: Name already exists");
@@ -144,6 +186,11 @@ class networkTree {
     }
   }
 
+  /*
+This Funtcion is used to add the IoT Device node to the specified parentName with its SSID and passwd
+It also check the parent SSID and passwd to match with its SSID and passwd
+    Time Complexity : O(n)
+*/
   addIotDevice(parentWrRouterName, Device) {
     if (this.nameList.includes(Device.name)) {
       console.log("ERROR: Name already exists");
@@ -175,6 +222,12 @@ class networkTree {
     }
   }
 
+
+  /*
+This Funtcion is used to add the PC node to the specified parentName with its ip address 
+It aslo check the match between network_ip and its ip.
+    Time Complexity : O(n)
+*/
   addPC(parentNodeName, pcNode) {
     if (this.nameList.includes(pcNode.name)) {
       return;
@@ -203,6 +256,11 @@ class networkTree {
     }
   }
 
+  /*
+    All Edit Functions are used to edit the properties of the specified component . It uses delete function and add function
+    Time Complexity : O(n^2)
+*/
+
   editRouter(parentRouterName, oldRouterName, newRouter) {
     this.deleteNode(parentRouterName, oldRouterName);
     this.addRouter(parentRouterName,newRouter)
@@ -226,6 +284,10 @@ class networkTree {
     this.addIotDevice(parentNodeName, deviceNode)
   }
 
+    /*
+    This Funtcion is used to delete the specified component .
+    Time Complexity : O(n)
+*/
   deleteNode(parentName, nodeName) {
     let parent = this.searchElement(parentName, nodeName, 2);
     if (parent instanceof RouterNode) {
@@ -247,6 +309,11 @@ class networkTree {
     console.log("Before Editing but after deleting inside delete function")
     this.printElements()
   }
+
+  /*
+This Funtcion is used to search for a particular node's parent . 
+    Time Complexity : O(n^2)
+*/
 
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
     if (node.name == parentNodeName) {
