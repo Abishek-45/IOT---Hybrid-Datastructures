@@ -7,7 +7,7 @@ class RouterNode {
   constructor(routerName, floorNo) {
     this.name = routerName;
     this.floorNo = floorNo;
-    this.routeTable = new Map(); 
+    this.routeTable = new Map();
     this.subnetMask = "255.255.255.0";
     this.parent = null;
   }
@@ -84,7 +84,7 @@ and floor list to store the floor No of each router to check
 class networkTree {
   constructor(root = null) {
     this.nameList = [];
-    this.floorList = {}; 
+    this.floorList = {};
     this.root = root;
     if (root != null) {
       this.nameList.push(root.name);
@@ -104,7 +104,7 @@ This Funtcion is used to set the root of the network tree as home router with fl
     }
   }
 
-/*
+  /*
 This Funtcion is used to add the router node to the specified parentName with its floor no
     Time Complexity : O(1)
 */
@@ -136,14 +136,14 @@ This Funtcion is used to add the router node to the specified parentName with it
     }
   }
 
-
   /*
 This Funtcion is used to add the switch node to the specified parentName with its room Name , network_ip
-    Time Complexity : O(n)
+    Time Complexity : O(nlogn)
 */
   addSwitch(parentRouterName, newSwitch) {
     if (this.nameList.includes(newSwitch.name)) {
-      console.log("ERROR: Name already exists");s
+      console.log("ERROR: Name already exists");
+      s;
       return;
     }
     let parent = this.searchElement(parentRouterName, newSwitch.name, 1);
@@ -164,7 +164,7 @@ This Funtcion is used to add the switch node to the specified parentName with it
 
   /*
 This Funtcion is used to add the WiFi-Router node to the specified parentName with its room Name , SSID and passwd
-    Time Complexity : O(n) 
+    Time Complexity : O(nlogn) 
 */
   addWrRouter(parentRouterName, newWrRouter) {
     if (this.nameList.includes(newWrRouter.name)) {
@@ -189,7 +189,7 @@ This Funtcion is used to add the WiFi-Router node to the specified parentName wi
   /*
 This Funtcion is used to add the IoT Device node to the specified parentName with its SSID and passwd
 It also check the parent SSID and passwd to match with its SSID and passwd
-    Time Complexity : O(n)
+    Time Complexity : O(nlogn)
 */
   addIotDevice(parentWrRouterName, Device) {
     if (this.nameList.includes(Device.name)) {
@@ -204,29 +204,28 @@ It also check the parent SSID and passwd to match with its SSID and passwd
             if (parent.passwd == Device.passwd) {
               parent.children.push(Device);
               Device.parent = parent;
-              this.nameList.push(Device.name)
+              this.nameList.push(Device.name);
             } else {
               alert("ERROR: The password doesn't match");
-              return
+              return;
             }
           } else {
             parent.children.push(Device);
             Device.parent = parent;
-            this.nameList.push(Device.name)
+            this.nameList.push(Device.name);
           }
         } else {
           alert("ERROR: Incorrect SSID");
-          return
+          return;
         }
       }
     }
   }
 
-
   /*
 This Funtcion is used to add the PC node to the specified parentName with its ip address 
 It aslo check the match between network_ip and its ip.
-    Time Complexity : O(n)
+    Time Complexity : O(nlogn)
 */
   addPC(parentNodeName, pcNode) {
     if (this.nameList.includes(pcNode.name)) {
@@ -244,7 +243,7 @@ It aslo check the match between network_ip and its ip.
         ) {
           parent.children.push(pcNode);
           pcNode.parent = parent;
-          this.nameList.push(pcNode.name)
+          this.nameList.push(pcNode.name);
         } else {
           alert("IP doesn't match with network ip");
           return;
@@ -258,35 +257,35 @@ It aslo check the match between network_ip and its ip.
 
   /*
     All Edit Functions are used to edit the properties of the specified component . It uses delete function and add function
-    Time Complexity : O(n^2)
+    Time Complexity : O(2logn)
 */
 
   editRouter(parentRouterName, oldRouterName, newRouter) {
     this.deleteNode(parentRouterName, oldRouterName);
-    this.addRouter(parentRouterName,newRouter)
+    this.addRouter(parentRouterName, newRouter);
   }
-  editSwitch(parentName, oldParent, oldSwitchName, newSwitch){
+  editSwitch(parentName, oldParent, oldSwitchName, newSwitch) {
     this.deleteNode(oldParent, oldSwitchName);
-    this.addSwitch(parentName,newSwitch)
+    this.addSwitch(parentName, newSwitch);
   }
 
-  editWRouter(parentRouterName, oldParent, oldWRouterName, newWrRouter){
+  editWRouter(parentRouterName, oldParent, oldWRouterName, newWrRouter) {
     this.deleteNode(oldParent, oldWRouterName);
-    this.addWrRouter(parentRouterName,newWrRouter)
+    this.addWrRouter(parentRouterName, newWrRouter);
   }
-  editPC(parentNodeName, oldParent, oldPCName, pcNode){
+  editPC(parentNodeName, oldParent, oldPCName, pcNode) {
     this.deleteNode(oldParent, oldPCName);
-    this.addPC(parentNodeName, pcNode)
+    this.addPC(parentNodeName, pcNode);
   }
 
-  editDevice(parentNodeName, oldParent, oldDeviceName, deviceNode){
+  editDevice(parentNodeName, oldParent, oldDeviceName, deviceNode) {
     this.deleteNode(oldParent, oldDeviceName);
-    this.addIotDevice(parentNodeName, deviceNode)
+    this.addIotDevice(parentNodeName, deviceNode);
   }
 
-    /*
+  /*
     This Funtcion is used to delete the specified component .
-    Time Complexity : O(n)
+    Time Complexity : O(nlogn)
 */
   deleteNode(parentName, nodeName) {
     let parent = this.searchElement(parentName, nodeName, 2);
@@ -306,13 +305,13 @@ It aslo check the match between network_ip and its ip.
     }
     delete this.floorList[nodeName];
     this.nameList = this.nameList.filter((item) => item != nodeName);
-    console.log("Before Editing but after deleting inside delete function")
-    this.printElements()
+    console.log("Before Editing but after deleting inside delete function");
+    this.printElements();
   }
 
   /*
 This Funtcion is used to search for a particular node's parent . 
-    Time Complexity : O(n^2)
+    Time Complexity : O(nlogn)
 */
 
   searchElement(parentNodeName, childNodeName, mode, node = this.root) {
@@ -332,13 +331,16 @@ This Funtcion is used to search for a particular node's parent .
       }
     }
   }
-  
+  /*
+This Funtcion is used to convert the backend data into a graphical tree structure . 
+    Time Complexity : O(n)
+*/
   convertToTreeData(node) {
     const treeData = {
       name: node.name,
       children: [],
     };
-  
+
     if (node instanceof RouterNode) {
       treeData.attributes = { floorNo: node.floorNo };
     } else if (node instanceof SwitchNode || node instanceof wrlessRouterNode) {
@@ -356,7 +358,7 @@ This Funtcion is used to search for a particular node's parent .
         treeData.attributes.password = node.passwd;
       }
     }
-  
+
     if (node instanceof RouterNode && node.routeTable) {
       for (let [childNode, _] of node.routeTable.entries()) {
         const childTreeData = this.convertToTreeData(childNode);
@@ -368,10 +370,9 @@ This Funtcion is used to search for a particular node's parent .
         treeData.children.push(childTreeData);
       }
     }
-  
+
     return treeData;
   }
-  
 }
 
 export {
